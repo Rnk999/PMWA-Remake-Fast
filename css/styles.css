@@ -1,3 +1,4 @@
+/* ตัวแปรหลัก: สี ระยะห่าง เงา และความกว้างเนื้อหากลางหน้า */
 :root {
   color-scheme: light;
   --navy: #173f70;
@@ -22,6 +23,7 @@
   text-rendering: optimizeLegibility;
 }
 
+/* พื้นฐานร่วม: box model การเลื่อน ภาพ ตัวอักษร และการแสดงไอคอน */
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -34,10 +36,12 @@ button { font: inherit; }
 .container { width: min(calc(100% - 48px), var(--content)); margin-inline: auto; }
 .material-symbols-rounded { font-family: "Material Symbols Rounded"; font-weight: normal; font-style: normal; font-size: 1.25em; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; direction: ltr; font-feature-settings: "liga"; -webkit-font-feature-settings: "liga"; -webkit-font-smoothing: antialiased; vertical-align: middle; }
 
+/* การเข้าถึง: ลิงก์ข้ามเนื้อหาและกรอบแสดงตำแหน่งโฟกัสด้วยคีย์บอร์ด */
 .skip-link { position: fixed; z-index: 20; top: 8px; left: 8px; padding: 10px 16px; border-radius: 8px; background: var(--white); color: var(--navy); transform: translateY(-150%); }
 .skip-link:focus { transform: translateY(0); }
 :focus-visible { outline: 3px solid #ffbf47; outline-offset: 3px; }
 
+/* ส่วนหัว: แถบข้อมูล แถบประกาศ แบรนด์ เมนู และปุ่มนำทาง */
 .utility-bar { background: var(--navy); color: #fff; font-size: 13px; }
 .utility-inner, .announcement-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 32px; }
 .utility-inner p, .utility-inner a, .announcement-inner p, .announcement-inner a { margin: 0; text-decoration: none; }
@@ -62,6 +66,7 @@ button { font: inherit; }
 .header-call { display: inline-flex; align-items: center; gap: 7px; color: var(--navy); font-weight: 700; text-decoration: none; white-space: nowrap; }
 .menu-toggle { display: none; border: 1px solid var(--line); border-radius: 10px; background: var(--white); color: var(--navy); width: 44px; height: 44px; align-items: center; justify-content: center; cursor: pointer; }
 
+/* ภาพหลัก: วางข้อความบนภาพพื้นหลังพร้อมชั้นไล่สีเพื่อให้อ่านชัด */
 .hero { position: relative; isolation: isolate; display: flex; align-items: center; min-height: 600px; padding: 76px 0; color: var(--white); background: #07547e url("../assets/images/hero/waterwork%201.jpg") center 47% / cover no-repeat; }
 .hero-shade { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgb(3 36 73 / 84%) 0%, rgb(5 56 94 / 66%) 48%, rgb(3 37 66 / 15%) 100%); }
 .hero-content { position: relative; z-index: 1; padding-right: 440px; }
@@ -90,6 +95,7 @@ button { font: inherit; }
 .icon-box-blue { width: 40px; height: 40px; border-radius: 50%; background: var(--blue); color: var(--white); }
 .icon-box-pale { background: #e4efff; color: var(--navy); }
 
+/* พื้นที่เนื้อหาและสถานะ: ใช้พื้นหลังอ่อน การ์ด และตัวชี้วัดตัวอย่าง */
 .page-content { background: var(--page); }
 .section { padding: 64px 0; }
 .status-section { padding-top: 42px; }
@@ -139,6 +145,7 @@ button { font: inherit; }
 .chart-column small { font-size: 11px; }
 .chart-column.is-highlight small { color: var(--blue-bright); font-weight: 700; }
 
+/* บริการประชาชน: จัดการ์ดเป็นกริดและเน้นช่องทางเร่งด่วน */
 .service-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .service-card { position: relative; min-height: 210px; padding: 20px; border-top: 5px solid var(--blue); }
 .service-card.service-urgent { border-top-color: var(--red); }
@@ -149,6 +156,7 @@ button { font: inherit; }
 .service-card p, .info-card p { min-height: 48px; margin: 7px 0 10px; font-size: 13px; }
 .prototype-disclaimer { display: flex; align-items: center; gap: 7px; margin: 18px 0 0; color: var(--muted); font-size: 12px; }
 .prototype-disclaimer .material-symbols-rounded { color: var(--blue); }
+/* ข้อมูลเผยแพร่: การ์ดหมวดข้อมูลสาธารณะและแนวทางบริการ */
 .information-section { padding-top: 40px; }
 .info-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; }
 .info-card { padding: 20px; }
@@ -156,6 +164,7 @@ button { font: inherit; }
 .icon-box-muted { background: #e9edf2; color: var(--navy); }
 .info-card p { min-height: 62px; }
 
+/* ข่าวสาร: ข่าวเด่นและรายการข่าวประกอบต้นแบบ */
 .news-section { padding-top: 45px; padding-bottom: 72px; }
 .news-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 20px; align-items: stretch; }
 .news-feature { overflow: hidden; }
@@ -180,6 +189,7 @@ button { font: inherit; }
 .button-muted { background: #dfe6f1; color: var(--navy); }
 .button-muted:hover { background: #d1dceb; }
 
+/* ส่วนท้าย: ข้อมูลหน่วยงาน ลิงก์หมวด และข้อความลิขสิทธิ์ */
 .site-footer { background: var(--navy); color: #f4f7fb; }
 .footer-main { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 38px; padding-top: 45px; padding-bottom: 42px; }
 .footer-brand { display: inline-flex; align-items: center; gap: 12px; color: var(--white); text-decoration: none; }
@@ -205,6 +215,7 @@ button { font: inherit; }
 .footer-bottom-inner div { display: flex; flex-wrap: wrap; gap: 12px; }
 .footer-bottom a { color: #e0e8f1; text-decoration: none; }
 
+/* จอขนาดกลาง: ลดระยะเมนูและพื้นที่ hero ก่อนสลับเป็นเมนูมือถือ */
 @media (max-width: 1100px) {
   .nav-inner { gap: 16px; }
   .brand img { width: 118px; }
@@ -217,6 +228,7 @@ button { font: inherit; }
   .footer-main { gap: 24px; }
 }
 
+/* แท็บเล็ตและมือถือ: ใช้เมนูพับและจัดกริดเป็นสองคอลัมน์ */
 @media (max-width: 800px) {
   .container { width: min(calc(100% - 36px), var(--content)); }
   .nav-inner { min-height: 74px; flex-wrap: wrap; gap: 12px; padding-block: 10px; }
@@ -247,6 +259,7 @@ button { font: inherit; }
   .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
+/* มือถือขนาดเล็ก: เรียงเนื้อหาเป็นคอลัมน์เดียวและปรับระยะให้อ่านง่าย */
 @media (max-width: 540px) {
   body { font-size: 14px; }
   .container { width: min(calc(100% - 32px), var(--content)); }
@@ -314,6 +327,7 @@ button { font: inherit; }
   .footer-bottom-inner { align-items: flex-start; flex-direction: column; justify-content: center; padding-block: 12px; }
 }
 
+/* การเข้าถึง: ลดการเคลื่อนไหวตามการตั้งค่าของผู้ใช้ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
