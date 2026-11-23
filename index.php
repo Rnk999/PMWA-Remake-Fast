@@ -17,69 +17,7 @@
   <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
 
-    <!-- ส่วนที่ 1: แถบข้อมูลหน่วยงาน ประกาศ และเมนูนำทาง -->
-    <!-- หน้าที่: แสดงช่องทางติดต่อ ข่าวประกาศ โลโก้ และทางลัดไปยังเนื้อหาหลัก -->
-    <header class="site-header" id="top">
-      <!-- แถบข้อมูลหน่วยงานและหมายเลขโทรศัพท์ -->
-      <div class="utility-bar">
-        <div class="container utility-inner">
-          <!-- แถบเครื่องมือช่วยการเข้าถึงเว็บไซต์ -->
-          <div class="accessibility-tools" role="group" aria-label="เครื่องมือช่วยการเข้าถึงเว็บไซต์">
-            <button id="font-decrease" type="button" aria-label="ลดขนาดตัวอักษร">A−</button>
-            <button id="font-reset" type="button" aria-label="คืนค่าขนาดตัวอักษรปกติ" aria-pressed="true">A</button>
-            <button id="font-increase" type="button" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
-            <button id="contrast-toggle" type="button" aria-label="เปิดโหมดสีความเปรียบต่างสูง" aria-pressed="false"><span class="material-symbols-rounded" aria-hidden="true">contrast</span></button>
-          </div>
-          <div class="utility-contact">
-            <a class="utility-phone" href="tel:055983230"><span class="material-symbols-rounded" aria-hidden="true">call</span> 055-983230</a>
-            <!-- ช่องทางสังคมจะแสดงเป็นลิงก์เมื่อมีการกำหนด URL ทางการใน js/main.js -->
-            <div class="top-social" role="group" aria-label="ช่องทางสังคม รอยืนยัน URL ทางการ">
-              <span class="social-channel" data-social-channel="facebook"><img src="assets/contact/Facebook%20logo.png" alt=""><span>Facebook</span><small>รอ URL ทางการ</small></span>
-              <span class="social-channel" data-social-channel="line"><img src="assets/contact/Line%20OA%20logo.png" alt=""><span>LINE Official</span><small>รอ URL ทางการ</small></span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- แถบประกาศพร้อมทางลัดไปยังข่าวสาร -->
-      <div class="announcement-bar">
-        <div class="container announcement-inner">
-          <p><span class="material-symbols-rounded" aria-hidden="true">campaign</span><strong>ประกาศสำคัญ</strong> ติดตามข่าวสารและประกาศการให้บริการประปาจากกองการประปา</p>
-          <a href="#news" aria-label="อ่านประกาศเพิ่มเติม"><span class="announcement-link-long">อ่านข่าวประกาศ</span><span class="announcement-link-short">อ่านต่อ</span><span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a>
-        </div>
-      </div>
-      <!-- ส่วนหัวหลักและเมนูนำทาง -->
-      <div class="nav-wrap">
-        <div class="container nav-inner">
-          <a class="brand" href="#top" aria-label="กองการประปา เทศบาลนครพิษณุโลก - หน้าแรก">
-            <img src="assets/logos/PMWA.jpg" alt="ตราสัญลักษณ์กองการประปา เทศบาลนครพิษณุโลก">
-            <span class="brand-name"><strong>กองการประปา</strong><span>เทศบาลนครพิษณุโลก</span></span>
-          </a>
-          <!-- ค้นหาจากเนื้อหาบนหน้าเว็บที่มีอยู่เท่านั้น -->
-          <form class="header-search" id="site-search" role="search">
-            <label class="visually-hidden" for="site-search-input">ค้นหาบริการหรือประกาศ</label>
-            <input id="site-search-input" name="q" type="search" placeholder="ค้นหาบริการหรือประกาศ..." autocomplete="off">
-            <button type="submit" aria-label="ค้นหาในหน้านี้"><span class="material-symbols-rounded" aria-hidden="true">search</span></button>
-          </form>
-          <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" aria-label="เปิดเมนูนำทาง">
-            <span class="material-symbols-rounded" aria-hidden="true">menu</span>
-          </button>
-          <nav class="primary-nav" id="primary-navigation" aria-label="เมนูหลัก">
-            <a class="nav-link is-current" href="#top" aria-current="page">หน้าแรก</a>
-            <a class="nav-link" href="#services">บริการประชาชน</a>
-            <a class="nav-link" href="#information">ข้อมูลเผยแพร่</a>
-            <button class="nav-link procurement-toggle" id="procurement-toggle" type="button" aria-expanded="false" aria-controls="procurement-status">จัดซื้อจัดจ้าง <span class="material-symbols-rounded" aria-hidden="true">arrow_drop_down</span></button>
-            <a class="nav-link" href="#about">เกี่ยวกับเรา</a>
-            <a class="nav-link" href="#contact">ติดต่อเรา</a>
-          </nav>
-          <p class="nav-pending" id="procurement-status" role="status" hidden>ข้อมูลจัดซื้อจัดจ้างยังไม่เชื่อมต่อในต้นแบบ</p>
-          <div class="search-results" id="search-results" aria-live="polite" hidden>
-            <p id="search-results-status"></p>
-            <ul id="search-result-list"></ul>
-          </div>
-        </div>
-      </div>
-    </header>
-    <!-- สิ้นสุดส่วนหัวเว็บไซต์ -->
+    <?php require __DIR__ . '/partials/header.php'; ?>
 
     <main id="main-content">
       <!-- ส่วนที่ 2: ภาพหลักและทางลัดบริการด่วน -->
@@ -112,6 +50,27 @@
       <!-- สิ้นสุดส่วนภาพหลัก -->
 
       <div class="page-content">
+        <!-- ส่วนที่ 6: ข่าวสารและประชาสัมพันธ์ -->
+        <!-- หน้าที่: แสดงตัวอย่างรูปแบบข่าวและประกาศของหน่วยงาน -->
+        <section class="section news-section" id="news" aria-labelledby="news-title">
+          <div class="container">
+            <div class="section-heading"><div><p class="section-kicker"><span class="material-symbols-rounded" aria-hidden="true">campaign</span> ข่าวสารอัปเดตล่าสุด</p><h2 id="news-title">ข่าวสารและประชาสัมพันธ์</h2><p>ติดตามข่าวสาร ประกาศการให้บริการ และกิจกรรมของกองการประปา</p></div><span class="section-aside"><span class="status-dot status-dot-red"></span> ข่าวตัวอย่างสำหรับต้นแบบ</span></div>
+            <div class="news-grid">
+              <article class="card news-feature">
+                <div class="news-art news-art-work" role="img" aria-label="ภาพประกอบตัวอย่างข่าว รอภาพข่าวจริงจากหน่วยงาน"><span class="material-symbols-rounded" aria-hidden="true">image</span><span>ภาพข่าวตัวอย่าง</span></div>
+                <div class="news-body"><span class="news-tag tag-red">ตัวอย่างรูปแบบข่าว</span><p class="news-meta">ข่าวประชาสัมพันธ์ · รอข้อมูลจริง</p><h3>หัวข้อข่าวประชาสัมพันธ์ตัวอย่าง</h3><p>พื้นที่แสดงรายละเอียดข่าว รอเนื้อหาที่ผ่านการยืนยันจากหน่วยงาน</p></div>
+              </article>
+              <div class="news-list">
+                <article class="card news-item"><span class="news-icon"><span class="material-symbols-rounded" aria-hidden="true">science</span></span><div><p class="news-meta"><span class="news-tag">ข่าวกิจกรรม</span> รอข้อมูลจริง</p><h3>หัวข้อข่าวกิจกรรมตัวอย่าง</h3></div></article>
+              <article class="card news-item"><span class="news-icon"><span class="material-symbols-rounded" aria-hidden="true">description</span></span><div><p class="news-meta"><span class="news-tag">จัดซื้อจัดจ้าง</span> รอข้อมูลจริง</p><h3>รายการประกาศจัดซื้อจัดจ้าง</h3><p class="news-pending">ยังไม่มีประกาศหรือเอกสาร TOR ใน Assets</p></div></article>
+                <article class="card news-item"><span class="news-icon"><span class="material-symbols-rounded" aria-hidden="true">lightbulb</span></span><div><p class="news-meta"><span class="news-tag tag-green">สาระน่ารู้</span> รอข้อมูลจริง</p><h3>หัวข้อสาระน่ารู้ตัวอย่าง</h3></div></article>
+              </div>
+            </div>
+            <div class="news-more"><a class="button button-muted" href="#news">ดูข่าวทั้งหมด <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></div>
+          </div>
+        </section>
+        <!-- สิ้นสุดส่วนข่าวสาร -->
+
         <!-- ส่วนที่ 3: สถานะน้ำประปาและสถิติ -->
         <!-- หน้าที่: แสดงตัวอย่างสถานะระบบ คุณภาพน้ำ และสถิติที่ยังไม่เชื่อมต่อข้อมูลจริง -->
         <section class="section status-section" id="water-status" aria-labelledby="status-title">
@@ -119,7 +78,7 @@
             <div class="section-heading status-heading">
               <div>
                 <p class="section-kicker"><span class="material-symbols-rounded" aria-hidden="true">bar_chart</span> ระบบติดตามสถานการณ์น้ำประปา</p>
-                <h2 id="status-title">ข้อมูลเผยแพร่</h2>
+                <h2 id="status-title">สถานะน้ำประปา</h2>
                 <p>รายงานสถานการณ์จ่ายน้ำ สถิติการใช้น้ำ และคุณภาพน้ำประปาในเขตเทศบาลนครพิษณุโลก</p>
               </div>
               <span class="prototype-pill"><span class="status-dot"></span> ข้อมูลตัวอย่างเพื่อแสดงรูปแบบ</span>
@@ -165,18 +124,21 @@
                   <button class="period-button is-selected" id="period-monthly" type="button" aria-pressed="true">รายเดือน (Monthly)</button>
                   <button class="period-button" id="period-yearly" type="button" aria-pressed="false">รายปี (Yearly)</button>
                   <label class="visually-hidden" for="usage-year">เลือกปี พ.ศ.</label>
-                  <select id="usage-year" aria-label="เลือกปี พ.ศ."><option value="2570" selected>ปี พ.ศ. 2570</option></select>
+                  <select id="usage-year" aria-label="เลือกปี พ.ศ." aria-controls="usage-chart">
+                    <option value="2567">ปี พ.ศ. 2567</option>
+                    <option value="2568">ปี พ.ศ. 2568</option>
+                    <option value="2569" selected>ปี พ.ศ. 2569</option>
+                  </select>
                 </div>
               </div>
-              <p class="usage-period-status" id="usage-period-status" role="status" aria-live="polite">ข้อมูลรายเดือนเป็นตัวอย่างสำหรับต้นแบบ</p>
+              <p class="usage-period-status" id="usage-period-status" role="status" aria-live="polite">ข้อมูลจำลองเพื่อประกอบต้นแบบเว็บไซต์ ไม่ใช่สถิติทางการ</p>
               <div class="usage-data" id="usage-data">
                 <div class="usage-summary">
-                <div><span>ปริมาณการใช้น้ำรวม (ตัวอย่าง)</span><strong>1,285,400 <small>ลบ.ม.</small></strong></div>
-                <div><span>แนวโน้มเทียบเดือนก่อน</span><strong class="trend"><span class="material-symbols-rounded" aria-hidden="true">trending_up</span> +2.4%</strong></div>
+                <div><span>ปริมาณการใช้น้ำรวม (ข้อมูลจำลอง)</span><strong><span data-usage-total>—</span> <small>ลบ.ม.</small></strong></div>
+                <div><span>แนวโน้มเทียบเดือนก่อน</span><strong class="trend" data-usage-trend>—</strong></div>
                 <div><span>ผู้ใช้น้ำที่ลงทะเบียน (ตัวอย่าง)</span><strong>34,812 <small>ราย</small></strong></div>
                 </div>
-                <div class="chart" role="img" aria-label="กราฟแท่งตัวอย่างปริมาณการใช้น้ำรายเดือน เดือนพฤษภาคมมีค่าสูงสุด">
-                <div class="chart-column"><span style="--bar:72%"></span><small>ม.ค.</small></div><div class="chart-column"><span style="--bar:68%"></span><small>ก.พ.</small></div><div class="chart-column"><span style="--bar:82%"></span><small>มี.ค.</small></div><div class="chart-column"><span style="--bar:91%"></span><small>เม.ย.</small></div><div class="chart-column is-highlight"><span style="--bar:100%"></span><small>พ.ค.</small></div><div class="chart-column"><span style="--bar:78%"></span><small>มิ.ย.</small></div><div class="chart-column"><span style="--bar:75%"></span><small>ก.ค.</small></div><div class="chart-column"><span style="--bar:70%"></span><small>ส.ค.</small></div><div class="chart-column"><span style="--bar:69%"></span><small>ก.ย.</small></div><div class="chart-column"><span style="--bar:65%"></span><small>ต.ค.</small></div><div class="chart-column"><span style="--bar:62%"></span><small>พ.ย.</small></div><div class="chart-column"><span style="--bar:66%"></span><small>ธ.ค.</small></div>
+                <div class="chart" id="usage-chart" aria-label="กราฟปริมาณการใช้น้ำประปา ข้อมูลจำลอง">
                 </div>
               </div>
               <p class="usage-empty" id="usage-empty" hidden>ยังไม่มีข้อมูลรายปีสำหรับแสดงในต้นแบบ</p>
@@ -221,51 +183,10 @@
         </section>
         <!-- สิ้นสุดส่วนข้อมูลเผยแพร่ -->
 
-        <!-- ส่วนที่ 6: ข่าวสารและประชาสัมพันธ์ -->
-        <!-- หน้าที่: แสดงตัวอย่างรูปแบบข่าวและประกาศของหน่วยงาน -->
-        <section class="section news-section" id="news" aria-labelledby="news-title">
-          <div class="container">
-            <div class="section-heading"><div><p class="section-kicker"><span class="material-symbols-rounded" aria-hidden="true">campaign</span> ข่าวสารอัปเดตล่าสุด</p><h2 id="news-title">ข่าวสารและประชาสัมพันธ์</h2><p>ติดตามข่าวสาร ประกาศการให้บริการ และกิจกรรมของกองการประปา</p></div><span class="section-aside"><span class="status-dot status-dot-red"></span> ข่าวตัวอย่างสำหรับต้นแบบ</span></div>
-            <div class="news-grid">
-              <article class="card news-feature">
-                <div class="news-art news-art-work" role="img" aria-label="ภาพประกอบตัวอย่างข่าว รอภาพข่าวจริงจากหน่วยงาน"><span class="material-symbols-rounded" aria-hidden="true">image</span><span>ภาพข่าวตัวอย่าง</span></div>
-                <div class="news-body"><span class="news-tag tag-red">ตัวอย่างรูปแบบข่าว</span><p class="news-meta">ข่าวประชาสัมพันธ์ · รอข้อมูลจริง</p><h3>หัวข้อข่าวประชาสัมพันธ์ตัวอย่าง</h3><p>พื้นที่แสดงรายละเอียดข่าว รอเนื้อหาที่ผ่านการยืนยันจากหน่วยงาน</p></div>
-              </article>
-              <div class="news-list">
-                <article class="card news-item"><span class="news-icon"><span class="material-symbols-rounded" aria-hidden="true">science</span></span><div><p class="news-meta"><span class="news-tag">ข่าวกิจกรรม</span> รอข้อมูลจริง</p><h3>หัวข้อข่าวกิจกรรมตัวอย่าง</h3></div></article>
-              <article class="card news-item"><span class="news-icon"><span class="material-symbols-rounded" aria-hidden="true">description</span></span><div><p class="news-meta"><span class="news-tag">จัดซื้อจัดจ้าง</span> รอข้อมูลจริง</p><h3>รายการประกาศจัดซื้อจัดจ้าง</h3><p class="news-pending">ยังไม่มีประกาศหรือเอกสาร TOR ใน Assets</p></div></article>
-                <article class="card news-item"><span class="news-icon"><span class="material-symbols-rounded" aria-hidden="true">lightbulb</span></span><div><p class="news-meta"><span class="news-tag tag-green">สาระน่ารู้</span> รอข้อมูลจริง</p><h3>หัวข้อสาระน่ารู้ตัวอย่าง</h3></div></article>
-              </div>
-            </div>
-            <div class="news-more"><a class="button button-muted" href="#news">ดูข่าวทั้งหมด <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></div>
-          </div>
-        </section>
-        <!-- สิ้นสุดส่วนข่าวสาร -->
+
       </div>
     </main>
 
-    <!-- ส่วนที่ 7: ข้อมูลหน่วยงาน ช่องทางติดต่อ และลิงก์ท้ายเว็บไซต์ -->
-    <!-- หน้าที่: ให้ข้อมูลติดต่อและทางลัดไปยังหมวดต่าง ๆ ของเว็บไซต์ -->
-    <footer class="site-footer" id="about">
-      <div class="container footer-main">
-        <div class="footer-about" id="contact">
-          <a class="footer-brand" href="#top"><img src="assets/logos/กองการประปา%20logo.PNG" alt="ตราสัญลักษณ์เทศบาลนครพิษณุโลก"><span><strong>กองการประปา</strong><small>เทศบาลนครพิษณุโลก</small></span></a>
-          <address>
-            <p><span class="material-symbols-rounded" aria-hidden="true">location_on</span> 1299 ถนนบรมไตรโลกนารถ 2 ตำบลในเมือง อำเภอเมือง จังหวัดพิษณุโลก 65000</p>
-            <p><span class="material-symbols-rounded" aria-hidden="true">call</span> โทรศัพท์: <a href="tel:055983230">055-983230</a></p>
-          </address>
-          <!-- ปุ่มแผนที่รอ URL ทางการ จึงไม่เปิดบริการภายนอก -->
-          <button class="map-button" id="map-button" type="button" aria-disabled="true" aria-describedby="map-status"><span class="material-symbols-rounded" aria-hidden="true">location_on</span> ดูแผนที่การเดินทาง</button>
-          <p class="map-status" id="map-status" role="status" aria-live="polite">รอยืนยัน URL แผนที่จากหน่วยงาน</p>
-          <div class="social-links" aria-label="ตัวอย่างช่องทางสื่อสารที่รอการยืนยันลิงก์ทางการ"><span><img src="assets/contact/Facebook%20logo.png" alt=""> Facebook</span><span><img src="assets/contact/Line%20OA%20logo.png" alt=""> LINE Official</span></div>
-        </div>
-        <nav class="footer-nav" aria-label="บริการประชาชน"><h2>บริการประชาชน</h2><a href="#services">แจ้งปัญหาน้ำประปา</a><a href="#services">ขอใช้น้ำประปา</a><a href="#services">ชำระค่าน้ำประปา</a><a href="#services">แบบฟอร์มบริการ</a><a href="#contact">ติดต่อเจ้าหน้าที่</a></nav>
-        <nav class="footer-nav" aria-label="ข้อมูลเผยแพร่"><h2>ข้อมูลเผยแพร่</h2><a href="#news">ข่าวประชาสัมพันธ์</a><a href="#information">ข้อมูลการใช้น้ำ</a><a href="#water-status">คุณภาพน้ำประปา</a><a href="#news">ประกาศ</a></nav>
-        <nav class="footer-nav policy-nav" aria-label="กฎหมายและนโยบาย"><h2>กฎหมายและนโยบาย</h2><ul><li>PDPA</li><li>นโยบายเว็บไซต์</li><li>นโยบายความเป็นส่วนตัว</li><li>นโยบายคุกกี้</li><li>ข้อกำหนดการใช้งาน</li></ul><p>รอเนื้อหาจากหน่วยงาน</p></nav>
-        <nav class="footer-nav" aria-label="หน่วยงานที่เกี่ยวข้อง"><h2>หน่วยงานที่เกี่ยวข้อง</h2><a href="https://www.phsmun.go.th/" target="_blank" rel="noopener noreferrer">เทศบาลนครพิษณุโลก <span class="material-symbols-rounded" aria-hidden="true">open_in_new</span></a></nav>
-      </div>
-      <div class="footer-bottom"><div class="container footer-bottom-inner"><p>© 2569 กองการประปา เทศบาลนครพิษณุโลก สงวนลิขสิทธิ์ตามกฎหมาย</p><span>เอกสารกฎหมายและนโยบายรอเผยแพร่จากหน่วยงาน</span></div></div>
-    </footer>
-    <!-- สิ้นสุดส่วนท้ายเว็บไซต์ -->
+    <?php require __DIR__ . '/partials/footer.php'; ?>
   </body>
 </html>

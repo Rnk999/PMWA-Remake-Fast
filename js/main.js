@@ -110,32 +110,104 @@ searchInput?.addEventListener("input", () => {
   if (!searchInput.value.trim()) searchResults.hidden = true;
 });
 
-// เลือกช่วงเวลาสถิติโดยไม่สร้างข้อมูลรายปีที่ยังไม่มีแหล่งข้อมูล
+// ข้อมูลจำลองแยกตามปี เพื่อใช้กับกราฟต้นแบบเท่านั้น ไม่ใช่สถิติทางการ
 const monthlyButton = document.querySelector("#period-monthly");
 const yearlyButton = document.querySelector("#period-yearly");
 const usageYear = document.querySelector("#usage-year");
 const usageData = document.querySelector("#usage-data");
 const usageEmpty = document.querySelector("#usage-empty");
 const usagePeriodStatus = document.querySelector("#usage-period-status");
+const usageChart = document.querySelector("#usage-chart");
+const usageTotal = document.querySelector("[data-usage-total]");
+const usageTrend = document.querySelector("[data-usage-trend]");
+const buddhistCurrentYear = new Date().getFullYear() + 543;
+const waterUsageByYear = {
+  2567: [1180000, 1142000, 1236000, 1290000, 1348000, 1312000, 1286000, 1305000, 1251000, 1209000, 1167000, 1224000],
+  2568: [1245000, 1208000, 1276000, 1338000, 1401000, 1372000, 1346000, 1319000, 1291000, 1254000, 1216000, 1269000],
+  2569: [1302000, 1258000, 1336000, 1394000, 1458000, 1426000, 1398000, 1371000, 1345000, 1310000, 1276000, 1334000]
+};
+const waterUsageMonths = [
+  { name: "มกราคม", short: "ม.ค." }, { name: "กุมภาพันธ์", short: "ก.พ." },
+  { name: "มีนาคม", short: "มี.ค." }, { name: "เมษายน", short: "เม.ย." },
+  { name: "พฤษภาคม", short: "พ.ค." }, { name: "มิถุนายน", short: "มิ.ย." },
+  { name: "กรกฎาคม", short: "ก.ค." }, { name: "สิงหาคม", short: "ส.ค." },
+  { name: "กันยายน", short: "ก.ย." }, { name: "ตุลาคม", short: "ต.ค." },
+  { name: "พฤศจิกายน", short: "พ.ย." }, { name: "ธันวาคม", short: "ธ.ค." }
+];
+
+function renderWaterUsage(year, period) {
+  const values = waterUsageByYear[year];
+  if (!usageChart || !values) return;
+
+  const isCurrentYear = Number(year) === buddhistCurrentYear;
+  const completedMonthCount = isCurrentYear ? new Date().getMonth() : 12;
+  const visibleValues = values.slice(0, completedMonthCount);
+  const maximum = Math.max(...visibleValues, 1);
+  const numberFormat = new Intl.NumberFormat("en-US");
+  usageChart.replaceChildren();
+  usageChart.style.gridTemplateColumns = visibleValues.length
+    ? `repeat(${visibleValues.length}, minmax(0, 1fr))`
+    : "none";
+  usageChart.setAttribute("role", "group");
+  usageChart.setAttribute(
+    "aria-label",
+    `${period === "monthly" ? "สถิติรายเดือน" : "สถิติรายปี"} พ.ศ. ${year} ข้อมูลจำลอง`
+  );
+
+  visibleValues.forEach((value, index) => {
+    const month = waterUsageMonths[index];
+    const bar = document.createElement("button");
+    const tooltip = `${month.name} ${year}: ${numberFormat.format(value)} ลูกบาศก์เมตร`;
+    bar.type = "button";
+    bar.className = "chart-column";
+    bar.dataset.month = String(index + 1);
+    bar.dataset.value = String(value);
+    bar.dataset.tooltip = tooltip;
+    bar.setAttribute("aria-label", tooltip);
+    bar.title = tooltip;
+    bar.style.setProperty("--bar-height", `${Math.max(12, (value / maximum) * 100)}%`);
+
+    const column = document.createElement("span");
+    column.className = "chart-bar";
+    column.setAttribute("aria-hidden", "true");
+    const label = document.createElement("small");
+    label.textContent = month.short;
+    bar.append(column, label);
+    usageChart.append(bar);
+  });
+
+  if (usageTotal) {
+    usageTotal.textContent = numberFormat.format(visibleValues.reduce((sum, value) => sum + value, 0));
+  }
+  if (usageTrend) {
+    const current = visibleValues.at(-1);
+    const previous = visibleValues.at(-2);
+    const change = current && previous ? ((current - previous) / previous) * 100 : null;
+    usageTrend.textContent = change === null ? "—" : `${change > 0 ? "+" : ""}${change.toFixed(1)}%`;
+  }
+}
 
 function setUsagePeriod(period) {
   const isMonthly = period === "monthly";
-  monthlyButton.setAttribute("aria-pressed", String(isMonthly));
-  yearlyButton.setAttribute("aria-pressed", String(!isMonthly));
-  monthlyButton.classList.toggle("is-selected", isMonthly);
-  yearlyButton.classList.toggle("is-selected", !isMonthly);
-  usageData.hidden = !isMonthly;
-  usageEmpty.hidden = isMonthly;
-  usagePeriodStatus.textContent = isMonthly
-    ? `ข้อมูลรายเดือน ปี พ.ศ. ${usageYear.value} เป็นตัวอย่างสำหรับต้นแบบ`
-    : `ยังไม่มีข้อมูลรายปี พ.ศ. ${usageYear.value} สำหรับแสดงในต้นแบบ`;
+  monthlyButton?.setAttribute("aria-pressed", String(isMonthly));
+  yearlyButton?.setAttribute("aria-pressed", String(!isMonthly));
+  monthlyButton?.classList.toggle("is-selected", isMonthly);
+  yearlyButton?.classList.toggle("is-selected", !isMonthly);
+  if (usageYear) usageYear.disabled = isMonthly;
+  if (usageData) usageData.hidden = false;
+  if (usageEmpty) usageEmpty.hidden = true;
+
+  const year = isMonthly ? buddhistCurrentYear : Number(usageYear?.value);
+  renderWaterUsage(year, period);
+  if (usagePeriodStatus) {
+    usagePeriodStatus.textContent = `ข้อมูล${isMonthly ? "รายเดือน" : "รายปี"} พ.ศ. ${year} เป็นข้อมูลจำลอง ไม่ใช่สถิติทางการ`;
+  }
 }
 
 monthlyButton?.addEventListener("click", () => setUsagePeriod("monthly"));
 yearlyButton?.addEventListener("click", () => setUsagePeriod("yearly"));
-usageYear?.addEventListener("change", () => {
-  setUsagePeriod(yearlyButton.getAttribute("aria-pressed") === "true" ? "yearly" : "monthly");
-});
+usageYear?.addEventListener("change", () => setUsagePeriod("yearly"));
+setUsagePeriod("monthly");
 
 // ปุ่มแผนที่จะแจ้งสถานะเท่านั้นจนกว่าจะมี URL ทางการ
 const mapButton = document.querySelector("#map-button");
