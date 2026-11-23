@@ -74,7 +74,7 @@ button { font: inherit; }
 .brand-name strong { color: var(--blue); font-size: 1.25rem; }
 .brand-name span { font-size: 0.875rem; }
 /* ค้นหาเนื้อหาภายในหน้าและแสดงผลลัพธ์ใต้ช่องค้นหา */
-.header-search { display: flex; flex: 0 1 230px; min-width: 170px; align-items: center; border: 1px solid var(--navy); border-radius: 22px; }
+.header-search { display: flex; flex: 0 1 250px; min-width: 170px; align-items: center; border: 1px solid var(--navy); border-radius: 22px; }
 .header-search input { width: 100%; min-width: 0; padding: 9px 5px 9px 13px; border: 0; border-radius: inherit; background: transparent; color: var(--body); font: inherit; }
 .header-search button { display: inline-flex; width: 40px; height: 38px; flex: 0 0 auto; align-items: center; justify-content: center; border: 0; border-radius: 50%; background: transparent; color: var(--muted); cursor: pointer; }
 .header-search:focus-within { outline: 3px solid #ffbf47; outline-offset: 2px; }
