@@ -15,7 +15,8 @@
   --white: #fff;
   --green: #08bd68;
   --red: #e7363d;
-  --shadow: 0 2px 8px rgb(19 50 83 / 7%);
+  --shadow: 0 3px 12px rgb(19 50 83 / 7%);
+  --shadow-hover: 0 9px 22px rgb(19 50 83 / 11%);
   --radius: 16px;
   --content: 1380px;
   --font-scale: 1;
@@ -74,7 +75,7 @@ button { font: inherit; }
 .brand-name strong { color: var(--blue); font-size: 1.25rem; }
 .brand-name span { font-size: 0.875rem; }
 /* ค้นหาเนื้อหาภายในหน้าและแสดงผลลัพธ์ใต้ช่องค้นหา */
-.header-search { display: flex; flex: 0 1 250px; min-width: 170px; align-items: center; border: 1px solid var(--navy); border-radius: 22px; }
+.header-search { display: flex; flex: 0 1 350px; min-width: 170px; align-items: center; border: 1px solid var(--navy); border-radius: 22px; }
 .header-search input { width: 100%; min-width: 0; padding: 9px 5px 9px 13px; border: 0; border-radius: inherit; background: transparent; color: var(--body); font: inherit; }
 .header-search button { display: inline-flex; width: 40px; height: 38px; flex: 0 0 auto; align-items: center; justify-content: center; border: 0; border-radius: 50%; background: transparent; color: var(--muted); cursor: pointer; }
 .header-search:focus-within { outline: 3px solid #ffbf47; outline-offset: 2px; }
@@ -104,8 +105,8 @@ button { font: inherit; }
 .hero h1 { max-width: 760px; margin: 0 0 20px; font-size: clamp(2.25rem, 4.3vw, 3.625rem); line-height: 1.2; letter-spacing: -.025em; }
 .hero-copy { max-width: 570px; margin: 0; font-size: 1.0625rem; line-height: 1.8; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 25px; }
-.button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; padding: 10px 22px; border: 0; border-radius: 9px; font-weight: 700; text-decoration: none; transition: background-color .18s ease, transform .18s ease; }
-.button:hover { transform: translateY(-1px); }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 48px; padding: 10px 22px; border: 0; border-radius: 9px; font-weight: 700; text-decoration: none; transition: background-color .18s ease, color .18s ease, transform .18s ease; }
+.button:active { transform: translateY(0); }
 .button-primary { background: #168fc9; color: var(--white); }
 .button-primary:hover { background: #087ab0; }
 .button-light { background: var(--white); color: var(--blue-bright); }
@@ -133,7 +134,7 @@ button { font: inherit; }
 .section-kicker .material-symbols-rounded { font-size: 1.25rem; }
 .section-aside { display: inline-flex; align-items: center; gap: 8px; padding-bottom: 5px; color: var(--muted); font-size: 0.75rem; }
 .prototype-pill { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 20px; background: var(--white); color: var(--muted); font-size: 0.6875rem; white-space: nowrap; }
-.card { border: 1px solid rgb(18 57 98 / 5%); border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); }
+.card { border: 1px solid rgb(18 57 98 / 5%); border-radius: var(--radius); background: var(--white); box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
 .status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .status-card { padding: 24px; }
 .card-title-row { display: flex; align-items: center; gap: 11px; }
@@ -150,6 +151,7 @@ button { font: inherit; }
 .metric-grid small { color: var(--green); font-size: 0.6875rem; }
 .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; padding-top: 11px; border-top: 1px solid #edf0f3; color: var(--muted); font-size: 0.6875rem; }
 .card-footer a, .service-card a, .info-card a, .news-body a, .news-item a { display: inline-flex; align-items: center; gap: 5px; color: var(--blue-bright); font-size: 0.75rem; text-decoration: none; white-space: nowrap; }
+.card-footer a, .service-card a, .info-card a, .news-body a, .news-item a { transition: color .18s ease; }
 .card-footer a:hover, .service-card a:hover, .info-card a:hover, .news-body a:hover, .news-item a:hover { text-decoration: underline; }
 .quality-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 0; }
 .quality-grid div { padding: 10px 12px; border: 1px solid #dce9f2; border-radius: 12px; background: var(--blue-pale); }
@@ -225,6 +227,15 @@ button { font: inherit; }
 .button-muted { background: #dfe6f1; color: var(--navy); }
 .button-muted:hover { background: #d1dceb; }
 
+/* ปฏิสัมพันธ์ละเอียดบนอุปกรณ์ที่มีตัวชี้แบบ hover */
+@media (hover: hover) and (pointer: fine) {
+  .card:hover { transform: translateY(-2px); border-color: rgb(18 57 98 / 10%); box-shadow: var(--shadow-hover); }
+  .button:hover { transform: translateY(-1px); }
+  .button:hover:active { transform: translateY(0); }
+  .card-footer a:hover, .service-card a:hover, .info-card a:hover, .news-body a:hover, .news-item a:hover { color: var(--navy); }
+  .footer-nav a:hover { color: var(--white); }
+}
+
 /* ส่วนท้าย: ข้อมูลหน่วยงาน ลิงก์หมวด และข้อความลิขสิทธิ์ */
 .site-footer { background: var(--navy); color: #f4f7fb; }
 .footer-main { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr 1.1fr; gap: 22px; padding-top: 45px; padding-bottom: 42px; }
@@ -275,6 +286,7 @@ button { font: inherit; }
   --green: #006b3c;
   --red: #a40000;
   --shadow: none;
+  --shadow-hover: none;
 }
 :root[data-contrast="high"] .announcement-bar { background: #003f63; }
 :root[data-contrast="high"] .hero-shade { background: rgb(0 0 0 / 82%); }
