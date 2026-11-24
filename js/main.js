@@ -69,6 +69,67 @@ document.querySelectorAll("[data-social-channel]").forEach((channel) => {
   }
 });
 
+// ค้นหาและกรองคำถามที่พบบ่อย โดยใช้ native details/summary สำหรับ accordion
+const faqSearch = document.querySelector("#faq-search");
+const faqSearchClear = document.querySelector("#faq-search-clear");
+const faqItems = [...document.querySelectorAll("[data-faq-item]")];
+const faqFilters = [...document.querySelectorAll(".faq-filter[data-faq-category]")];
+const faqResultsStatus = document.querySelector("#faq-results-status");
+const faqEmptyState = document.querySelector("#faq-empty-state");
+const faqResetFilters = document.querySelector("#faq-reset-filters");
+const faqTotal = document.querySelector("[data-faq-total]");
+let activeFaqCategory = "all";
+
+function updateFaqResults() {
+  if (!faqSearch || !faqItems.length) return;
+  const query = faqSearch.value.trim().toLocaleLowerCase("th");
+  const visibleItems = faqItems.filter((item) => {
+    const matchesCategory = activeFaqCategory === "all" || item.dataset.faqCategory === activeFaqCategory;
+    const matchesQuery = !query || item.textContent.toLocaleLowerCase("th").includes(query);
+    item.hidden = !(matchesCategory && matchesQuery);
+    return !item.hidden;
+  });
+
+  if (faqTotal) faqTotal.textContent = String(faqItems.length);
+  if (faqResultsStatus) {
+    faqResultsStatus.textContent = visibleItems.length
+      ? `แสดงคำถาม ${visibleItems.length} จาก ${faqItems.length} รายการ${query ? ` สำหรับ “${faqSearch.value.trim()}”` : ""}`
+      : "ไม่พบคำถามที่ตรงกับตัวกรอง";
+  }
+  if (faqEmptyState) faqEmptyState.hidden = visibleItems.length > 0;
+  if (faqSearchClear) faqSearchClear.hidden = !query;
+}
+
+faqSearch?.addEventListener("input", updateFaqResults);
+faqSearchClear?.addEventListener("click", () => {
+  faqSearch.value = "";
+  updateFaqResults();
+  faqSearch.focus();
+});
+faqFilters.forEach((filter) => {
+  filter.addEventListener("click", () => {
+    activeFaqCategory = filter.dataset.faqCategory;
+    faqFilters.forEach((button) => {
+      const isActive = button === filter;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+    updateFaqResults();
+  });
+});
+faqResetFilters?.addEventListener("click", () => {
+  faqSearch.value = "";
+  activeFaqCategory = "all";
+  faqFilters.forEach((button) => {
+    const isActive = button.dataset.faqCategory === "all";
+    button.classList.toggle("is-active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+  updateFaqResults();
+  faqSearch.focus();
+});
+updateFaqResults();
+
 // ค้นหาข้อความจากการ์ดที่มีอยู่บนหน้า และแสดงลิงก์ไปยังรายการที่ตรงกัน
 const searchForm = document.querySelector("#site-search");
 const searchInput = document.querySelector("#site-search-input");
@@ -220,6 +281,50 @@ mapButton?.addEventListener("click", () => {
   window.open(mapUrl, "_blank", "noopener,noreferrer");
 });
 
+// เมนู Dropdown บริการประชาชน
+const servicesToggle = document.querySelector("#services-toggle");
+const servicesMenu = document.querySelector("#services-menu");
+const servicesDropdown = document.querySelector("#services-dropdown");
+
+function closeServicesMenu() {
+  if (!servicesToggle || !servicesMenu) return;
+  servicesToggle.setAttribute("aria-expanded", "false");
+  servicesMenu.hidden = true;
+}
+
+function openServicesMenu() {
+  if (!servicesToggle || !servicesMenu) return;
+  if (procurementStatus && !procurementStatus.hidden) {
+    procurementStatus.hidden = true;
+    procurementButton?.setAttribute("aria-expanded", "false");
+  }
+  servicesToggle.setAttribute("aria-expanded", "true");
+  servicesMenu.hidden = false;
+}
+
+servicesToggle?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  const isExpanded = servicesToggle.getAttribute("aria-expanded") === "true";
+  if (isExpanded) {
+    closeServicesMenu();
+  } else {
+    openServicesMenu();
+  }
+});
+
+document.addEventListener("click", (event) => {
+  if (servicesDropdown && !servicesDropdown.contains(event.target)) {
+    closeServicesMenu();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && servicesMenu && !servicesMenu.hidden) {
+    closeServicesMenu();
+    servicesToggle?.focus();
+  }
+});
+
 // เปิด/ปิดข้อความสถานะจัดซื้อจัดจ้างที่ยังไม่เชื่อมกับแหล่งข้อมูลจริง
 const procurementButton = document.querySelector("#procurement-toggle");
 const procurementStatus = document.querySelector("#procurement-status");
@@ -227,6 +332,9 @@ procurementButton?.addEventListener("click", () => {
   const isExpanded = procurementButton.getAttribute("aria-expanded") === "true";
   procurementButton.setAttribute("aria-expanded", String(!isExpanded));
   procurementStatus.hidden = isExpanded;
+  if (!isExpanded && servicesMenu && !servicesMenu.hidden) {
+    closeServicesMenu();
+  }
 });
 
 if (menuButton && primaryNavigation) {

@@ -1,5 +1,15 @@
     <!-- ส่วนที่ 1: แถบข้อมูลหน่วยงาน ประกาศ และเมนูนำทาง -->
     <!-- หน้าที่: แสดงช่องทางติดต่อ ข่าวประกาศ โลโก้ และทางลัดไปยังเนื้อหาหลัก -->
+    <?php
+      // กำหนดหน้าปัจจุบันสำหรับ nav active state ถ้ายังไม่ได้กำหนดจากหน้าที่เรียกใช้
+      if (!isset($activePage)) $activePage = 'home';
+      $isHome = ($activePage === 'home');
+      $homeHref = $isHome ? '#top' : 'index.php';
+      $newsHref = $isHome ? '#news' : 'index.php#news';
+      $informationHref = $isHome ? '#information' : 'index.php#information';
+      $aboutHref = $isHome ? '#about' : 'index.php#about';
+      $contactHref = $isHome ? '#contact' : 'index.php#contact';
+    ?>
     <header class="site-header" id="top">
       <!-- แถบข้อมูลหน่วยงานและหมายเลขโทรศัพท์ -->
       <div class="utility-bar">
@@ -25,13 +35,13 @@
       <div class="announcement-bar">
         <div class="container announcement-inner">
           <p><span class="material-symbols-rounded" aria-hidden="true">campaign</span><strong>ประกาศสำคัญ</strong> ติดตามข่าวสารและประกาศการให้บริการประปาจากกองการประปา</p>
-          <a href="#news" aria-label="อ่านประกาศเพิ่มเติม"><span class="announcement-link-long">อ่านข่าวประกาศ</span><span class="announcement-link-short">อ่านต่อ</span><span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a>
+          <a href="<?php echo $newsHref; ?>" aria-label="อ่านประกาศเพิ่มเติม"><span class="announcement-link-long">อ่านข่าวประกาศ</span><span class="announcement-link-short">อ่านต่อ</span><span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a>
         </div>
       </div>
       <!-- ส่วนหัวหลักและเมนูนำทาง -->
       <div class="nav-wrap">
         <div class="container nav-inner">
-          <a class="brand" href="#top" aria-label="กองการประปา เทศบาลนครพิษณุโลก - หน้าแรก">
+          <a class="brand" href="<?php echo $homeHref; ?>" aria-label="กองการประปา เทศบาลนครพิษณุโลก - หน้าแรก">
             <img src="assets/logos/PMWA.jpg" alt="ตราสัญลักษณ์กองการประปา เทศบาลนครพิษณุโลก">
             <span class="brand-name"><strong>กองการประปา</strong><span>เทศบาลนครพิษณุโลก</span></span>
           </a>
@@ -45,12 +55,30 @@
             <span class="material-symbols-rounded" aria-hidden="true">menu</span>
           </button>
           <nav class="primary-nav" id="primary-navigation" aria-label="เมนูหลัก">
-            <a class="nav-link is-current" href="#top" aria-current="page">หน้าแรก</a>
-            <a class="nav-link" href="#services">บริการประชาชน</a>
-            <a class="nav-link" href="#information">ข้อมูลเผยแพร่</a>
+            <a class="nav-link<?php echo $isHome ? ' is-current' : ''; ?>" href="<?php echo $homeHref; ?>"<?php echo $isHome ? ' aria-current="page"' : ''; ?>>หน้าแรก</a>
+            <div class="nav-dropdown" id="services-dropdown">
+              <button class="nav-link dropdown-toggle<?php echo in_array($activePage, ['citizen-guide', 'faqs'], true) ? ' is-current' : ''; ?>" id="services-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="services-menu">
+                บริการ <span class="material-symbols-rounded" aria-hidden="true">arrow_drop_down</span>
+              </button>
+              <div class="dropdown-menu" id="services-menu" role="menu" aria-labelledby="services-toggle" hidden>
+                <a class="dropdown-item" href="https://eservice.phsmun.go.th/" target="_blank" rel="noopener noreferrer" role="menuitem">
+                  <span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>
+                  <span>E-Service (บริการออนไลน์)</span>
+                </a>
+                <a class="dropdown-item<?php echo ($activePage === 'citizen-guide') ? ' is-active' : ''; ?>" href="citizen-guide.php" role="menuitem"<?php echo ($activePage === 'citizen-guide') ? ' aria-current="page"' : ''; ?>>
+                  <span class="material-symbols-rounded" aria-hidden="true">menu_book</span>
+                  <span>คู่มือประชาชน</span>
+                </a>
+                <a class="dropdown-item<?php echo ($activePage === 'faqs') ? ' is-active' : ''; ?>" href="faqs.php" role="menuitem"<?php echo ($activePage === 'faqs') ? ' aria-current="page"' : ''; ?>>
+                  <span class="material-symbols-rounded" aria-hidden="true">quiz</span>
+                  <span>คำถามที่พบบ่อย</span>
+                </a>
+              </div>
+            </div>
+            <a class="nav-link" href="<?php echo $informationHref; ?>">ข้อมูลเผยแพร่</a>
             <button class="nav-link procurement-toggle" id="procurement-toggle" type="button" aria-expanded="false" aria-controls="procurement-status">จัดซื้อจัดจ้าง <span class="material-symbols-rounded" aria-hidden="true">arrow_drop_down</span></button>
-            <a class="nav-link" href="#about">เกี่ยวกับเรา</a>
-            <a class="nav-link" href="#contact">ติดต่อเรา</a>
+            <a class="nav-link" href="<?php echo $aboutHref; ?>">เกี่ยวกับเรา</a>
+            <a class="nav-link" href="<?php echo $contactHref; ?>">ติดต่อเรา</a>
           </nav>
           <p class="nav-pending" id="procurement-status" role="status" hidden>ข้อมูลจัดซื้อจัดจ้างยังไม่เชื่อมต่อในต้นแบบ</p>
           <div class="search-results" id="search-results" aria-live="polite" hidden>

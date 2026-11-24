@@ -75,7 +75,7 @@ button { font: inherit; }
 .brand-name strong { color: var(--blue); font-size: 1.25rem; }
 .brand-name span { font-size: 0.875rem; }
 /* ค้นหาเนื้อหาภายในหน้าและแสดงผลลัพธ์ใต้ช่องค้นหา */
-.header-search { position: relative; isolation: isolate; display: flex; flex: 0 1 350px; min-width: 170px; align-items: center; border: 1px solid transparent; border-radius: 22px; background: linear-gradient(var(--white), var(--white)) padding-box, linear-gradient(115deg, #9ce9ff, #1977af 38%, #c4f4ff 62%, #397cba) border-box; background-size: 100% 100%, 220% 220%; box-shadow: 0 3px 12px rgb(16 99 155 / 12%), 0 0 14px rgb(59 183 226 / 12%); animation: search-border-glow 8s ease-in-out infinite; }
+.header-search { position: relative; isolation: isolate; display: flex; flex: 0 1 420px; min-width: 170px; align-items: center; border: 1px solid transparent; border-radius: 22px; background: linear-gradient(var(--white), var(--white)) padding-box, linear-gradient(115deg, #9ce9ff, #1977af 38%, #c4f4ff 62%, #397cba) border-box; background-size: 100% 100%, 220% 220%; box-shadow: 0 3px 12px rgb(16 99 155 / 12%), 0 0 14px rgb(59 183 226 / 12%); animation: search-border-glow 8s ease-in-out infinite; }
 .header-search::after { position: absolute; z-index: 0; inset: 1px; border-radius: inherit; background: linear-gradient(105deg, transparent 25%, rgb(255 255 255 / 66%) 48%, transparent 66%); content: ""; pointer-events: none; opacity: .45; animation: search-light-reflection 8s ease-in-out infinite; }
 .header-search input { position: relative; z-index: 1; width: 100%; min-width: 0; padding: 9px 5px 9px 13px; border: 0; border-radius: inherit; background: transparent; color: var(--body); font: inherit; }
 .header-search button { position: relative; z-index: 1; display: inline-flex; width: 40px; height: 38px; flex: 0 0 auto; align-items: center; justify-content: center; border: 0; border-radius: 50%; background: transparent; color: var(--muted); cursor: pointer; }
@@ -99,6 +99,69 @@ button { font: inherit; }
 .nav-link { padding: 7px 9px; border: 0; border-radius: 22px; background: transparent; color: #344457; cursor: pointer; font: inherit; text-decoration: none; white-space: nowrap; transition: background-color .18s ease, color .18s ease; }
 .nav-link:hover, .nav-link.is-current { background: var(--blue); color: var(--white); }
 .procurement-toggle { display: inline-flex; align-items: center; gap: 2px; }
+
+/* Dropdown เมนูสำหรับบริการ */
+.nav-dropdown { position: relative; display: inline-flex; align-items: center; }
+.dropdown-toggle { display: inline-flex; align-items: center; gap: 2px; }
+.dropdown-toggle .material-symbols-rounded { font-size: 1.125rem; transition: transform .2s ease; }
+.dropdown-toggle[aria-expanded="true"] .material-symbols-rounded { transform: rotate(180deg); }
+.dropdown-toggle[aria-expanded="true"]:not(.is-current) { background: var(--blue-pale); color: var(--blue-bright); }
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 60;
+  min-width: 250px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: 0 10px 28px rgb(19 50 83 / 14%), 0 2px 6px rgb(19 50 83 / 6%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.dropdown-menu[hidden] {
+  display: none;
+}
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color .15s ease, color .15s ease;
+}
+.dropdown-item .material-symbols-rounded {
+  font-size: 1.25rem;
+  color: var(--blue-bright);
+}
+.dropdown-item:hover,
+.dropdown-item:focus-visible {
+  background: var(--blue-pale);
+  color: var(--navy);
+  outline: none;
+}
+.dropdown-item:focus-visible {
+  outline: 2px solid #ffbf47;
+  outline-offset: 1px;
+}
+.dropdown-item.is-active,
+.dropdown-item[aria-current="page"] {
+  background: #e4eff8;
+  color: var(--navy);
+  font-weight: 600;
+}
+.dropdown-item.is-active .material-symbols-rounded,
+.dropdown-item[aria-current="page"] .material-symbols-rounded {
+  color: var(--blue);
+}
 .nav-pending { position: absolute; z-index: 8; top: calc(100% - 3px); right: 0; max-width: min(360px, 100%); margin: 0; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--white); color: var(--body); box-shadow: var(--shadow); }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
 .header-call { display: inline-flex; align-items: center; gap: 7px; color: var(--navy); font-weight: 700; text-decoration: none; white-space: nowrap; }
@@ -163,6 +226,7 @@ button { font: inherit; }
 .card-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px; padding-top: 11px; border-top: 1px solid #edf0f3; color: var(--muted); font-size: 0.6875rem; }
 .card-footer a, .service-card a, .info-card a, .news-body a, .news-item a { display: inline-flex; align-items: center; gap: 5px; color: var(--blue-bright); font-size: 0.75rem; text-decoration: none; white-space: nowrap; }
 .card-footer a, .service-card a, .info-card a, .news-body a, .news-item a { transition: color .18s ease; }
+.service-card a { font-weight: 400; }
 .card-footer a:hover, .service-card a:hover, .info-card a:hover, .news-body a:hover, .news-item a:hover { text-decoration: underline; }
 .quality-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 0; }
 .quality-grid div { padding: 10px 12px; border: 1px solid #dce9f2; border-radius: 12px; background: var(--blue-pale); }
@@ -213,7 +277,7 @@ button { font: inherit; }
 .icon-box-red { background: #fff0f0; color: var(--red); }
 .service-badge { position: absolute; top: 17px; right: 16px; padding: 3px 9px; border-radius: 14px; background: #e7f5fc; color: var(--blue-bright); font-size: 0.6875rem; }
 .service-urgent .service-badge { background: #fff0f0; color: var(--red); }
-.service-card p, .info-card p { min-height: 48px; margin: 7px 0 10px; font-size: 0.8125rem; }
+.service-card p, .info-card p { min-height: 48px; margin: 7px 0 10px; font-size: 0.8125rem; font-weight: 400; }
 .prototype-disclaimer { display: flex; align-items: center; gap: 7px; margin: 18px 0 0; color: var(--muted); font-size: 0.75rem; }
 .prototype-disclaimer .material-symbols-rounded { color: var(--blue); }
 /* ข้อมูลเผยแพร่: การ์ดหมวดข้อมูลสาธารณะและแนวทางบริการ */
@@ -255,6 +319,8 @@ button { font: inherit; }
   .card:hover { transform: translateY(-2px); border-color: rgb(18 57 98 / 10%); box-shadow: var(--shadow-hover); }
   .button:hover { transform: translateY(-1px); }
   .button:hover:active { transform: translateY(0); }
+  .service-card.service-urgent a {
+  color: var(--red); }/* หรือใส่รหัสสีที่ต้องการ */
   .card-footer a:hover, .service-card a:hover, .info-card a:hover, .news-body a:hover, .news-item a:hover { color: var(--navy); }
   .footer-nav a:hover { color: var(--white); }
 }
@@ -316,6 +382,16 @@ button { font: inherit; }
 :root[data-contrast="high"] .tag-red { color: #900; }
 :root[data-contrast="high"] .state-chip { border: 1px solid #006b3c; background: #fff; color: #00522d; }
 :root[data-contrast="high"] .tag-green { border: 1px solid #006b3c; background: #fff; color: #00522d; }
+:root[data-contrast="high"] .dropdown-menu { border-color: #000; box-shadow: none; background: #fff; }
+:root[data-contrast="high"] .dropdown-item:hover,
+:root[data-contrast="high"] .dropdown-item:focus-visible { background: #00416b; color: #fff; }
+:root[data-contrast="high"] .dropdown-item.is-active { background: #000; color: #fff; }
+:root[data-contrast="high"] .guide-category-header { background: #fff; border-left-color: #000; border-bottom: 1px solid #000; }
+:root[data-contrast="high"] .guide-category-icon { background: #000; color: #fff; }
+:root[data-contrast="high"] .guide-category-count { border-color: #000; color: #000; }
+:root[data-contrast="high"] .icon-box-blue-urgent { background: #00416b; color: #fff; border-color: #000; }
+:root[data-contrast="high"] .guide-tag-urgent { background: #00416b; color: #fff; border-color: #000; }
+:root[data-contrast="high"] .guide-contact-actions .button-contact-info { background: #fff; color: #000; border-color: #000; }
 
 /* จอขนาดกลาง: ลดระยะเมนูและพื้นที่ hero ก่อนสลับเป็นเมนูมือถือ */
 @media (max-width: 1100px) {
@@ -442,6 +518,204 @@ button { font: inherit; }
   .footer-nav { min-height: 0; }
   .footer-bottom-inner { align-items: flex-start; flex-direction: column; justify-content: center; padding-block: 12px; }
 }
+
+/* ===================================================================
+   หน้าย่อย: เส้นทาง Breadcrumb และส่วนหัวหน้าย่อย (Subpage)
+   =================================================================== */
+
+/* Breadcrumb navigation */
+.subpage-breadcrumb { background: var(--white); border-bottom: 1px solid var(--line); }
+.breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin: 0; padding: 10px 0; list-style: none; font-size: 0.8125rem; }
+.breadcrumb li { display: flex; align-items: center; gap: 6px; }
+.breadcrumb li + li::before { content: "/"; color: var(--muted); }
+.breadcrumb a { display: inline-flex; align-items: center; gap: 5px; color: var(--blue-bright); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb a .material-symbols-rounded,
+.breadcrumb [aria-current] .material-symbols-rounded { font-size: 1.0625rem; }
+.breadcrumb [aria-current] { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); }
+
+/* Subpage hero header band */
+.subpage-hero { background: linear-gradient(135deg, var(--navy) 0%, #1b5a9e 55%, #1a7bbf 100%); color: var(--white); padding: 48px 0 52px; }
+.subpage-hero-inner { display: flex; align-items: center; gap: 32px; justify-content: space-between; }
+.subpage-hero-content { flex: 1 1 auto; }
+.subpage-hero-content .section-kicker { color: #9ed8f7; }
+.subpage-hero-content h1 { margin: 8px 0 14px; font-size: clamp(1.875rem, 3.5vw, 2.75rem); line-height: 1.2; letter-spacing: -.02em; }
+.subpage-hero-desc { max-width: 680px; margin: 0 0 20px; font-size: 1.0rem; line-height: 1.75; color: #cce7f7; }
+.subpage-hero-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.guide-count-pill { display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 22px; background: rgb(255 255 255 / 20%); color: var(--white); font-size: 0.875rem; font-weight: 600; }
+.guide-note-pill { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 22px; background: rgb(255 255 255 / 10%); color: #cce7f7; font-size: 0.75rem; }
+.guide-count-pill .material-symbols-rounded,
+.guide-note-pill .material-symbols-rounded { font-size: 1.0625rem; }
+.subpage-hero-visual { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; }
+.subpage-hero-icon { display: flex; width: 128px; height: 128px; align-items: center; justify-content: center; border-radius: 50%; background: rgb(255 255 255 / 12%); border: 2px solid rgb(255 255 255 / 20%); }
+.subpage-hero-icon .material-symbols-rounded { font-size: 4rem; color: #9ed8f7; }
+
+/* ===================================================================
+   คู่มือประชาชน: กริดการ์ดรายการ
+   =================================================================== */
+
+.guide-section { padding-top: 48px; padding-bottom: 72px; }
+.guide-section-heading { margin-bottom: 32px; }
+
+/* หมวดหมู่คู่มือประชาชน (Citizen Guide Categories) */
+.guide-categories { display: flex; flex-direction: column; gap: 40px; }
+.guide-category-group { position: relative; }
+.guide-category-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 18px; margin-bottom: 20px; border-radius: 12px; background: linear-gradient(90deg, #edf6fc 0%, #f4f9fd 60%, transparent 100%); border-left: 4px solid var(--blue); }
+.guide-category-title-wrap { display: flex; align-items: center; gap: 12px; }
+.guide-category-icon { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 9px; background: var(--blue-pale); color: var(--blue-bright); flex: 0 0 auto; }
+.guide-category-icon .material-symbols-rounded { font-size: 1.25rem; }
+.guide-category-title { margin: 0; color: var(--navy); font-size: 1.1875rem; font-weight: 700; line-height: 1.35; }
+.guide-category-desc { margin: 2px 0 0; color: var(--muted); font-size: 0.8125rem; line-height: 1.4; }
+.guide-category-count { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 20px; background: var(--white); border: 1px solid var(--line); color: var(--navy); font-size: 0.75rem; font-weight: 600; white-space: nowrap; box-shadow: 0 1px 3px rgb(19 50 83 / 5%); }
+
+/* Grid: 3 columns at 1440px desktop */
+.guide-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin: 0; padding: 0; list-style: none; counter-reset: none; }
+.guide-grid > li { display: flex; }
+
+/* Guide card */
+.guide-card { display: flex; flex-direction: column; width: 100%; padding: 0; overflow: hidden; border-top: 4px solid var(--blue); }
+.guide-card:hover { border-top-color: var(--blue-bright); }
+
+.guide-card-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px 0; }
+.guide-number { font-size: 0.6875rem; font-weight: 700; color: var(--muted); letter-spacing: .08em; padding: 3px 8px; border-radius: 6px; background: var(--page); }
+
+/* Soft icon-box variants for guide cards */
+.icon-box-blue-soft { background: #dff0fb; color: #0876ac; }
+.icon-box-red-soft  { background: #fff0f0; color: var(--red); border-color: #ffd5d5; }
+.icon-box-blue-urgent { background: #d8edf9; color: #056a9e; border: 1px solid #b3daf3; }
+
+.guide-card-body { flex: 1; padding: 14px 20px 16px; }
+.guide-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 9px; }
+.guide-tag { display: inline-flex; padding: 2px 9px; border-radius: 12px; background: #e8eef4; color: var(--navy); font-size: 0.6875rem; white-space: nowrap; }
+.guide-tag-urgent { background: #d5ecf9; color: #065e8d; font-weight: 700; border: 1px solid #b0d8f1; }
+
+.guide-card-body h3 { margin: 0 0 8px; color: var(--ink); font-size: 1.0625rem; line-height: 1.45; }
+.guide-card-body > p { margin: 0 0 14px; font-size: 0.8125rem; line-height: 1.65; color: var(--body); }
+
+/* Meta row: time + fee */
+.guide-meta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; padding: 10px; border-radius: 10px; background: var(--page); }
+.guide-meta-row div { display: grid; gap: 2px; }
+.guide-meta-row dt { display: flex; align-items: center; gap: 4px; color: var(--muted); font-size: 0.6875rem; font-weight: 600; }
+.guide-meta-row dt .material-symbols-rounded { font-size: 0.9375rem; }
+.guide-meta-row dd { margin: 0; color: var(--ink); font-size: 0.75rem; font-weight: 500; }
+
+/* Guide card footer link */
+.guide-card-footer { padding: 12px 20px 16px; border-top: 1px solid var(--line); }
+.guide-link { display: inline-flex; align-items: center; gap: 6px; color: var(--blue-bright); font-size: 0.8125rem; font-weight: 600; text-decoration: none; transition: color .18s ease, gap .18s ease; }
+.guide-link:hover { color: var(--navy); gap: 9px; }
+.guide-link .material-symbols-rounded { font-size: 1.0625rem; }
+
+/* Hover card: guide card specific */
+@media (hover: hover) and (pointer: fine) {
+  .guide-card:hover .guide-link { color: var(--navy); }
+}
+
+/* Contact banner at bottom of guide list */
+.guide-contact-banner { margin-top: 48px; padding: 28px 32px; border-radius: var(--radius); background: linear-gradient(135deg, #e8f3fb, #d4eaf8); border: 1px solid #bcd9ee; }
+.guide-contact-banner-inner { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.guide-contact-banner-inner > .icon-box { flex: 0 0 auto; width: 52px; height: 52px; background: var(--blue); color: var(--white); }
+.guide-contact-banner-inner > div { flex: 1 1 auto; }
+.guide-contact-banner-inner strong { color: var(--navy); font-size: 1.0625rem; }
+.guide-contact-banner-inner p { margin: 4px 0 0; color: var(--body); font-size: 0.875rem; }
+.guide-contact-actions { display: flex; align-items: center; gap: 10px; flex: 0 0 auto; flex-wrap: wrap; }
+.guide-contact-actions .button-contact-info { background: var(--white); color: var(--navy); border: 1px solid #b8d4e9; box-shadow: 0 2px 8px rgb(19 50 83 / 8%); font-weight: 700; }
+.guide-contact-actions .button-contact-info .material-symbols-rounded { color: var(--blue-bright); }
+.guide-contact-actions .button-contact-info:hover { background: #f4f9fd; color: var(--blue-bright); border-color: var(--blue-bright); box-shadow: 0 4px 12px rgb(19 50 83 / 12%); }
+
+/* Nav active state: multi-page support via .is-current on <a> */
+.nav-link[aria-current="page"],
+.nav-link.is-current { background: var(--blue); color: var(--white); }
+
+/* FAQs: search, category filters, accordion list, and supporting links */
+.faq-breadcrumb-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.faq-breadcrumb-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 18px; background: #e4f2fb; color: var(--blue-bright); font-size: .75rem; font-weight: 600; white-space: nowrap; }
+.faq-hero { padding: 38px 0 30px; background: linear-gradient(115deg, #e7f2fd 0%, #f5f9ff 60%, #e7f0fb 100%); }
+.faq-hero-inner { display: flex; align-items: end; justify-content: space-between; gap: 32px; }
+.faq-hero .section-kicker { margin-bottom: 4px; }
+.faq-hero h1 { margin: 0 0 8px; color: var(--navy-deep); font-size: clamp(2rem, 3.2vw, 2.625rem); line-height: 1.25; letter-spacing: -.02em; }
+.faq-hero-desc { max-width: 780px; margin: 0; color: var(--body); font-size: 1rem; line-height: 1.75; }
+.faq-hero-stats { display: flex; flex: 0 0 auto; gap: 12px; }
+.faq-stat-card { display: flex; align-items: center; gap: 12px; min-width: 175px; padding: 13px 16px; border: 1px solid rgb(18 57 98 / 5%); border-radius: 14px; background: var(--white); box-shadow: var(--shadow); }
+.faq-stat-icon { display: grid; width: 44px; height: 44px; place-items: center; flex: 0 0 auto; border-radius: 11px; background: #e2efff; color: var(--blue-bright); }
+.faq-stat-icon .material-symbols-rounded { font-size: 1.5rem; }
+.faq-stat-card p { display: grid; gap: 0; margin: 0; }
+.faq-stat-card strong { color: var(--navy-deep); font-size: 1.125rem; line-height: 1.35; white-space: nowrap; }
+.faq-stat-card span:not(.faq-stat-icon) { color: var(--muted); font-size: .75rem; white-space: nowrap; }
+.faq-content { padding: 0 0 54px; }
+.faq-search-panel { position: relative; z-index: 1; margin-top: 0; padding: 24px; border: 1px solid rgb(18 57 98 / 5%); border-radius: var(--radius); background: var(--white); box-shadow: 0 3px 10px rgb(19 50 83 / 9%); }
+.faq-search-field { display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 16px; border: 1px solid #e3eaf1; border-radius: 12px; background: #f3f7fa; color: var(--blue-bright); }
+.faq-search-field:focus-within { border-color: var(--blue-bright); box-shadow: 0 0 0 3px rgb(7 141 204 / 12%); }
+.faq-search-field > .material-symbols-rounded { font-size: 1.375rem; }
+.faq-search-field input { width: 100%; min-width: 0; padding: 12px 0; border: 0; outline: 0; background: transparent; color: var(--navy-deep); font: inherit; }
+.faq-search-field input::placeholder { color: #7b8793; }
+.faq-search-clear { display: grid; width: 34px; height: 34px; place-items: center; flex: 0 0 auto; border: 0; border-radius: 50%; background: #e2eaf1; color: var(--navy); cursor: pointer; }
+.faq-search-clear[hidden] { display: none; }
+.faq-search-clear:hover { background: #d2e3f0; }
+.faq-category-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.faq-filter { min-height: 38px; padding: 7px 15px; border: 1px solid transparent; border-radius: 22px; background: #e5f0ff; color: #45576c; font-size: .8125rem; font-weight: 500; cursor: pointer; transition: background-color .16s ease, color .16s ease, border-color .16s ease; }
+.faq-filter:hover { border-color: #a9d6ef; background: #d6eaff; color: var(--navy); }
+.faq-filter.is-active { background: #08719f; color: var(--white); }
+.faq-filter:focus-visible, .faq-search-clear:focus-visible { outline: 3px solid #ffbf47; outline-offset: 2px; }
+.faq-layout { display: grid; grid-template-columns: minmax(0, 2fr) minmax(300px, .95fr); align-items: start; gap: 32px; margin-top: 34px; }
+.faq-results-status { margin: 0 0 12px; color: var(--muted); font-size: .8125rem; }
+.faq-list { display: grid; gap: 14px; }
+.faq-item { overflow: hidden; border: 1px solid rgb(18 57 98 / 5%); border-radius: var(--radius); background: var(--white); box-shadow: 0 2px 6px rgb(19 50 83 / 4%); transition: border-color .18s ease, box-shadow .18s ease; }
+.faq-item:hover, .faq-item[open] { border-color: #c5dfef; box-shadow: var(--shadow); }
+.faq-item[hidden] { display: none; }
+.faq-item summary { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 22px 24px; color: var(--navy-deep); cursor: pointer; list-style: none; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:focus-visible { outline: 3px solid #ffbf47; outline-offset: -4px; border-radius: var(--radius); }
+.faq-item-heading { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 8px 10px; min-width: 0; }
+.faq-category-tag { display: inline-flex; align-items: center; gap: 4px; width: max-content; max-width: 100%; padding: 3px 9px; border-radius: 14px; font-size: .6875rem; font-weight: 600; line-height: 1.35; white-space: nowrap; }
+.faq-category-tag .material-symbols-rounded { font-size: .9rem; }
+.tag-installation { background: #e7f2f8; color: #08719f; }
+.tag-billing { background: #e5edff; color: #3e67aa; }
+.tag-emergency { background: #ffeded; color: #ce343a; }
+.tag-quality { background: #ddf4fb; color: #08719f; }
+.tag-documents { background: #e5efff; color: #365f9c; }
+.faq-number { color: var(--muted); font-size: .75rem; white-space: nowrap; }
+.faq-question { grid-column: 1 / -1; color: var(--navy-deep); font-size: 1.0625rem; font-weight: 650; line-height: 1.55; }
+.faq-chevron { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; border-radius: 50%; background: #e4f0ff; color: #08719f; font-size: 1.375rem; transition: transform .18s ease, background-color .18s ease; }
+.faq-item[open] .faq-chevron { transform: rotate(180deg); background: #d2e9fa; }
+.faq-answer { margin: 0 24px; padding: 16px 0 20px; border-top: 1px solid #e8eef3; color: var(--body); }
+.faq-answer p { margin: 0 0 10px; line-height: 1.75; }
+.faq-answer strong { color: var(--navy); }
+.faq-answer-link { display: inline-flex; align-items: center; gap: 5px; color: var(--blue-bright); font-size: .8125rem; font-weight: 600; text-decoration: none; }
+.faq-answer-link:hover { color: var(--navy); text-decoration: underline; }
+.faq-empty-state { padding: 50px 24px; border: 1px dashed #bfd0de; border-radius: var(--radius); background: rgb(255 255 255 / 75%); text-align: center; }
+.faq-empty-state[hidden] { display: none; }
+.faq-empty-state > .material-symbols-rounded { color: #8ca2b5; font-size: 2.5rem; }
+.faq-empty-state h2 { margin: 8px 0 4px; color: var(--navy); font-size: 1.25rem; }
+.faq-empty-state p { margin: 0 0 16px; }
+.faq-empty-state .button { cursor: pointer; }
+.faq-sidebar { display: grid; gap: 22px; }
+.faq-online-card { padding: 24px; border-radius: var(--radius); background: linear-gradient(135deg, #08719f, #1589a7); color: var(--white); box-shadow: var(--shadow); }
+.faq-sidebar-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font-weight: 600; }
+.faq-sidebar-icon { display: grid; width: 42px; height: 42px; place-items: center; border-radius: 12px; background: rgb(255 255 255 / 16%); }
+.faq-sidebar-icon .material-symbols-rounded { font-size: 1.375rem; }
+.faq-online-card h2 { margin: 0 0 4px; font-size: 1.125rem; }
+.faq-online-card p { margin: 0 0 16px; color: #d9f2fb; font-size: .875rem; line-height: 1.7; }
+.faq-online-card > a { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 44px; padding: 8px 12px; border-radius: 10px; background: var(--white); color: #08719f; font-size: .8125rem; font-weight: 700; text-decoration: none; }
+.faq-online-card > a:hover { background: #eaf7fb; }
+.faq-sidebar-card { padding: 22px 24px; border: 1px solid rgb(18 57 98 / 5%); border-radius: var(--radius); background: var(--white); box-shadow: 0 2px 8px rgb(19 50 83 / 5%); }
+.faq-sidebar-card-title { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; color: var(--blue-bright); }
+.faq-sidebar-card-title h2 { margin: 0; color: var(--navy-deep); font-size: 1rem; }
+.faq-resource-link { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: 12px; background: #edf4ff; color: var(--navy); text-decoration: none; }
+.faq-resource-link:hover { background: #e2eeff; }
+.faq-resource-icon { display: grid; width: 38px; height: 38px; flex: 0 0 auto; place-items: center; border-radius: 9px; background: var(--white); color: var(--blue-bright); }
+.faq-resource-link > span:nth-child(2) { display: grid; flex: 1; gap: 2px; }
+.faq-resource-link strong { font-size: .8125rem; }
+.faq-resource-link small { color: var(--muted); font-size: .6875rem; }
+.faq-resource-link > .material-symbols-rounded { color: var(--muted); font-size: 1.125rem; }
+.faq-sample-note { display: flex; align-items: flex-start; gap: 7px; margin: 16px 0 0; color: var(--muted); font-size: .75rem; line-height: 1.65; }
+.faq-sample-note .material-symbols-rounded { flex: 0 0 auto; color: var(--blue-bright); font-size: 1.125rem; }
+.faq-contact-section { padding: 36px 0; background: #e8f2ff; }
+.faq-contact-card { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 30px 40px; border: 1px solid rgb(18 57 98 / 5%); border-radius: 24px; background: var(--white); box-shadow: var(--shadow); }
+.faq-contact-copy .section-kicker { margin-bottom: 6px; }
+.faq-contact-copy h2 { margin: 0 0 6px; color: var(--navy-deep); font-size: 1.5rem; line-height: 1.4; }
+.faq-contact-copy > p:last-child { max-width: 700px; margin: 0; color: var(--body); }
+.faq-contact-card > .button { flex: 0 0 auto; }
+.faqs-page :focus-visible { outline-color: #ffbf47; }
 
 /* การเข้าถึง: ลดการเคลื่อนไหวตามการตั้งค่าของผู้ใช้ */
 @media (prefers-reduced-motion: reduce) {

@@ -156,12 +156,12 @@
               <span class="section-aside">เลือกบริการเพื่อดูข้อมูลเบื้องต้น</span>
             </div>
             <div class="service-grid">
-              <article class="card service-card service-urgent"><span class="service-badge">เร่งด่วน</span><span class="icon-box icon-box-red"><span class="material-symbols-rounded" aria-hidden="true">water_pump</span></span><h3>แจ้งปัญหาน้ำประปา</h3><p>ช่องทางติดต่อเพื่อแจ้งเหตุขัดข้องหรือปัญหาเกี่ยวกับระบบประปา</p><a href="tel:055983230">โทรแจ้งเหตุ <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
+              <article class="card service-card service-urgent"><span class="service-badge">เร่งด่วน</span><span class="icon-box icon-box-red"><span class="material-symbols-rounded" aria-hidden="true">water_pump</span></span><h3>แจ้งปัญหาน้ำประปา</h3><p>ช่องทางติดต่อเพื่อแจ้งเหตุขัดข้องหรือปัญหาเกี่ยวกับระบบประปา</p><a href="tel:055983230">ติดต่อแจ้งเหตุ <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
               <article class="card service-card"><span class="service-badge">ข้อมูลบริการ</span><span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">humidity_indoor</span></span><h3>ขอใช้น้ำประปา</h3><p>ศึกษาข้อมูลและเอกสารเบื้องต้นสำหรับการขอติดตั้งมาตรวัดน้ำ</p><a href="#information">ดูขั้นตอน <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
               <article class="card service-card"><span class="service-badge">ข้อมูลบริการ</span><span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">qr_code</span></span><h3>ชำระค่าน้ำประปา</h3><p>ดูช่องทางและข้อมูลการชำระค่าน้ำประปาที่หน่วยงานเผยแพร่</p><a href="#information">ดูข้อมูล <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
               <article class="card service-card"><span class="service-badge">ข้อมูลบริการ</span><span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">area_chart</span></span><h3>ตรวจสอบข้อมูล</h3><p>ข้อมูลเกี่ยวกับประวัติการใช้น้ำและสถานะการให้บริการ</p><a href="#water-status">ดูสถานะตัวอย่าง <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
               <article class="card service-card"><span class="service-badge">เอกสาร</span><span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">download</span></span><h3>แบบฟอร์มบริการ</h3><p>รวมข้อมูลเอกสารและแบบฟอร์มที่เกี่ยวข้องกับงานบริการประปา</p><a href="#information">ดูเอกสาร <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
-              <article class="card service-card"><span class="service-badge">ติดต่อ</span><span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">live_help</span></span><h3>ติดต่อเจ้าหน้าที่</h3><p>สอบถามข้อมูลบริการประปากับกองการประปาโดยตรง</p><a href="#contact">ข้อมูลติดต่อ <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
+              <article class="card service-card"><span class="service-badge">ติดต่อ</span><span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">live_help</span></span><h3>ติดต่อเจ้าหน้าที่<h3><p>สอบถามข้อมูลบริการประปากับกองการประปาโดยตรง</p><a href="#contact">ข้อมูลติดต่อ <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
             </div>
             <p class="prototype-disclaimer"><span class="material-symbols-rounded" aria-hidden="true">info</span> บริการบนหน้านี้เป็นข้อมูลต้นแบบ ไม่มีการส่งคำขอหรือทำธุรกรรมออนไลน์</p>
           </div>
@@ -176,7 +176,7 @@
             <div class="info-grid">
               <article class="card info-card"><span class="icon-box icon-box-muted"><span class="material-symbols-rounded" aria-hidden="true">payments</span></span><h3>อัตราค่าน้ำประปา</h3><p>ข้อมูลอัตราค่าบริการและรายละเอียดที่ประชาชนควรทราบ</p><a href="#contact">สอบถามข้อมูล <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
               <article class="card info-card"><span class="icon-box icon-box-muted"><span class="material-symbols-rounded" aria-hidden="true">account_tree</span></span><h3>ขั้นตอนการให้บริการ</h3><p>แนวทางการขอรับบริการและการติดต่อกองการประปา</p><a href="#services">ดูบริการ <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
-              <article class="card info-card"><span class="icon-box icon-box-muted"><span class="material-symbols-rounded" aria-hidden="true">menu_book</span></span><h3>คู่มือประชาชน</h3><p>ข้อมูลเบื้องต้นเกี่ยวกับการใช้น้ำและการดูแลระบบประปา</p><a href="#news">อ่านข่าวสาร <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
+              <article class="card info-card"><span class="icon-box icon-box-muted"><span class="material-symbols-rounded" aria-hidden="true">menu_book</span></span><h3>คู่มือประชาชน</h3><p>ข้อมูลเบื้องต้นเกี่ยวกับการใช้น้ำและการดูแลระบบประปา</p><a href="citizen-guide.php">อ่านข่าวสาร <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
               <article class="card info-card"><span class="icon-box icon-box-muted"><span class="material-symbols-rounded" aria-hidden="true">folder_copy</span></span><h3>เอกสารและแบบฟอร์ม</h3><p>พื้นที่สำหรับเผยแพร่ข้อมูลสาธารณะและเอกสารของหน่วยงาน</p><a href="#contact">สอบถามหน่วยงาน <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
             </div>
           </div>
@@ -185,7 +185,7 @@
 
 
       </div>
-    </main>
+    </main>/
 
     <?php require __DIR__ . '/partials/footer.php'; ?>
   </body>
