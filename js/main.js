@@ -285,6 +285,9 @@ mapButton?.addEventListener("click", () => {
 const servicesToggle = document.querySelector("#services-toggle");
 const servicesMenu = document.querySelector("#services-menu");
 const servicesDropdown = document.querySelector("#services-dropdown");
+const informationToggle = document.querySelector("#information-toggle");
+const informationMenu = document.querySelector("#information-menu");
+const informationDropdown = document.querySelector("#information-dropdown");
 
 function closeServicesMenu() {
   if (!servicesToggle || !servicesMenu) return;
@@ -294,12 +297,30 @@ function closeServicesMenu() {
 
 function openServicesMenu() {
   if (!servicesToggle || !servicesMenu) return;
+  closeInformationMenu();
   if (procurementStatus && !procurementStatus.hidden) {
     procurementStatus.hidden = true;
     procurementButton?.setAttribute("aria-expanded", "false");
   }
   servicesToggle.setAttribute("aria-expanded", "true");
   servicesMenu.hidden = false;
+}
+
+function closeInformationMenu() {
+  if (!informationToggle || !informationMenu) return;
+  informationToggle.setAttribute("aria-expanded", "false");
+  informationMenu.hidden = true;
+}
+
+function openInformationMenu() {
+  if (!informationToggle || !informationMenu) return;
+  closeServicesMenu();
+  if (procurementStatus && !procurementStatus.hidden) {
+    procurementStatus.hidden = true;
+    procurementButton?.setAttribute("aria-expanded", "false");
+  }
+  informationToggle.setAttribute("aria-expanded", "true");
+  informationMenu.hidden = false;
 }
 
 servicesToggle?.addEventListener("click", (event) => {
@@ -312,9 +333,19 @@ servicesToggle?.addEventListener("click", (event) => {
   }
 });
 
+informationToggle?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  const isExpanded = informationToggle.getAttribute("aria-expanded") === "true";
+  if (isExpanded) closeInformationMenu();
+  else openInformationMenu();
+});
+
 document.addEventListener("click", (event) => {
   if (servicesDropdown && !servicesDropdown.contains(event.target)) {
     closeServicesMenu();
+  }
+  if (informationDropdown && !informationDropdown.contains(event.target)) {
+    closeInformationMenu();
   }
 });
 
@@ -322,6 +353,10 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && servicesMenu && !servicesMenu.hidden) {
     closeServicesMenu();
     servicesToggle?.focus();
+  }
+  if (event.key === "Escape" && informationMenu && !informationMenu.hidden) {
+    closeInformationMenu();
+    informationToggle?.focus();
   }
 });
 
@@ -335,6 +370,7 @@ procurementButton?.addEventListener("click", () => {
   if (!isExpanded && servicesMenu && !servicesMenu.hidden) {
     closeServicesMenu();
   }
+  if (!isExpanded) closeInformationMenu();
 });
 
 if (menuButton && primaryNavigation) {

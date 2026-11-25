@@ -6,7 +6,7 @@
       $isHome = ($activePage === 'home');
       $footerHomeHref = $isHome ? '#top' : 'index.php';
       $footerServicesHref = $isHome ? '#services' : 'index.php#services';
-      $footerNewsHref = $isHome ? '#news' : 'index.php#news';
+      $footerNewsHref = 'news.php';
       $footerStatusHref = $isHome ? '#water-status' : 'index.php#water-status';
       $footerInfoHref = $isHome ? '#information' : 'index.php#information';
       $footerContactHref = $isHome ? '#contact' : 'index.php#contact';
