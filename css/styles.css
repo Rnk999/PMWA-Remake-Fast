@@ -98,7 +98,6 @@ button { font: inherit; }
 .primary-nav { display: flex; align-items: center; gap: 2px; }
 .nav-link { padding: 7px 9px; border: 0; border-radius: 22px; background: transparent; color: #344457; cursor: pointer; font: inherit; text-decoration: none; white-space: nowrap; transition: background-color .18s ease, color .18s ease; }
 .nav-link:hover, .nav-link.is-current { background: var(--blue); color: var(--white); }
-.procurement-toggle { display: inline-flex; align-items: center; gap: 2px; }
 
 /* Dropdown เมนูสำหรับบริการ */
 .nav-dropdown { position: relative; display: inline-flex; align-items: center; }
@@ -162,7 +161,6 @@ button { font: inherit; }
 .dropdown-item[aria-current="page"] .material-symbols-rounded {
   color: var(--blue);
 }
-.nav-pending { position: absolute; z-index: 8; top: calc(100% - 3px); right: 0; max-width: min(360px, 100%); margin: 0; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--white); color: var(--body); box-shadow: var(--shadow); }
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
 .header-call { display: inline-flex; align-items: center; gap: 7px; color: var(--navy); font-weight: 700; text-decoration: none; white-space: nowrap; }
 .menu-toggle { display: none; border: 1px solid var(--line); border-radius: 10px; background: var(--white); color: var(--navy); width: 44px; height: 44px; align-items: center; justify-content: center; cursor: pointer; }
@@ -206,6 +204,34 @@ button { font: inherit; }
 .section-heading p:not(.section-kicker) { margin: 5px 0 0; }
 .section-kicker { display: flex; align-items: center; gap: 7px; margin: 0; color: var(--blue-bright); font-size: 0.8125rem; font-weight: 600; }
 .section-kicker .material-symbols-rounded { font-size: 1.25rem; }
+
+.filter-select {
+  display: grid;
+  width: 14rem;
+  max-width: 100%;
+  min-width: 0;
+  gap: 4px;
+  color: #000;
+  font-size: .8125rem;
+  font-weight: 600;
+}
+
+.filter-select select {
+  width: 100%;
+  min-width: 0;
+  min-height: 3rem;
+  padding-inline: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--page);
+  color: var(--body);
+  font: inherit;
+  font-size: .875rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.filter-select select:focus-visible { outline-offset: 2px; }
 .section-aside { display: inline-flex; align-items: center; gap: 8px; padding-bottom: 5px; color: var(--muted); font-size: 0.75rem; }
 .prototype-pill { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 20px; background: var(--white); color: var(--muted); font-size: 0.6875rem; white-space: nowrap; }
 .card { border: 1px solid rgb(18 57 98 / 6%); border-radius: var(--radius); background: linear-gradient(145deg, rgb(255 255 255 / 99%), rgb(250 253 255 / 98%)); box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
@@ -525,14 +551,13 @@ button { font: inherit; }
 
 /* Breadcrumb navigation */
 .subpage-breadcrumb { background: var(--white); border-bottom: 1px solid var(--line); }
-.breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin: 0; padding: 10px 0; list-style: none; font-size: 0.8125rem; }
-.breadcrumb li { display: flex; align-items: center; gap: 6px; }
-.breadcrumb li + li::before { content: "/"; color: var(--muted); }
-.breadcrumb a { display: inline-flex; align-items: center; gap: 5px; color: var(--blue-bright); text-decoration: none; }
+.breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin: 0; padding: 10px 0; list-style: none; font-size: .8125rem; }
+.breadcrumb li { display: flex; align-items: center; gap: 9px; }
+.breadcrumb li + li::before { content: "›" / ""; color: var(--muted); }
+.breadcrumb a { color: var(--body); text-decoration: none; }
 .breadcrumb a:hover { text-decoration: underline; }
-.breadcrumb a .material-symbols-rounded,
-.breadcrumb [aria-current] .material-symbols-rounded { font-size: 1.0625rem; }
-.breadcrumb [aria-current] { display: inline-flex; align-items: center; gap: 5px; color: var(--muted); }
+.breadcrumb [aria-current="page"] { color: var(--blue-bright); font-weight: 600; }
+.subpage-subtitle { margin: 2px 0 7px; color: var(--blue-bright); font-size: .9375rem; font-weight: 600; }
 
 /* Subpage hero header band */
 .subpage-hero { background: linear-gradient(135deg, var(--navy) 0%, #1b5a9e 55%, #1a7bbf 100%); color: var(--white); padding: 48px 0 52px; }
@@ -540,6 +565,7 @@ button { font: inherit; }
 .subpage-hero-content { flex: 1 1 auto; }
 .subpage-hero-content .section-kicker { color: #9ed8f7; }
 .subpage-hero-content h1 { margin: 8px 0 14px; font-size: clamp(1.875rem, 3.5vw, 2.75rem); line-height: 1.2; letter-spacing: -.02em; }
+.subpage-hero-content .subpage-subtitle { margin-top: -10px; color: #9ed8f7; }
 .subpage-hero-desc { max-width: 680px; margin: 0 0 20px; font-size: 1.0rem; line-height: 1.75; color: #cce7f7; }
 .subpage-hero-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
 .guide-count-pill { display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 22px; background: rgb(255 255 255 / 20%); color: var(--white); font-size: 0.875rem; font-weight: 600; }
@@ -627,8 +653,6 @@ button { font: inherit; }
 .nav-link.is-current { background: var(--blue); color: var(--white); }
 
 /* FAQs: search, category filters, accordion list, and supporting links */
-.faq-breadcrumb-inner { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.faq-breadcrumb-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 18px; background: #e4f2fb; color: var(--blue-bright); font-size: .75rem; font-weight: 600; white-space: nowrap; }
 .faq-hero { padding: 38px 0 30px; background: linear-gradient(115deg, #e7f2fd 0%, #f5f9ff 60%, #e7f0fb 100%); }
 .faq-hero-inner { display: flex; align-items: end; justify-content: space-between; gap: 32px; }
 .faq-hero .section-kicker { margin-bottom: 4px; }

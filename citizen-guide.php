@@ -22,19 +22,8 @@
       require __DIR__ . '/partials/header.php';
     ?>
 
+    <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
     <main id="main-content">
-
-      <!-- แถบเส้นทาง Breadcrumb -->
-      <div class="subpage-breadcrumb">
-        <div class="container">
-          <nav aria-label="เส้นทางนำทาง">
-            <ol class="breadcrumb">
-              <li><a href="index.php"><span class="material-symbols-rounded" aria-hidden="true">home</span> หน้าแรก</a></li>
-              <li aria-current="page"><span class="material-symbols-rounded" aria-hidden="true">menu_book</span> คู่มือประชาชน</li>
-            </ol>
-          </nav>
-        </div>
-      </div>
 
       <!-- ส่วนหัวหน้าย่อย (Subpage Hero) -->
       <div class="subpage-hero">
@@ -45,6 +34,7 @@
               บริการประชาชน · คู่มือขั้นตอน
             </p>
             <h1>คู่มือประชาชน</h1>
+            <p class="subpage-subtitle" lang="en">Citizen Guide</p>
             <p class="subpage-hero-desc">รวมขั้นตอนและเอกสารที่ต้องเตรียมสำหรับบริการของกองการประปา เทศบาลนครพิษณุโลก จำนวน 13 หัวข้อบริการ เพื่อให้ประชาชนสามารถเตรียมตัวและเข้ารับบริการได้อย่างสะดวก รวดเร็ว</p>
             <div class="subpage-hero-meta">
               <span class="guide-count-pill">

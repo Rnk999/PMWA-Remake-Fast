@@ -139,6 +139,14 @@ const searchResultList = document.querySelector("#search-result-list");
 
 searchForm?.addEventListener("submit", (event) => {
   event.preventDefault();
+  const pageSearch = document.querySelector("form[data-page-search]");
+  if (pageSearch) {
+    const pageSearchInput = pageSearch.querySelector('input[type="search"]');
+    pageSearchInput.value = searchInput.value;
+    pageSearch.requestSubmit();
+    pageSearchInput.focus();
+    return;
+  }
   const query = searchInput.value.trim().toLocaleLowerCase("th");
   searchResultList.replaceChildren();
   searchResults.hidden = false;
@@ -298,10 +306,6 @@ function closeServicesMenu() {
 function openServicesMenu() {
   if (!servicesToggle || !servicesMenu) return;
   closeInformationMenu();
-  if (procurementStatus && !procurementStatus.hidden) {
-    procurementStatus.hidden = true;
-    procurementButton?.setAttribute("aria-expanded", "false");
-  }
   servicesToggle.setAttribute("aria-expanded", "true");
   servicesMenu.hidden = false;
 }
@@ -315,10 +319,6 @@ function closeInformationMenu() {
 function openInformationMenu() {
   if (!informationToggle || !informationMenu) return;
   closeServicesMenu();
-  if (procurementStatus && !procurementStatus.hidden) {
-    procurementStatus.hidden = true;
-    procurementButton?.setAttribute("aria-expanded", "false");
-  }
   informationToggle.setAttribute("aria-expanded", "true");
   informationMenu.hidden = false;
 }
@@ -360,19 +360,6 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-// เปิด/ปิดข้อความสถานะจัดซื้อจัดจ้างที่ยังไม่เชื่อมกับแหล่งข้อมูลจริง
-const procurementButton = document.querySelector("#procurement-toggle");
-const procurementStatus = document.querySelector("#procurement-status");
-procurementButton?.addEventListener("click", () => {
-  const isExpanded = procurementButton.getAttribute("aria-expanded") === "true";
-  procurementButton.setAttribute("aria-expanded", String(!isExpanded));
-  procurementStatus.hidden = isExpanded;
-  if (!isExpanded && servicesMenu && !servicesMenu.hidden) {
-    closeServicesMenu();
-  }
-  if (!isExpanded) closeInformationMenu();
-});
-
 if (menuButton && primaryNavigation) {
   // ปิดเมนูและคืนค่าป้ายกำกับสำหรับโปรแกรมอ่านหน้าจอ
   const closeMenu = () => {
@@ -399,11 +386,6 @@ if (menuButton && primaryNavigation) {
     if (event.key === "Escape" && primaryNavigation.classList.contains("is-open")) {
       closeMenu();
       menuButton.focus();
-    }
-    if (event.key === "Escape" && !procurementStatus.hidden) {
-      procurementStatus.hidden = true;
-      procurementButton.setAttribute("aria-expanded", "false");
-      procurementButton.focus();
     }
   });
 

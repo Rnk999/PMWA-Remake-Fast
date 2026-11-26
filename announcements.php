@@ -71,14 +71,15 @@ foreach ($announcements as $announcement) {
   <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
+    <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
     <main id="main-content" class="announcements-page">
       <section class="announcement-hero">
         <div class="container">
-          <nav class="announcement-breadcrumb" aria-label="เส้นทางนำทาง"><a href="index.php">หน้าแรก</a><span aria-hidden="true">›</span><span>ข้อมูลเผยแพร่</span><span aria-hidden="true">›</span><span aria-current="page">ประกาศด่วนและแจ้งเหตุน้ำประปา</span></nav>
           <div class="announcement-hero-row">
             <div class="announcement-intro">
-              <p class="announcement-eyebrow"><span class="status-dot status-dot-red"></span> ศูนย์แจ้งเตือนและข่าวสารสถานการณ์น้ำประปา</p>
+              <p class="section-kicker announcement-eyebrow"><span class="status-dot status-dot-red" aria-hidden="true"></span> ศูนย์แจ้งเตือนและข่าวสารสถานการณ์น้ำประปา</p>
               <h1>ประกาศด่วนและแจ้งเหตุน้ำประปา</h1>
+              <p class="subpage-subtitle" lang="en">Urgent Announcements &amp; Water Service Alerts</p>
               <p>ติดตามประกาศหยุดจ่ายน้ำชั่วคราว เหตุขัดข้อง และความคืบหน้าการซ่อมบำรุง</p>
             </div>
             <div class="announcement-stats" aria-label="สรุปประกาศจากข้อมูลตัวอย่าง">
@@ -94,7 +95,7 @@ foreach ($announcements as $announcement) {
         <form class="announcement-filters" id="announcement-filters">
           <div class="announcement-filter-row">
             <label class="announcement-search"><span class="material-symbols-rounded" aria-hidden="true">search</span><span class="visually-hidden">ค้นหาประกาศ</span><input id="announcement-search" type="search" placeholder="ค้นหาหัวข้อประกาศ ถนน ชุมชน หรือรหัสประกาศ..."></label>
-            <label><span class="visually-hidden">พื้นที่</span><select id="announcement-area"><option value="">ทุกพื้นที่ในเขตเทศบาล</option><option value="ชุมชนตัวอย่าง">ชุมชนตัวอย่าง</option><option value="ถนนตัวอย่าง">ถนนตัวอย่าง</option><option value="พื้นที่ตัวอย่าง">พื้นที่ตัวอย่าง</option><option value="สถานีตัวอย่าง">สถานีตัวอย่าง</option><option value="บริเวณตัวอย่าง">บริเวณตัวอย่าง</option></select></label>
+            <label class="filter-select"><span>พื้นที่</span><select id="announcement-area"><option value="">ทุกพื้นที่ในเขตเทศบาล</option><option value="ชุมชนตัวอย่าง">ชุมชนตัวอย่าง</option><option value="ถนนตัวอย่าง">ถนนตัวอย่าง</option><option value="พื้นที่ตัวอย่าง">พื้นที่ตัวอย่าง</option><option value="สถานีตัวอย่าง">สถานีตัวอย่าง</option><option value="บริเวณตัวอย่าง">บริเวณตัวอย่าง</option></select></label>
           </div>
           <div class="announcement-filter-bottom">
             <fieldset class="announcement-levels"><legend>ระดับความสำคัญ:</legend>
@@ -103,7 +104,7 @@ foreach ($announcements as $announcement) {
               <label><input type="radio" name="announcement-level" value="important"><span class="level-important">สำคัญ (<?= $counts['important'] ?>)</span></label>
               <label><input type="radio" name="announcement-level" value="other"><span class="level-other">อื่น ๆ (<?= $counts['other'] ?>)</span></label>
             </fieldset>
-            <label class="announcement-date-filter"><span class="material-symbols-rounded" aria-hidden="true">calendar_month</span><span>ช่วงเวลา:</span><select id="announcement-date"><option value="all">ทั้งหมด</option><option value="today">วันนี้</option><option value="week">7 วันล่าสุด</option><option value="month">30 วันล่าสุด</option></select></label>
+            <label class="filter-select"><span>ช่วงเวลา</span><select id="announcement-date"><option value="all">ทั้งหมด</option><option value="today">วันนี้</option><option value="week">7 วันล่าสุด</option><option value="month">30 วันล่าสุด</option></select></label>
             <button class="announcement-reset" type="reset"><span class="material-symbols-rounded" aria-hidden="true">restart_alt</span> ล้างตัวกรอง</button>
           </div>
         </form>

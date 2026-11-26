@@ -21,18 +21,14 @@ $activePage = 'documents';
   <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
+    <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
     <main id="main-content" class="documents-page container">
       <header class="documents-intro">
-        <nav class="documents-breadcrumb" aria-label="เส้นทางนำทาง">
-          <a href="index.php">หน้าแรก</a><span aria-hidden="true">›</span>
-          <a href="index.php#information">ข้อมูลเผยแพร่</a><span aria-hidden="true">›</span>
-          <span aria-current="page">แบบฟอร์มและเอกสารเผยแพร่</span>
-        </nav>
         <div class="documents-intro-row">
           <div>
             <p class="documents-eyebrow"><span class="material-symbols-rounded" aria-hidden="true">folder_open</span> ศูนย์รวมข้อมูลและเอกสาร</p>
             <h1 id="documents-title">แบบฟอร์มและเอกสารเผยแพร่</h1>
-            <p class="documents-subtitle">Forms &amp; Published Documents</p>
+            <p class="documents-subtitle" lang="en">Forms &amp; Published Documents</p>
             <p class="documents-lead">ค้นหาแบบฟอร์มสำหรับประชาชน คู่มือ และเอกสารเผยแพร่ได้จากจุดเดียว พร้อมตรวจสอบประเภทเอกสารก่อนเลือกดู</p>
           </div>
           <aside class="documents-notice" aria-label="คำชี้แจงข้อมูลตัวอย่าง">
@@ -49,10 +45,10 @@ $activePage = 'documents';
             <input id="documents-search" type="search" placeholder="ค้นหาชื่อเอกสารหรือคำสำคัญ" autocomplete="off">
             <button id="documents-search-clear" type="button" aria-label="ล้างคำค้นหา" hidden><span class="material-symbols-rounded" aria-hidden="true">close</span></button>
           </label>
-          <label class="documents-select"><span>หมวดหมู่</span>
+          <label class="filter-select"><span>หมวดหมู่</span>
             <select id="documents-category"><option value="">ทุกหมวดหมู่</option><option value="แบบฟอร์ม">แบบฟอร์ม</option><option value="คู่มือและแนวทาง">คู่มือและแนวทาง</option><option value="แผนงานและรายงาน">แผนงานและรายงาน</option><option value="ข้อมูลทั่วไป">ข้อมูลทั่วไป</option></select>
           </label>
-          <label class="documents-select"><span>รูปแบบไฟล์</span>
+          <label class="filter-select"><span>รูปแบบไฟล์</span>
             <select id="documents-format"><option value="">ทุกประเภทไฟล์</option><option value="PDF">PDF</option><option value="DOCX">DOCX</option><option value="XLSX">XLSX</option></select>
           </label>
           <button class="documents-reset" id="documents-reset" type="button"><span class="material-symbols-rounded" aria-hidden="true">restart_alt</span> ล้างตัวกรอง</button>

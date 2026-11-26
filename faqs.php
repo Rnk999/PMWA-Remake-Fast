@@ -22,25 +22,15 @@
       require __DIR__ . '/partials/header.php';
     ?>
 
+    <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
     <main id="main-content" class="faqs-page">
-      <div class="subpage-breadcrumb">
-        <div class="container faq-breadcrumb-inner">
-          <nav aria-label="เส้นทางนำทาง">
-            <ol class="breadcrumb">
-              <li><a href="index.php"><span class="material-symbols-rounded" aria-hidden="true">home</span> หน้าแรก</a></li>
-              <li><span>บริการ</span></li>
-              <li aria-current="page">คำถามที่พบบ่อย (FAQs)</li>
-            </ol>
-          </nav>
-          <span class="faq-breadcrumb-badge"><span class="material-symbols-rounded" aria-hidden="true">support_agent</span> ศูนย์ช่วยเหลือประชาชน</span>
-        </div>
-      </div>
 
       <section class="faq-hero" aria-labelledby="faq-title">
         <div class="container faq-hero-inner">
           <div>
             <p class="section-kicker"><span class="status-dot"></span> คำถามจากบริการสาธารณะ</p>
-            <h1 id="faq-title">คำถามที่พบบ่อย (FAQs)</h1>
+            <h1 id="faq-title">คำถามที่พบบ่อย</h1>
+            <p class="subpage-subtitle" lang="en">Frequently Asked Questions (FAQs)</p>
             <p class="faq-hero-desc">รวมคำถามตัวอย่างเกี่ยวกับการใช้น้ำประปา การขอติดตั้ง การชำระเงิน และการแจ้งเหตุ เพื่อช่วยค้นหาหัวข้อที่ต้องการได้สะดวก</p>
           </div>
           <div class="faq-hero-stats" aria-label="ข้อมูลคำถาม">

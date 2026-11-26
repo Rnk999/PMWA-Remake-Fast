@@ -75,20 +75,20 @@
               </div>
             </div>
             <div class="nav-dropdown" id="information-dropdown">
-              <button class="nav-link dropdown-toggle<?php echo in_array($activePage, ['announcements', 'news', 'documents'], true) ? ' is-current' : ''; ?>" id="information-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="information-menu">
+              <button class="nav-link dropdown-toggle<?php echo in_array($activePage, ['announcements', 'news', 'documents', 'open-data'], true) ? ' is-current' : ''; ?>" id="information-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="information-menu">
                 ข้อมูลเผยแพร่ <span class="material-symbols-rounded" aria-hidden="true">arrow_drop_down</span>
               </button>
               <div class="dropdown-menu" id="information-menu" role="menu" aria-labelledby="information-toggle" hidden>
                 <a class="dropdown-item<?php echo ($activePage === 'announcements') ? ' is-active' : ''; ?>" href="announcements.php" role="menuitem"<?php echo ($activePage === 'announcements') ? ' aria-current="page"' : ''; ?>><span class="material-symbols-rounded" aria-hidden="true">campaign</span><span>ประกาศด่วนและแจ้งเหตุ</span></a>
                 <a class="dropdown-item<?php echo ($activePage === 'news') ? ' is-active' : ''; ?>" href="<?php echo $newsHref; ?>" role="menuitem"<?php echo ($activePage === 'news') ? ' aria-current="page"' : ''; ?>><span class="material-symbols-rounded" aria-hidden="true">newspaper</span><span>ข่าวประชาสัมพันธ์</span></a>
                 <a class="dropdown-item<?php echo ($activePage === 'documents') ? ' is-active' : ''; ?>" href="documents.php" role="menuitem"<?php echo ($activePage === 'documents') ? ' aria-current="page"' : ''; ?>><span class="material-symbols-rounded" aria-hidden="true">folder_open</span><span>แบบฟอร์มและเอกสารเผยแพร่</span></a>
+                <a class="dropdown-item<?php echo ($activePage === 'open-data') ? ' is-active' : ''; ?>" href="open-data.php" role="menuitem"<?php echo ($activePage === 'open-data') ? ' aria-current="page"' : ''; ?>><span class="material-symbols-rounded" aria-hidden="true">database</span><span lang="en">Open Data</span></a>
               </div>
             </div>
-            <button class="nav-link procurement-toggle" id="procurement-toggle" type="button" aria-expanded="false" aria-controls="procurement-status">จัดซื้อจัดจ้าง <span class="material-symbols-rounded" aria-hidden="true">arrow_drop_down</span></button>
+            <a class="nav-link<?php echo ($activePage === 'procurement') ? ' is-current' : ''; ?>" href="procurement.php"<?php echo ($activePage === 'procurement') ? ' aria-current="page"' : ''; ?>>จัดซื้อจัดจ้าง</a>
             <a class="nav-link" href="<?php echo $aboutHref; ?>">เกี่ยวกับเรา</a>
             <a class="nav-link" href="<?php echo $contactHref; ?>">ติดต่อเรา</a>
           </nav>
-          <p class="nav-pending" id="procurement-status" role="status" hidden>ข้อมูลจัดซื้อจัดจ้างยังไม่เชื่อมต่อในต้นแบบ</p>
           <div class="search-results" id="search-results" aria-live="polite" hidden>
             <p id="search-results-status"></p>
             <ul id="search-result-list"></ul>
