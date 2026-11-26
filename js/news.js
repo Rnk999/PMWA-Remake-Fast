@@ -18,8 +18,8 @@ let currentPage = 1;
 let matchingCards = [];
 
 function matchesNews(item) {
-  const query = newsSearch.value.trim().toLocaleLowerCase("th");
-  const searchText = `${item.title} ${item.summary} ${item.category}`.toLocaleLowerCase("th");
+  const query = newsSearch.value.trim().normalize().toLocaleLowerCase("th");
+  const searchText = siteLanguage.searchText(item.title, item.summary, item.category);
   const year = String(Number(item.date.slice(0, 4)) + 543);
   return (!query || searchText.includes(query))
     && (!newsCategory.value || item.category === newsCategory.value)
@@ -40,9 +40,9 @@ function renderNews() {
   newsCards.forEach((card) => { card.hidden = !pageCards.has(card); });
   newsGrid.hidden = matchingCards.length === 0;
   newsEmpty.hidden = resultCount > 0;
-  newsCount.textContent = `${resultCount} รายการ`;
+  newsCount.textContent = t("{0} รายการ", resultCount);
   newsPagination.hidden = matchingCards.length <= pageSize;
-  newsPageStatus.textContent = `หน้า ${currentPage} จาก ${pageCount}`;
+  newsPageStatus.textContent = t("หน้า {0} จาก {1}", currentPage, pageCount);
   newsSearchClear.hidden = !newsSearch.value;
   renderPageButtons(pageCount);
 }
@@ -52,7 +52,7 @@ function renderPageButtons(pageCount) {
   const previous = document.createElement("button");
   previous.type = "button";
   previous.disabled = currentPage === 1;
-  previous.setAttribute("aria-label", "หน้าก่อนหน้า");
+  previous.setAttribute("aria-label", t("หน้าก่อนหน้า"));
   previous.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">chevron_left</span>';
   previous.addEventListener("click", () => changePage(currentPage - 1));
   buttons.push(previous);
@@ -61,7 +61,7 @@ function renderPageButtons(pageCount) {
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = String(page);
-    button.setAttribute("aria-label", `หน้า ${page}`);
+    button.setAttribute("aria-label", t("หน้า {0}", page));
     if (page === currentPage) button.setAttribute("aria-current", "page");
     button.addEventListener("click", () => changePage(page));
     buttons.push(button);
@@ -70,7 +70,7 @@ function renderPageButtons(pageCount) {
   const next = document.createElement("button");
   next.type = "button";
   next.disabled = currentPage === pageCount;
-  next.setAttribute("aria-label", "หน้าถัดไป");
+  next.setAttribute("aria-label", t("หน้าถัดไป"));
   next.innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>';
   next.addEventListener("click", () => changePage(currentPage + 1));
   buttons.push(next);
@@ -96,14 +96,14 @@ function openNewsDetail(id) {
   if (!item || !newsDialog || !newsDialogContent) return;
   const heading = document.createElement("h2");
   heading.id = "news-dialog-title";
-  heading.textContent = item.title;
+  heading.textContent = t(item.title);
   const meta = document.createElement("p");
   meta.className = "news-dialog-meta";
-  meta.textContent = `${item.category} · ${item.dateLabel} · ข้อมูลตัวอย่าง`;
+  meta.textContent = [item.category, item.dateLabel, "ข้อมูลตัวอย่าง"].map((part) => t(part)).join(" · ");
   const summary = document.createElement("p");
-  summary.textContent = item.summary;
+  summary.textContent = t(item.summary);
   const note = document.createElement("p");
-  note.textContent = "เนื้อหานี้เป็นข้อมูลจำลองสำหรับต้นแบบ ไม่ใช่ข่าวหรือประกาศจากหน่วยงาน";
+  note.textContent = t("เนื้อหานี้เป็นข้อมูลจำลองสำหรับต้นแบบ ไม่ใช่ข่าวหรือประกาศจากหน่วยงาน");
   newsDialogContent.replaceChildren(heading, meta, summary, note);
   newsDialog.showModal();
 }
@@ -116,4 +116,5 @@ document.querySelector("#news-reset").addEventListener("click", resetNewsFilters
 document.querySelectorAll("[data-news-id]").forEach((button) => button.addEventListener("click", () => openNewsDetail(button.dataset.newsId)));
 newsDialog?.addEventListener("click", (event) => { if (event.target === newsDialog) newsDialog.close(); });
 
+document.addEventListener("site-language-change", renderNews);
 renderNews();

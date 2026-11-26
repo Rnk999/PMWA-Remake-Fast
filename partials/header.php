@@ -6,10 +6,12 @@
       $isHome = ($activePage === 'home');
       $homeHref = $isHome ? '#top' : 'index.php';
       $newsHref = 'news.php';
+      $navigationGroups = require __DIR__ . '/navigation.php';
+      $siteTranslations = json_decode(file_get_contents(__DIR__ . '/../locales/en.json'), true, 512, JSON_THROW_ON_ERROR);
       $aboutCategories ??= require __DIR__ . '/about-categories.php';
       $contactHref = $isHome ? '#contact' : 'index.php#contact';
     ?>
-    <header class="site-header" id="top">
+    <header class="site-header">
       <!-- แถบข้อมูลหน่วยงานและหมายเลขโทรศัพท์ -->
       <div class="utility-bar">
         <div class="container utility-inner">
@@ -19,6 +21,10 @@
             <button id="font-reset" type="button" aria-label="คืนค่าขนาดตัวอักษรปกติ" aria-pressed="true">A</button>
             <button id="font-increase" type="button" aria-label="เพิ่มขนาดตัวอักษร">A+</button>
             <button id="contrast-toggle" type="button" aria-label="เปิดโหมดสีความเปรียบต่างสูง" aria-pressed="false"><span class="material-symbols-rounded" aria-hidden="true">contrast</span></button>
+            <div class="language-switch" role="group" aria-label="ภาษาเว็บไซต์" hidden>
+              <button type="button" lang="th" data-site-language="th" aria-label="ภาษาไทย" aria-pressed="true">TH</button>
+              <button type="button" lang="en" data-site-language="en" aria-label="English" aria-pressed="false">EN</button>
+            </div>
           </div>
           <div class="utility-contact">
             <a class="utility-phone" href="tel:055983230"><span class="material-symbols-rounded" aria-hidden="true">call</span> 055-983230</a>
@@ -55,36 +61,21 @@
           </button>
           <nav class="primary-nav" id="primary-navigation" aria-label="เมนูหลัก">
             <a class="nav-link<?php echo $isHome ? ' is-current' : ''; ?>" href="<?php echo $homeHref; ?>"<?php echo $isHome ? ' aria-current="page"' : ''; ?>>หน้าแรก</a>
-            <div class="nav-dropdown" id="services-dropdown">
-              <button class="nav-link dropdown-toggle<?php echo in_array($activePage, ['citizen-guide', 'faqs'], true) ? ' is-current' : ''; ?>" id="services-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="services-menu">
-                บริการ <span class="material-symbols-rounded" aria-hidden="true">arrow_drop_down</span>
-              </button>
-              <div class="dropdown-menu" id="services-menu" role="menu" aria-labelledby="services-toggle" hidden>
-                <a class="dropdown-item" href="https://eservice.phsmun.go.th/" target="_blank" rel="noopener noreferrer" role="menuitem">
-                  <span class="material-symbols-rounded" aria-hidden="true">open_in_new</span>
-                  <span>E-Service (บริการออนไลน์)</span>
-                </a>
-                <a class="dropdown-item<?php echo ($activePage === 'citizen-guide') ? ' is-active' : ''; ?>" href="citizen-guide.php" role="menuitem"<?php echo ($activePage === 'citizen-guide') ? ' aria-current="page"' : ''; ?>>
-                  <span class="material-symbols-rounded" aria-hidden="true">menu_book</span>
-                  <span>คู่มือประชาชน</span>
-                </a>
-                <a class="dropdown-item<?php echo ($activePage === 'faqs') ? ' is-active' : ''; ?>" href="faqs.php" role="menuitem"<?php echo ($activePage === 'faqs') ? ' aria-current="page"' : ''; ?>>
-                  <span class="material-symbols-rounded" aria-hidden="true">quiz</span>
-                  <span>คำถามที่พบบ่อย</span>
-                </a>
+            <?php foreach ($navigationGroups as $groupId => ['label' => $label, 'items' => $items]): ?>
+              <div class="nav-dropdown" id="<?= $groupId ?>-dropdown">
+                <button class="nav-link dropdown-toggle<?= isset($items[$activePage]) ? ' is-current' : '' ?>" id="<?= $groupId ?>-toggle" type="button" aria-expanded="false" aria-controls="<?= $groupId ?>-menu">
+                  <?= $label ?> <span class="material-symbols-rounded" aria-hidden="true">arrow_drop_down</span>
+                </button>
+                <div class="dropdown-menu" id="<?= $groupId ?>-menu" hidden>
+                  <?php foreach ($items as $pageId => [$itemLabel, $href, $icon]): ?>
+                    <a class="dropdown-item<?= $activePage === $pageId ? ' is-active' : '' ?>" href="<?= $href ?>"<?= $pageId === 'e-service' ? ' target="_blank" rel="noopener noreferrer"' : '' ?><?= $activePage === $pageId ? ' aria-current="page"' : '' ?>>
+                      <span class="material-symbols-rounded" aria-hidden="true"><?= $icon ?></span>
+                      <span<?= $pageId === 'open-data' ? ' lang="en"' : '' ?>><?= $itemLabel ?></span>
+                    </a>
+                  <?php endforeach; ?>
+                </div>
               </div>
-            </div>
-            <div class="nav-dropdown" id="information-dropdown">
-              <button class="nav-link dropdown-toggle<?php echo in_array($activePage, ['announcements', 'news', 'documents', 'open-data'], true) ? ' is-current' : ''; ?>" id="information-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="information-menu">
-                ข้อมูลเผยแพร่ <span class="material-symbols-rounded" aria-hidden="true">arrow_drop_down</span>
-              </button>
-              <div class="dropdown-menu" id="information-menu" role="menu" aria-labelledby="information-toggle" hidden>
-                <a class="dropdown-item<?php echo ($activePage === 'announcements') ? ' is-active' : ''; ?>" href="announcements.php" role="menuitem"<?php echo ($activePage === 'announcements') ? ' aria-current="page"' : ''; ?>><span class="material-symbols-rounded" aria-hidden="true">campaign</span><span>ประกาศด่วนและแจ้งเหตุ</span></a>
-                <a class="dropdown-item<?php echo ($activePage === 'news') ? ' is-active' : ''; ?>" href="<?php echo $newsHref; ?>" role="menuitem"<?php echo ($activePage === 'news') ? ' aria-current="page"' : ''; ?>><span class="material-symbols-rounded" aria-hidden="true">newspaper</span><span>ข่าวประชาสัมพันธ์</span></a>
-                <a class="dropdown-item<?php echo ($activePage === 'documents') ? ' is-active' : ''; ?>" href="documents.php" role="menuitem"<?php echo ($activePage === 'documents') ? ' aria-current="page"' : ''; ?>><span class="material-symbols-rounded" aria-hidden="true">folder_open</span><span>แบบฟอร์มและเอกสารเผยแพร่</span></a>
-                <a class="dropdown-item<?php echo ($activePage === 'open-data') ? ' is-active' : ''; ?>" href="open-data.php" role="menuitem"<?php echo ($activePage === 'open-data') ? ' aria-current="page"' : ''; ?>><span class="material-symbols-rounded" aria-hidden="true">database</span><span lang="en">Open Data</span></a>
-              </div>
-            </div>
+            <?php endforeach; ?>
             <a class="nav-link<?php echo ($activePage === 'procurement') ? ' is-current' : ''; ?>" href="procurement.php"<?php echo ($activePage === 'procurement') ? ' aria-current="page"' : ''; ?>>จัดซื้อจัดจ้าง</a>
             <div class="nav-dropdown" id="about-dropdown">
               <button class="nav-link dropdown-toggle<?= $activePage === 'about' ? ' is-current' : '' ?>" id="about-toggle" type="button" aria-expanded="false" aria-controls="about-menu">

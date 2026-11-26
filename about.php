@@ -27,6 +27,7 @@ $introductions = [
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/about.css">
+    <script src="js/localization.js" defer></script>
     <script src="js/main.js" defer></script>
   </head>
   <body>
@@ -39,7 +40,7 @@ $introductions = [
       <div class="about-intro">
         <div class="container">
           <p class="subpage-subtitle"><span class="material-symbols-rounded" aria-hidden="true"><?= $aboutIcon ?></span> <span lang="en"><?= $pageSubtitle ?></span></p>
-          <h1><?= $pageHeading ?></h1>
+          <h1 class="subpage-title"><?= $pageHeading ?></h1>
           <p><?= $pageLead ?></p>
         </div>
       </div>
@@ -133,7 +134,11 @@ $introductions = [
             $query = is_string($_GET['q'] ?? null) ? trim($_GET['q']) : '';
             $group = is_string($_GET['group'] ?? null) && isset($newsGroups[$_GET['group']]) ? $_GET['group'] : '';
             $visibleNews = array_filter($newsGroups, static fn ($item, $key) =>
-                ($group === '' || $group === $key) && stripos(implode(' ', $item), $query) !== false,
+                ($group === '' || $group === $key)
+                    && (stripos(implode(' ', $item), $query) !== false
+                        || stripos(implode(' ', array_map(
+                            static fn ($phrase) => $siteTranslations[$phrase] ?? $phrase, $item
+                        )), $query) !== false),
                 ARRAY_FILTER_USE_BOTH
             );
         ?>
@@ -155,7 +160,7 @@ $introductions = [
           <section class="about-section" aria-labelledby="operations-title">
             <div class="about-results-heading">
               <h2 id="operations-title">รายการข่าวและผลการดำเนินงาน</h2>
-              <p>พบ <?= count($visibleNews) ?> รายการ</p>
+              <p data-about-result-count="<?= count($visibleNews) ?>">พบ <?= count($visibleNews) ?> รายการ</p>
             </div>
             <?php if ($visibleNews): ?>
               <div class="about-grid about-grid-three">

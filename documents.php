@@ -15,6 +15,7 @@ $activePage = 'documents';
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/documents.css">
+    <script src="js/localization.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/documents.js" defer></script>
   </head>
@@ -22,12 +23,12 @@ $activePage = 'documents';
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
     <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
-    <main id="main-content" class="documents-page container">
+    <main tabindex="-1" id="main-content" class="documents-page container">
       <header class="documents-intro">
         <div class="documents-intro-row">
           <div>
             <p class="documents-eyebrow"><span class="material-symbols-rounded" aria-hidden="true">folder_open</span> ศูนย์รวมข้อมูลและเอกสาร</p>
-            <h1 id="documents-title">แบบฟอร์มและเอกสารเผยแพร่</h1>
+            <h1 class="subpage-title" id="documents-title">แบบฟอร์มและเอกสารเผยแพร่</h1>
             <p class="documents-subtitle" lang="en">Forms &amp; Published Documents</p>
             <p class="documents-lead">ค้นหาแบบฟอร์มสำหรับประชาชน คู่มือ และเอกสารเผยแพร่ได้จากจุดเดียว พร้อมตรวจสอบประเภทเอกสารก่อนเลือกดู</p>
           </div>
@@ -40,11 +41,12 @@ $activePage = 'documents';
 
       <section class="documents-filter-panel" aria-label="ค้นหาและกรองเอกสาร">
         <div class="documents-filter-row">
-          <label class="documents-search" for="documents-search">
+          <div class="page-search documents-search">
             <span class="material-symbols-rounded" aria-hidden="true">search</span>
+            <label class="visually-hidden" for="documents-search">ค้นหาเอกสารเผยแพร่</label>
             <input id="documents-search" type="search" placeholder="ค้นหาชื่อเอกสารหรือคำสำคัญ" autocomplete="off">
             <button id="documents-search-clear" type="button" aria-label="ล้างคำค้นหา" hidden><span class="material-symbols-rounded" aria-hidden="true">close</span></button>
-          </label>
+          </div>
           <label class="filter-select"><span>หมวดหมู่</span>
             <select id="documents-category"><option value="">ทุกหมวดหมู่</option><option value="แบบฟอร์ม">แบบฟอร์ม</option><option value="คู่มือและแนวทาง">คู่มือและแนวทาง</option><option value="แผนงานและรายงาน">แผนงานและรายงาน</option><option value="ข้อมูลทั่วไป">ข้อมูลทั่วไป</option></select>
           </label>
@@ -56,7 +58,7 @@ $activePage = 'documents';
         <p class="documents-filter-status" id="documents-filter-status" aria-live="polite"></p>
       </section>
 
-      <section class="documents-results" aria-labelledby="documents-results-title">
+      <section class="documents-results" id="documents-results" aria-labelledby="documents-results-title">
         <div class="documents-results-heading">
           <div><p class="documents-section-eyebrow">รายการเอกสาร</p><h2 id="documents-results-title">ค้นหาเอกสารเผยแพร่</h2></div>
           <span class="documents-count" id="documents-count"></span>

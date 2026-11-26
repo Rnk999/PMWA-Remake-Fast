@@ -8,9 +8,8 @@ const procurementRows = [...procurementRecords.querySelectorAll("[data-procureme
 const procurementSearchText = new Map(procurementRows.map((row) => [
   row,
   [...row.querySelectorAll(".procurement-record-title, .procurement-record-meta, .procurement-badge, .procurement-date")]
-    .map((field) => field.textContent.trim())
+    .map(siteLanguage.searchableContent)
     .join(" ")
-    .toLocaleLowerCase("th")
 ]));
 const procurementPageSize = Number(procurementRecords.dataset.pageSize);
 const procurementQuickButtons = [...procurementFilters.querySelectorAll("[data-procurement-quick]")];
@@ -23,7 +22,7 @@ let procurementQuickFilter = "";
 let procurementPage = 1;
 
 function renderProcurement() {
-  const query = procurementSearch.value.trim().toLocaleLowerCase("th");
+  const query = procurementSearch.value.trim().normalize().toLocaleLowerCase("th");
   const year = procurementYear.value;
   const category = procurementCategory.value;
   const yearRows = procurementRows.filter((row) => !year || row.dataset.year === year);
@@ -40,12 +39,12 @@ function renderProcurement() {
   procurementQuickButtons.forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.procurementQuick === procurementQuickFilter));
   });
-  document.querySelector("#procurement-summary-year").textContent = year || "ทุกปี";
-  document.querySelector("#procurement-summary-total").textContent = `${yearRows.length} รายการ`;
+  document.querySelector("#procurement-summary-year").textContent = year || t("ทุกปี");
+  document.querySelector("#procurement-summary-total").textContent = t("{0} รายการ", yearRows.length);
   document.querySelector("#procurement-empty").hidden = matches.length > 0;
   document.querySelector("#procurement-results-status").textContent = matches.length
-    ? `แสดง ${offset + 1}–${offset + visibleRows.size} จาก ${matches.length} รายการตัวอย่าง`
-    : "ไม่พบประกาศที่ตรงกับตัวกรอง";
+    ? t("แสดง {0}–{1} จาก {2} รายการตัวอย่าง", offset + 1, offset + visibleRows.size, matches.length)
+    : t("ไม่พบประกาศที่ตรงกับตัวกรอง");
 
   procurementPages.hidden = pageCount < 2;
   procurementPrevious.disabled = procurementPage <= 1;
@@ -56,7 +55,7 @@ function renderProcurement() {
     button.type = "button";
     button.textContent = String(page);
     button.dataset.procurementPage = String(page);
-    button.setAttribute("aria-label", `หน้า ${page}`);
+    button.setAttribute("aria-label", t("หน้า {0}", page));
     if (page === procurementPage) button.setAttribute("aria-current", "page");
     procurementPageNumbers.append(button);
   }
@@ -116,4 +115,5 @@ procurementRecords.addEventListener("click", (event) => {
   procurementPreview.showModal();
 });
 
+document.addEventListener("site-language-change", renderProcurement);
 renderProcurement();

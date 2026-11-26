@@ -65,6 +65,7 @@ foreach ($announcements as $announcement) {
     <link rel="icon" type="image/png" href="assets/logos/กองการประปา%20logo.PNG">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/announcements.css">
+    <script src="js/localization.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/announcements.js" defer></script>
   </head>
@@ -72,13 +73,13 @@ foreach ($announcements as $announcement) {
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
     <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
-    <main id="main-content" class="announcements-page">
+    <main tabindex="-1" id="main-content" class="announcements-page">
       <section class="announcement-hero">
         <div class="container">
           <div class="announcement-hero-row">
             <div class="announcement-intro">
               <p class="section-kicker announcement-eyebrow"><span class="status-dot status-dot-red" aria-hidden="true"></span> ศูนย์แจ้งเตือนและข่าวสารสถานการณ์น้ำประปา</p>
-              <h1>ประกาศด่วนและแจ้งเหตุน้ำประปา</h1>
+              <h1 class="subpage-title">ประกาศด่วนและแจ้งเหตุน้ำประปา</h1>
               <p class="subpage-subtitle" lang="en">Urgent Announcements &amp; Water Service Alerts</p>
               <p>ติดตามประกาศหยุดจ่ายน้ำชั่วคราว เหตุขัดข้อง และความคืบหน้าการซ่อมบำรุง</p>
             </div>
@@ -94,7 +95,7 @@ foreach ($announcements as $announcement) {
       <section class="announcement-content container" aria-label="ค้นหาและรายการประกาศ">
         <form class="announcement-filters" id="announcement-filters">
           <div class="announcement-filter-row">
-            <label class="announcement-search"><span class="material-symbols-rounded" aria-hidden="true">search</span><span class="visually-hidden">ค้นหาประกาศ</span><input id="announcement-search" type="search" placeholder="ค้นหาหัวข้อประกาศ ถนน ชุมชน หรือรหัสประกาศ..."></label>
+            <label class="page-search announcement-search"><span class="material-symbols-rounded" aria-hidden="true">search</span><span class="visually-hidden">ค้นหาประกาศ</span><input id="announcement-search" type="search" placeholder="ค้นหาหัวข้อประกาศ ถนน ชุมชน หรือรหัสประกาศ..."></label>
             <label class="filter-select"><span>พื้นที่</span><select id="announcement-area"><option value="">ทุกพื้นที่ในเขตเทศบาล</option><option value="ชุมชนตัวอย่าง">ชุมชนตัวอย่าง</option><option value="ถนนตัวอย่าง">ถนนตัวอย่าง</option><option value="พื้นที่ตัวอย่าง">พื้นที่ตัวอย่าง</option><option value="สถานีตัวอย่าง">สถานีตัวอย่าง</option><option value="บริเวณตัวอย่าง">บริเวณตัวอย่าง</option></select></label>
           </div>
           <div class="announcement-filter-bottom">

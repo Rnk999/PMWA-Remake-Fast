@@ -50,6 +50,7 @@ $pageSize = 10;
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/documents.css">
     <link rel="stylesheet" href="css/procurement.css">
+    <script src="js/localization.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/procurement.js" defer></script>
   </head>
@@ -57,12 +58,12 @@ $pageSize = 10;
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
     <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
-    <main id="main-content" class="procurement-page container">
+    <main tabindex="-1" id="main-content" class="procurement-page container">
       <header class="documents-intro">
         <div class="documents-intro-row">
           <div>
             <p class="documents-eyebrow"><span class="material-symbols-rounded" aria-hidden="true">assignment_turned_in</span> ความโปร่งใสภาครัฐ</p>
-            <h1>จัดซื้อจัดจ้าง</h1>
+            <h1 class="subpage-title">จัดซื้อจัดจ้าง</h1>
             <p class="documents-subtitle" lang="en">Procurement</p>
             <p class="documents-lead">ค้นหาประกาศ แผนงาน ราคากลาง ผลการเสนอราคา และสัญญาจัดซื้อจัดจ้างของหน่วยงาน</p>
           </div>
@@ -93,7 +94,7 @@ $pageSize = 10;
 
       <form class="card procurement-filters" id="procurement-filters" role="search" aria-label="ค้นหาประกาศจัดซื้อจัดจ้าง" data-page-search>
         <div class="procurement-filter-fields">
-          <label class="procurement-search">
+          <label class="page-search procurement-search">
             <span class="visually-hidden">คำค้นหาประกาศจัดซื้อจัดจ้าง</span>
             <span class="material-symbols-rounded" aria-hidden="true">search</span>
             <input id="procurement-search" type="search" placeholder="ค้นหาชื่อโครงการ รหัสโครงการ หรือเลขที่สัญญา" autocomplete="off">

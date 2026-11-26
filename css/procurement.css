@@ -83,30 +83,8 @@
   gap: 10px;
 }
 
-.procurement-search {
-  display: flex;
-  min-width: 0;
-  min-height: 44px;
-  align-items: center;
-  gap: 10px;
-  padding-inline: 12px;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  background: var(--page);
-}
 
-.procurement-search:focus-within { outline: 3px solid #ffbf47; outline-offset: 2px; }
-.procurement-search input {
-  width: 100%;
-  min-width: 0;
-  padding-block: 8px;
-  border: 0;
-  background: transparent;
-  color: var(--body);
-  font: inherit;
-}
 
-.procurement-search input:focus-visible { outline: 0; }
 
 .procurement-filter-actions,
 .procurement-quick-filters,

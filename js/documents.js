@@ -26,10 +26,12 @@ const documentsPageButtons = document.querySelector("#documents-page-buttons");
 const documentsPageSize = 6;
 let currentDocumentsPage = 1;
 let matchingDocuments = [];
+let documentActionFeedback;
 
 function makeDocumentCard(item) {
   const card = document.createElement("article");
   card.className = "documents-item";
+  card.dataset.search = siteLanguage.searchText(item.title, item.description, item.category, item.format);
 
   const iconBox = document.createElement("span");
   iconBox.className = "documents-file-icon";
@@ -46,19 +48,19 @@ function makeDocumentCard(item) {
   tags.className = "documents-item-tags";
   const category = document.createElement("span");
   category.className = "documents-category";
-  category.textContent = item.category;
+  category.textContent = t(item.category);
   const sampleTag = document.createElement("span");
   sampleTag.className = "documents-sample-tag";
-  sampleTag.textContent = "ข้อมูลจำลอง";
+  sampleTag.textContent = t("ข้อมูลจำลอง");
   tags.append(category, sampleTag);
   const title = document.createElement("h4");
-  title.textContent = item.title;
+  title.textContent = t(item.title);
   const description = document.createElement("p");
-  description.textContent = item.description;
+  description.textContent = t(item.description);
   const meta = document.createElement("div");
   meta.className = "documents-item-meta";
   const format = document.createElement("span");
-  format.textContent = `รูปแบบไฟล์ตัวอย่าง: ${item.format}`;
+  format.textContent = t("รูปแบบไฟล์ตัวอย่าง: {0}", item.format);
   meta.append(format);
   copy.append(tags, title, description, meta);
 
@@ -74,7 +76,7 @@ function makeDocumentCard(item) {
     actionIcon.className = "material-symbols-rounded";
     actionIcon.setAttribute("aria-hidden", "true");
     actionIcon.textContent = icon;
-    button.append(actionIcon, document.createTextNode(label));
+    button.append(actionIcon, document.createTextNode(t(label)));
     actions.append(button);
   });
 
@@ -95,20 +97,21 @@ function renderDocumentPageButtons(pageCount) {
     buttons.push(button);
   };
 
-  addButton("chevron_left", Math.max(1, currentDocumentsPage - 1), "หน้าก่อนหน้า", currentDocumentsPage === 1);
+  addButton("chevron_left", Math.max(1, currentDocumentsPage - 1), t("หน้าก่อนหน้า"), currentDocumentsPage === 1);
   buttons[0].innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">chevron_left</span>';
   for (let page = 1; page <= pageCount; page += 1) {
-    addButton(String(page), page, `หน้า ${page}`, false, page === currentDocumentsPage);
+    addButton(String(page), page, t("หน้า {0}", page), false, page === currentDocumentsPage);
   }
-  addButton("chevron_right", Math.min(pageCount, currentDocumentsPage + 1), "หน้าถัดไป", currentDocumentsPage === pageCount);
+  addButton("chevron_right", Math.min(pageCount, currentDocumentsPage + 1), t("หน้าถัดไป"), currentDocumentsPage === pageCount);
   buttons[buttons.length - 1].innerHTML = '<span class="material-symbols-rounded" aria-hidden="true">chevron_right</span>';
   documentsPageButtons.replaceChildren(...buttons);
 }
 
-function renderDocuments() {
-  const query = documentsSearch.value.trim().toLocaleLowerCase("th");
+function renderDocuments({ preserveFeedback = false } = {}) {
+  if (!preserveFeedback) documentActionFeedback = null;
+  const query = documentsSearch.value.trim().normalize().toLocaleLowerCase("th");
   matchingDocuments = documentRecords.filter((item) => {
-    const searchableText = `${item.title} ${item.description} ${item.category} ${item.format}`.toLocaleLowerCase("th");
+    const searchableText = siteLanguage.searchText(item.title, item.description, item.category, item.format);
     return (!query || searchableText.includes(query))
       && (!documentsCategory.value || item.category === documentsCategory.value)
       && (!documentsFormat.value || item.format === documentsFormat.value);
@@ -123,16 +126,18 @@ function renderDocuments() {
   document.querySelector("#publications-list").replaceChildren(...publications.map(makeDocumentCard));
   document.querySelector("#forms-group").hidden = forms.length === 0;
   document.querySelector("#publications-group").hidden = publications.length === 0;
-  document.querySelector("#forms-count").textContent = `${forms.length} รายการในหน้านี้`;
-  document.querySelector("#publications-count").textContent = `${publications.length} รายการในหน้านี้`;
+  document.querySelector("#forms-count").textContent = t("{0} รายการในหน้านี้", forms.length);
+  document.querySelector("#publications-count").textContent = t("{0} รายการในหน้านี้", publications.length);
   documentsEmpty.hidden = matchingDocuments.length > 0;
-  documentsCount.textContent = `${matchingDocuments.length} รายการตัวอย่าง`;
+  documentsCount.textContent = t("{0} รายการตัวอย่าง", matchingDocuments.length);
   documentsFilterStatus.textContent = matchingDocuments.length
-    ? `แสดง ${Math.min((currentDocumentsPage - 1) * documentsPageSize + 1, matchingDocuments.length)}–${Math.min(currentDocumentsPage * documentsPageSize, matchingDocuments.length)} จาก ${matchingDocuments.length} รายการ`
-    : "ไม่มีรายการที่ตรงกับตัวกรองปัจจุบัน";
+    ? t("แสดง {0}–{1} จาก {2} รายการ", (currentDocumentsPage - 1) * documentsPageSize + 1,
+      Math.min(currentDocumentsPage * documentsPageSize, matchingDocuments.length), matchingDocuments.length)
+    : t("ไม่มีรายการที่ตรงกับตัวกรองปัจจุบัน");
+  if (documentActionFeedback) showDocumentActionFeedback();
   documentsSearchClear.hidden = !documentsSearch.value;
   documentsPagination.hidden = matchingDocuments.length === 0;
-  documentsPageStatus.textContent = `หน้า ${currentDocumentsPage} จาก ${pageCount}`;
+  documentsPageStatus.textContent = t("หน้า {0} จาก {1}", currentDocumentsPage, pageCount);
   renderDocumentPageButtons(pageCount);
 }
 
@@ -163,7 +168,14 @@ document.querySelector("#documents-results").addEventListener("click", (event) =
   const item = documentRecords.find((record) => record.id === actionButton.dataset.documentId);
   if (!item) return;
   const action = actionButton.dataset.documentAction === "download" ? "ดาวน์โหลด" : "ดูตัวอย่าง";
-  documentsFilterStatus.textContent = `${action}ไม่ได้: “${item.title}” เป็นข้อมูลจำลองและไม่มีไฟล์แนบ`;
+  documentActionFeedback = { action, title: item.title };
+  showDocumentActionFeedback();
 });
 
+function showDocumentActionFeedback() {
+  const { action, title } = documentActionFeedback;
+  documentsFilterStatus.textContent = t("{0}ไม่ได้: “{1}” เป็นข้อมูลจำลองและไม่มีไฟล์แนบ", t(action), t(title));
+}
+
+document.addEventListener("site-language-change", () => renderDocuments({ preserveFeedback: true }));
 renderDocuments();

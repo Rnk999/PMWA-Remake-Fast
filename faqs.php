@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/logos/กองการประปา%20logo.PNG">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/localization.js" defer></script>
     <script src="js/main.js" defer></script>
   </head>
   <body>
@@ -23,13 +24,13 @@
     ?>
 
     <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
-    <main id="main-content" class="faqs-page">
+    <main tabindex="-1" id="main-content" class="faqs-page">
 
       <section class="faq-hero" aria-labelledby="faq-title">
         <div class="container faq-hero-inner">
           <div>
             <p class="section-kicker"><span class="status-dot"></span> คำถามจากบริการสาธารณะ</p>
-            <h1 id="faq-title">คำถามที่พบบ่อย</h1>
+            <h1 class="subpage-title" id="faq-title">คำถามที่พบบ่อย</h1>
             <p class="subpage-subtitle" lang="en">Frequently Asked Questions (FAQs)</p>
             <p class="faq-hero-desc">รวมคำถามตัวอย่างเกี่ยวกับการใช้น้ำประปา การขอติดตั้ง การชำระเงิน และการแจ้งเหตุ เพื่อช่วยค้นหาหัวข้อที่ต้องการได้สะดวก</p>
           </div>
@@ -42,7 +43,7 @@
 
       <div class="page-content faq-content">
         <section class="container faq-search-panel" aria-label="ค้นหาและกรองคำถาม">
-          <div class="faq-search-field">
+          <div class="page-search faq-search-field">
             <span class="material-symbols-rounded" aria-hidden="true">search</span>
             <label class="visually-hidden" for="faq-search">ค้นหาคำถามที่พบบ่อย</label>
             <input id="faq-search" type="search" placeholder="ค้นหาข้อสงสัย เช่น ขอติดตั้งมิเตอร์, ค่าน้ำประปา, ท่อแตก..." autocomplete="off" aria-controls="faq-list">

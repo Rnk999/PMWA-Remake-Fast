@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/logos/กองการประปา%20logo.PNG">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/localization.js" defer></script>
     <script src="js/main.js" defer></script>
   </head>
   <body>
@@ -23,7 +24,7 @@
     ?>
 
     <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
-    <main id="main-content">
+    <main tabindex="-1" id="main-content">
 
       <!-- ส่วนหัวหน้าย่อย (Subpage Hero) -->
       <div class="subpage-hero">
@@ -33,7 +34,7 @@
               <span class="material-symbols-rounded" aria-hidden="true">menu_book</span>
               บริการประชาชน · คู่มือขั้นตอน
             </p>
-            <h1>คู่มือประชาชน</h1>
+            <h1 class="subpage-title">คู่มือประชาชน</h1>
             <p class="subpage-subtitle" lang="en">Citizen Guide</p>
             <p class="subpage-hero-desc">รวมขั้นตอนและเอกสารที่ต้องเตรียมสำหรับบริการของกองการประปา เทศบาลนครพิษณุโลก จำนวน 13 หัวข้อบริการ เพื่อให้ประชาชนสามารถเตรียมตัวและเข้ารับบริการได้อย่างสะดวก รวดเร็ว</p>
             <div class="subpage-hero-meta">

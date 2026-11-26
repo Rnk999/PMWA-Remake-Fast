@@ -55,6 +55,7 @@ $datasetCount = count($datasets);
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/open-data.css">
+    <script src="js/localization.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/open-data.js" defer></script>
   </head>
@@ -62,13 +63,13 @@ $datasetCount = count($datasets);
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
     <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
-    <main class="open-data" id="main-content">
+    <main tabindex="-1" class="open-data" id="main-content">
       <header class="open-data-intro">
         <div class="container">
           <div class="open-data-intro-row">
             <div>
               <p class="section-kicker"><span class="material-symbols-rounded" aria-hidden="true">database</span> แค็ตตาล็อกชุดข้อมูลเปิด</p>
-              <h1>ข้อมูลเปิด</h1>
+              <h1 class="subpage-title">ข้อมูลเปิด</h1>
               <p class="subpage-subtitle" lang="en">Open Data</p>
               <p class="open-data-lead">ศูนย์รวมชุดข้อมูลเปิดของกองการประปา เทศบาลนครพิษณุโลก เพื่อส่งเสริมการเข้าถึงข้อมูลและความโปร่งใสในการให้บริการประชาชน</p>
             </div>
@@ -82,7 +83,7 @@ $datasetCount = count($datasets);
 
       <section class="container open-data-catalog" aria-label="แค็ตตาล็อกชุดข้อมูล">
         <form class="card open-data-filters" role="search" aria-label="ค้นหาชุดข้อมูลเปิด">
-          <div class="open-data-search">
+          <div class="page-search open-data-search">
             <span class="material-symbols-rounded" aria-hidden="true">search</span>
             <label class="visually-hidden" for="dataset-search">ค้นหาชุดข้อมูล</label>
             <input id="dataset-search" type="search" placeholder="ค้นหาชุดข้อมูล" autocomplete="off">

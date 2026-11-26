@@ -5,11 +5,6 @@
       if (!isset($activePage)) $activePage = 'home';
       $isHome = ($activePage === 'home');
       $footerHomeHref = $isHome ? '#top' : 'index.php';
-      $footerServicesHref = $isHome ? '#services' : 'index.php#services';
-      $footerNewsHref = 'news.php';
-      $footerStatusHref = $isHome ? '#water-status' : 'index.php#water-status';
-      $footerInfoHref = $isHome ? '#information' : 'index.php#information';
-      $footerContactHref = $isHome ? '#contact' : 'index.php#contact';
     ?>
     <footer class="site-footer" id="about">
       <div class="container footer-main">
@@ -24,11 +19,21 @@
           <p class="map-status" id="map-status" role="status" aria-live="polite">รอยืนยัน URL แผนที่จากหน่วยงาน</p>
           <div class="social-links" aria-label="ตัวอย่างช่องทางสื่อสารที่รอการยืนยันลิงก์ทางการ"><span><img src="assets/contact/Facebook%20logo.png" alt=""> Facebook</span><span><img src="assets/contact/Line%20OA%20logo.png" alt=""> LINE Official</span></div>
         </div>
-        <nav class="footer-nav" aria-label="บริการประชาชน"><h2>บริการประชาชน</h2><a href="<?php echo $footerServicesHref; ?>">แจ้งปัญหาน้ำประปา</a><a href="<?php echo $footerServicesHref; ?>">ขอใช้น้ำประปา</a><a href="<?php echo $footerServicesHref; ?>">ชำระค่าน้ำประปา</a><a href="citizen-guide.php">คู่มือประชาชน</a><a href="faqs.php">คำถามที่พบบ่อย</a><a href="<?php echo $footerContactHref; ?>">ติดต่อเจ้าหน้าที่</a></nav>
-        <nav class="footer-nav" aria-label="ข้อมูลเผยแพร่"><h2>ข้อมูลเผยแพร่</h2><a href="<?php echo $footerNewsHref; ?>">ข่าวประชาสัมพันธ์</a><a href="<?php echo $footerInfoHref; ?>">ข้อมูลการใช้น้ำ</a><a href="<?php echo $footerStatusHref; ?>">คุณภาพน้ำประปา</a><a href="<?php echo $footerNewsHref; ?>">ประกาศ</a><a href="procurement.php"<?php echo ($activePage === 'procurement') ? ' aria-current="page"' : ''; ?>>จัดซื้อจัดจ้าง</a></nav>
+        <?php foreach ($navigationGroups as $groupId => ['label' => $label, 'items' => $items]): ?>
+          <nav class="footer-nav" data-footer-group="<?= $groupId ?>" aria-labelledby="footer-<?= $groupId ?>-title">
+            <h2 id="footer-<?= $groupId ?>-title"><?= $label ?></h2>
+            <?php foreach ($items as $pageId => [$itemLabel, $href, $icon]): ?>
+              <a href="<?= $href ?>"<?= $pageId === 'e-service' ? ' target="_blank" rel="noopener noreferrer"' : '' ?><?= $activePage === $pageId ? ' aria-current="page"' : '' ?>>
+                <span<?= $pageId === 'open-data' ? ' lang="en"' : '' ?>><?= $itemLabel ?></span><?php if ($pageId === 'e-service'): ?>
+                  <span class="material-symbols-rounded" aria-hidden="true"><?= $icon ?></span><?php endif; ?>
+              </a>
+            <?php endforeach; ?>
+          </nav>
+        <?php endforeach; ?>
         <nav class="footer-nav policy-nav" aria-label="กฎหมายและนโยบาย"><h2>กฎหมายและนโยบาย</h2><ul><li>PDPA</li><li>นโยบายเว็บไซต์</li><li>นโยบายความเป็นส่วนตัว</li><li>นโยบายคุกกี้</li><li>ข้อกำหนดการใช้งาน</li></ul><p>รอเนื้อหาจากหน่วยงาน</p></nav>
         <nav class="footer-nav" aria-label="หน่วยงานที่เกี่ยวข้อง"><h2>หน่วยงานที่เกี่ยวข้อง</h2><a href="https://www.phsmun.go.th/" target="_blank" rel="noopener noreferrer">เทศบาลนครพิษณุโลก <span class="material-symbols-rounded" aria-hidden="true">open_in_new</span></a></nav>
       </div>
       <div class="footer-bottom"><div class="container footer-bottom-inner"><p>© 2569 กองการประปา เทศบาลนครพิษณุโลก สงวนลิขสิทธิ์ตามกฎหมาย</p><span>เอกสารกฎหมายและนโยบายรอเผยแพร่จากหน่วยงาน</span></div></div>
     </footer>
+    <script type="application/json" id="site-translations"><?= json_encode($siteTranslations, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_THROW_ON_ERROR) ?></script>
     <!-- สิ้นสุดส่วนท้ายเว็บไซต์ -->

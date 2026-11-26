@@ -12,14 +12,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet">
     <link rel="icon" type="image/png" href="assets/logos/กองการประปา%20logo.PNG">
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/localization.js" defer></script>
     <script src="js/main.js" defer></script>
   </head>
-  <body>
+  <body id="top">
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
 
     <?php require __DIR__ . '/partials/header.php'; ?>
 
-    <main id="main-content">
+    <main tabindex="-1" id="main-content">
       <!-- ส่วนที่ 2: ภาพหลักและทางลัดบริการด่วน -->
       <!-- หน้าที่: แนะนำภารกิจของหน่วยงานและนำไปยังบริการหรือติดต่อทางโทรศัพท์ -->
       <section class="hero" aria-labelledby="hero-title">
@@ -161,7 +162,7 @@
               <article class="card service-card"><span class="service-badge">ข้อมูลบริการ</span><span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">qr_code</span></span><h3>ชำระค่าน้ำประปา</h3><p>ดูช่องทางและข้อมูลการชำระค่าน้ำประปาที่หน่วยงานเผยแพร่</p><a href="#information">ดูข้อมูล <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
               <article class="card service-card"><span class="service-badge">ข้อมูลบริการ</span><span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">area_chart</span></span><h3>ตรวจสอบข้อมูล</h3><p>ข้อมูลเกี่ยวกับประวัติการใช้น้ำและสถานะการให้บริการ</p><a href="#water-status">ดูสถานะตัวอย่าง <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
               <article class="card service-card"><span class="service-badge">เอกสาร</span><span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">download</span></span><h3>แบบฟอร์มบริการ</h3><p>รวมข้อมูลเอกสารและแบบฟอร์มที่เกี่ยวข้องกับงานบริการประปา</p><a href="#information">ดูเอกสาร <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
-              <article class="card service-card"><span class="service-badge">ติดต่อ</span><span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">live_help</span></span><h3>ติดต่อเจ้าหน้าที่<h3><p>สอบถามข้อมูลบริการประปากับกองการประปาโดยตรง</p><a href="#contact">ข้อมูลติดต่อ <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
+              <article class="card service-card"><span class="service-badge">ติดต่อ</span><span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">live_help</span></span><h3>ติดต่อเจ้าหน้าที่</h3><p>สอบถามข้อมูลบริการประปากับกองการประปาโดยตรง</p><a href="#contact">ข้อมูลติดต่อ <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></article>
             </div>
             <p class="prototype-disclaimer"><span class="material-symbols-rounded" aria-hidden="true">info</span> บริการบนหน้านี้เป็นข้อมูลต้นแบบ ไม่มีการส่งคำขอหรือทำธุรกรรมออนไลน์</p>
           </div>
@@ -185,7 +186,7 @@
 
 
       </div>
-    </main>/
+    </main>
 
     <?php require __DIR__ . '/partials/footer.php'; ?>
   </body>

@@ -33,6 +33,7 @@ $years = array_values(array_unique(array_map(static fn ($item) => (string) ((int
     <link rel="icon" type="image/png" href="assets/logos/กองการประปา%20logo.PNG">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/news.css">
+    <script src="js/localization.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/news.js" defer></script>
   </head>
@@ -40,12 +41,12 @@ $years = array_values(array_unique(array_map(static fn ($item) => (string) ((int
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
     <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
-    <main id="main-content" class="news-page container">
+    <main tabindex="-1" id="main-content" class="news-page container">
       <section class="news-intro" aria-labelledby="news-title">
         <div class="news-intro-row">
           <div>
             <p class="news-eyebrow"><span class="material-symbols-rounded" aria-hidden="true">newspaper</span> ข่าวสารและกิจกรรม</p>
-            <h1 id="news-title">ข่าวประชาสัมพันธ์</h1>
+            <h1 class="subpage-title" id="news-title">ข่าวประชาสัมพันธ์</h1>
             <p class="subpage-subtitle" lang="en">Public Relations News</p>
             <p class="news-lead">ติดตามข่าวสาร กิจกรรม และข้อมูลที่เป็นประโยชน์จากกองการประปา เทศบาลนครพิษณุโลก</p>
           </div>
@@ -54,7 +55,12 @@ $years = array_values(array_unique(array_map(static fn ($item) => (string) ((int
       </section>
 
       <section class="news-filters" aria-label="ค้นหาและกรองข่าว">
-        <label class="news-search" for="news-search"><span class="material-symbols-rounded" aria-hidden="true">search</span><input id="news-search" type="search" placeholder="ค้นหาหัวข้อข่าวหรือคำสำคัญ..." autocomplete="off"><button type="button" id="news-search-clear" aria-label="ล้างคำค้นหา" hidden><span class="material-symbols-rounded" aria-hidden="true">close</span></button></label>
+        <div class="page-search news-search">
+          <span class="material-symbols-rounded" aria-hidden="true">search</span>
+          <label class="visually-hidden" for="news-search">ค้นหาข่าว</label>
+          <input id="news-search" type="search" placeholder="ค้นหาหัวข้อข่าวหรือคำสำคัญ..." autocomplete="off">
+          <button type="button" id="news-search-clear" aria-label="ล้างคำค้นหา" hidden><span class="material-symbols-rounded" aria-hidden="true">close</span></button>
+        </div>
         <label class="filter-select"><span>หมวดหมู่</span><select id="news-category"><option value="">ทุกหมวดหมู่</option><?php foreach ($categories as $category): ?><option value="<?= htmlspecialchars($category, ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($category, ENT_QUOTES, 'UTF-8') ?></option><?php endforeach; ?></select></label>
         <label class="filter-select"><span>ปีที่เผยแพร่</span><select id="news-year"><option value="">ทุกปี</option><?php foreach ($years as $year): ?><option value="<?= htmlspecialchars($year, ENT_QUOTES, 'UTF-8') ?>">พ.ศ. <?= htmlspecialchars($year, ENT_QUOTES, 'UTF-8') ?></option><?php endforeach; ?></select></label>
         <button class="news-reset" id="news-reset" type="button"><span class="material-symbols-rounded" aria-hidden="true">restart_alt</span> ล้างตัวกรอง</button>

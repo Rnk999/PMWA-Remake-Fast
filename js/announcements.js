@@ -7,9 +7,14 @@ const announcementCount = document.querySelector("#announcement-result-count");
 const announcementEmpty = document.querySelector("#announcement-empty");
 const announcementDialog = document.querySelector("#announcement-dialog");
 const announcementDialogContent = document.querySelector("#announcement-dialog-content");
+const announcementSearchText = new Map(announcementCards.map((card) => {
+  const id = card.querySelector("[data-announcement-id]").dataset.announcementId;
+  const { title, area, description } = window.announcementData[id];
+  return [card, siteLanguage.searchText(title, area, id, description)];
+}));
 
 function filterAnnouncements() {
-  const query = announcementSearch.value.trim().toLocaleLowerCase("th");
+  const query = announcementSearch.value.trim().normalize().toLocaleLowerCase("th");
   const level = announcementForm.querySelector('input[name="announcement-level"]:checked')?.value || "";
   const area = announcementArea.value;
   const range = announcementDate.value;
@@ -21,7 +26,7 @@ function filterAnnouncements() {
   announcementCards.forEach((card) => {
     const cardDate = new Date(card.dataset.date);
     const age = (today - new Date(cardDate.getFullYear(), cardDate.getMonth(), cardDate.getDate())) / 86400000;
-    const matches = (!query || card.dataset.search.toLocaleLowerCase("th").includes(query))
+    const matches = (!query || announcementSearchText.get(card).includes(query))
       && (!level || card.dataset.level === level)
       && (!area || card.dataset.area.includes(area))
       && (days === undefined || (age >= 0 && age < days));
@@ -29,10 +34,11 @@ function filterAnnouncements() {
     if (matches) visible++;
   });
 
-  announcementCount.textContent = `${visible} รายการ`;
+  announcementCount.textContent = t("{0} รายการ", visible);
   announcementEmpty.hidden = visible > 0;
 }
 
+document.addEventListener("site-language-change", filterAnnouncements);
 announcementForm?.addEventListener("input", filterAnnouncements);
 announcementForm?.addEventListener("change", filterAnnouncements);
 announcementForm?.addEventListener("reset", () => requestAnimationFrame(filterAnnouncements));
@@ -40,32 +46,28 @@ document.querySelector("#announcement-empty-reset")?.addEventListener("click", (
 
 document.querySelectorAll("[data-announcement-id]").forEach((button) => {
   button.addEventListener("click", () => {
-    const card = button.closest(".announcement-card");
-    if (!card || !announcementDialog || !announcementDialogContent) return;
-    const title = card.querySelector("h3").textContent;
-    const updates = card.dataset.announcementId;
-    const data = window.announcementData?.[updates];
-    if (!data) return;
+    const data = window.announcementData?.[button.dataset.announcementId];
+    if (!data || !announcementDialog || !announcementDialogContent) return;
 
     const heading = document.createElement("h2");
     heading.id = "announcement-dialog-title";
-    heading.textContent = title;
+    heading.textContent = t(data.title);
     const meta = document.createElement("p");
     meta.className = "dialog-meta";
-    meta.textContent = `${data.displayDate} · ${data.area} · ${data.statusLabel}`;
+    meta.textContent = [data.displayDate, data.area, data.statusLabel].map((part) => t(part)).join(" · ");
     const description = document.createElement("p");
-    description.textContent = data.description;
+    description.textContent = t(data.description);
     const progress = document.createElement("section");
     progress.className = "dialog-progress";
     const progressHeading = document.createElement("h3");
-    progressHeading.textContent = "ความคืบหน้าการดำเนินงาน (ข้อมูลจำลอง)";
+    progressHeading.textContent = t("ความคืบหน้าการดำเนินงาน (ข้อมูลจำลอง)");
     const list = document.createElement("ol");
     data.updates.forEach((update) => {
       const item = document.createElement("li");
       const time = document.createElement("time");
-      time.textContent = update.time;
+      time.textContent = t(update.time);
       const text = document.createElement("span");
-      text.textContent = update.text;
+      text.textContent = t(update.text);
       item.append(time, text);
       list.append(item);
     });
@@ -78,3 +80,5 @@ document.querySelectorAll("[data-announcement-id]").forEach((button) => {
 announcementDialog?.addEventListener("click", (event) => {
   if (event.target === announcementDialog) announcementDialog.close();
 });
+
+filterAnnouncements();

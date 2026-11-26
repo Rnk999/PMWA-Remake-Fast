@@ -2,6 +2,15 @@
 const menuButton = document.querySelector(".menu-toggle");
 const primaryNavigation = document.querySelector("#primary-navigation");
 const rootElement = document.documentElement;
+const siteHeader = document.querySelector(".site-header");
+const t = siteLanguage.text;
+
+function updateHeaderHeight() {
+  rootElement.style.setProperty("--header-height", `${Math.ceil(siteHeader.getBoundingClientRect().height)}px`);
+}
+rootElement.classList.add("has-fixed-header");
+updateHeaderHeight();
+new ResizeObserver(updateHeaderHeight).observe(siteHeader);
 
 // URL ทางการแยกจากส่วนแสดงผล และเว้นว่างไว้จนกว่าจะได้รับการยืนยัน
 const officialSocialUrls = { facebook: "", line: "" };
@@ -35,15 +44,41 @@ fontScaleButtons.increase?.addEventListener("click", () => setFontScale(fontScal
 
 // สลับตัวแปรสีของหน้าเพื่อเพิ่มความเปรียบต่าง และอัปเดตสถานะปุ่ม
 const contrastButton = document.querySelector("#contrast-toggle");
+const contrastStorageKey = "pmwa-site-contrast";
+
+function updateContrastLabel() {
+  contrastButton?.setAttribute("aria-label", t(rootElement.dataset.contrast === "high"
+    ? "ปิดโหมดสีความเปรียบต่างสูง" : "เปิดโหมดสีความเปรียบต่างสูง"));
+}
+
+function setContrast(enabled) {
+  if (enabled) rootElement.dataset.contrast = "high";
+  else delete rootElement.dataset.contrast;
+  contrastButton?.setAttribute("aria-pressed", String(enabled));
+  updateContrastLabel();
+}
+
+function restoreContrast() {
+  try {
+    setContrast(localStorage.getItem(contrastStorageKey) === "high");
+  } catch {
+    // Keep the current mode when storage is unavailable.
+  }
+}
+
+restoreContrast();
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted) restoreContrast();
+});
+document.addEventListener("site-language-change", updateContrastLabel);
 contrastButton?.addEventListener("click", () => {
-  const isEnabled = rootElement.dataset.contrast === "high";
-  if (isEnabled) delete rootElement.dataset.contrast;
-  else rootElement.dataset.contrast = "high";
-  contrastButton.setAttribute("aria-pressed", String(!isEnabled));
-  contrastButton.setAttribute(
-    "aria-label",
-    isEnabled ? "เปิดโหมดสีความเปรียบต่างสูง" : "ปิดโหมดสีความเปรียบต่างสูง"
-  );
+  const enabled = rootElement.dataset.contrast !== "high";
+  setContrast(enabled);
+  try {
+    localStorage.setItem(contrastStorageKey, enabled ? "high" : "normal");
+  } catch {
+    // The button still works on the current page.
+  }
 });
 
 // แสดงช่องทางสังคมเป็นลิงก์เฉพาะเมื่อมีการกำหนด URL ทางการที่ปลอดภัย
@@ -60,7 +95,7 @@ document.querySelectorAll("[data-social-channel]").forEach((channel) => {
     link.href = parsedUrl.href;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
-    link.setAttribute("aria-label", `${channel.dataset.socialChannel} (เปิดในแท็บใหม่)`);
+    link.setAttribute("aria-label", t("{0} (เปิดในแท็บใหม่)", channel.dataset.socialChannel));
     channel.querySelector("small")?.remove();
     while (channel.firstChild) link.append(channel.firstChild);
     channel.replaceWith(link);
@@ -82,19 +117,21 @@ let activeFaqCategory = "all";
 
 function updateFaqResults() {
   if (!faqSearch || !faqItems.length) return;
-  const query = faqSearch.value.trim().toLocaleLowerCase("th");
+  const query = faqSearch.value.trim().normalize().toLocaleLowerCase("th");
   const visibleItems = faqItems.filter((item) => {
     const matchesCategory = activeFaqCategory === "all" || item.dataset.faqCategory === activeFaqCategory;
-    const matchesQuery = !query || item.textContent.toLocaleLowerCase("th").includes(query);
+    const matchesQuery = !query || siteLanguage.searchableContent(item).includes(query);
     item.hidden = !(matchesCategory && matchesQuery);
     return !item.hidden;
   });
 
   if (faqTotal) faqTotal.textContent = String(faqItems.length);
   if (faqResultsStatus) {
-    faqResultsStatus.textContent = visibleItems.length
-      ? `แสดงคำถาม ${visibleItems.length} จาก ${faqItems.length} รายการ${query ? ` สำหรับ “${faqSearch.value.trim()}”` : ""}`
-      : "ไม่พบคำถามที่ตรงกับตัวกรอง";
+    faqResultsStatus.textContent = !visibleItems.length
+      ? t("ไม่พบคำถามที่ตรงกับตัวกรอง")
+      : query
+        ? t("แสดงคำถาม {0} จาก {1} รายการ สำหรับ “{2}”", visibleItems.length, faqItems.length, faqSearch.value.trim())
+        : t("แสดงคำถาม {0} จาก {1} รายการ", visibleItems.length, faqItems.length);
   }
   if (faqEmptyState) faqEmptyState.hidden = visibleItems.length > 0;
   if (faqSearchClear) faqSearchClear.hidden = !query;
@@ -129,6 +166,16 @@ faqResetFilters?.addEventListener("click", () => {
   faqSearch.focus();
 });
 updateFaqResults();
+document.addEventListener("site-language-change", updateFaqResults);
+
+const aboutResultCount = document.querySelector("[data-about-result-count]");
+if (aboutResultCount) {
+  const updateAboutResultCount = () => {
+    aboutResultCount.textContent = t("พบ {0} รายการ", aboutResultCount.dataset.aboutResultCount);
+  };
+  updateAboutResultCount();
+  document.addEventListener("site-language-change", updateAboutResultCount);
+}
 
 // ค้นหาข้อความจากการ์ดที่มีอยู่บนหน้า และแสดงลิงก์ไปยังรายการที่ตรงกัน
 const searchForm = document.querySelector("#site-search");
@@ -137,7 +184,37 @@ const searchResults = document.querySelector("#search-results");
 const searchResultStatus = document.querySelector("#search-results-status");
 const searchResultList = document.querySelector("#search-result-list");
 
-searchForm?.addEventListener("submit", (event) => {
+function renderSiteSearch() {
+  const query = searchInput.value.trim().normalize().toLocaleLowerCase("th");
+  searchResultList.replaceChildren();
+  searchResults.hidden = false;
+
+  if (!query) {
+    searchResultStatus.textContent = t("พิมพ์คำค้นหาเพื่อค้นหาในเนื้อหาหน้านี้");
+    return;
+  }
+
+  const matches = [...document.querySelectorAll("main article")].filter((article) => {
+    const searchText = article.dataset.search?.normalize().toLocaleLowerCase("th") ?? "";
+    return searchText.includes(query) || siteLanguage.searchableContent(article).includes(query);
+  });
+  searchResultStatus.textContent = matches.length
+    ? t("พบ {0} รายการในเนื้อหาหน้านี้", matches.length)
+    : t("ไม่พบรายการที่ตรงกับคำค้นหาในเนื้อหาหน้านี้");
+
+  matches.forEach((article, index) => {
+    if (!article.id) article.id = `search-result-${index + 1}`;
+    const title = article.querySelector("h2, h3, h4")?.textContent.trim() || t("ข้อมูลในหน้าแรก");
+    const item = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = `#${article.id}`;
+    link.textContent = title;
+    item.append(link);
+    searchResultList.append(item);
+  });
+}
+
+searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const pageSearch = document.querySelector("form[data-page-search]");
   if (pageSearch) {
@@ -147,32 +224,21 @@ searchForm?.addEventListener("submit", (event) => {
     pageSearchInput.focus();
     return;
   }
-  const query = searchInput.value.trim().toLocaleLowerCase("th");
-  searchResultList.replaceChildren();
-  searchResults.hidden = false;
-
-  if (!query) {
-    searchResultStatus.textContent = "พิมพ์คำค้นหาเพื่อค้นหาในเนื้อหาหน้านี้";
-    return;
+  setOpenDropdown(null);
+  renderSiteSearch();
+});
+document.addEventListener("site-language-change", () => {
+  if (!searchResults.hidden) renderSiteSearch();
+});
+searchResultList.addEventListener("click", (event) => {
+  const link = event.target.closest("a");
+  if (!link) return;
+  const target = document.getElementById(link.hash.slice(1));
+  if (target) {
+    target.tabIndex = -1;
+    target.focus({ preventScroll: true });
   }
-
-  const matches = [...document.querySelectorAll("main article")].filter((article) =>
-    article.textContent.toLocaleLowerCase("th").includes(query)
-  );
-  searchResultStatus.textContent = matches.length
-    ? `พบ ${matches.length} รายการในเนื้อหาหน้านี้`
-    : "ไม่พบรายการที่ตรงกับคำค้นหาในเนื้อหาหน้านี้";
-
-  matches.forEach((article, index) => {
-    if (!article.id) article.id = `search-result-${index + 1}`;
-    const title = article.querySelector("h2, h3")?.textContent.trim() || "ข้อมูลในหน้าแรก";
-    const item = document.createElement("li");
-    const link = document.createElement("a");
-    link.href = `#${article.id}`;
-    link.textContent = title;
-    item.append(link);
-    searchResultList.append(item);
-  });
+  searchResults.hidden = true;
 });
 
 searchInput?.addEventListener("input", () => {
@@ -220,13 +286,13 @@ function renderWaterUsage(year, period) {
   usageChart.setAttribute("role", "group");
   usageChart.setAttribute(
     "aria-label",
-    `${period === "monthly" ? "สถิติรายเดือน" : "สถิติรายปี"} พ.ศ. ${year} ข้อมูลจำลอง`
+    t("{0} พ.ศ. {1} ข้อมูลจำลอง", t(period === "monthly" ? "สถิติรายเดือน" : "สถิติรายปี"), year)
   );
 
   visibleValues.forEach((value, index) => {
     const month = waterUsageMonths[index];
     const bar = document.createElement("button");
-    const tooltip = `${month.name} ${year}: ${numberFormat.format(value)} ลูกบาศก์เมตร`;
+    const tooltip = t("{0} {1}: {2} ลูกบาศก์เมตร", t(month.name), year, numberFormat.format(value));
     bar.type = "button";
     bar.className = "chart-column";
     bar.dataset.month = String(index + 1);
@@ -240,7 +306,7 @@ function renderWaterUsage(year, period) {
     column.className = "chart-bar";
     column.setAttribute("aria-hidden", "true");
     const label = document.createElement("small");
-    label.textContent = month.short;
+    label.textContent = t(month.short);
     bar.append(column, label);
     usageChart.append(bar);
   });
@@ -269,121 +335,83 @@ function setUsagePeriod(period) {
   const year = isMonthly ? buddhistCurrentYear : Number(usageYear?.value);
   renderWaterUsage(year, period);
   if (usagePeriodStatus) {
-    usagePeriodStatus.textContent = `ข้อมูล${isMonthly ? "รายเดือน" : "รายปี"} พ.ศ. ${year} เป็นข้อมูลจำลอง ไม่ใช่สถิติทางการ`;
+    usagePeriodStatus.textContent = t(isMonthly ? "ข้อมูลรายเดือน พ.ศ. {0} เป็นข้อมูลจำลอง ไม่ใช่สถิติทางการ" : "ข้อมูลรายปี พ.ศ. {0} เป็นข้อมูลจำลอง ไม่ใช่สถิติทางการ", year);
   }
 }
 
 monthlyButton?.addEventListener("click", () => setUsagePeriod("monthly"));
 yearlyButton?.addEventListener("click", () => setUsagePeriod("yearly"));
 usageYear?.addEventListener("change", () => setUsagePeriod("yearly"));
-setUsagePeriod("monthly");
+if (usageChart) {
+  setUsagePeriod("monthly");
+  document.addEventListener("site-language-change", () => {
+    setUsagePeriod(yearlyButton.getAttribute("aria-pressed") === "true" ? "yearly" : "monthly");
+  });
+}
 
 // ปุ่มแผนที่จะแจ้งสถานะเท่านั้นจนกว่าจะมี URL ทางการ
 const mapButton = document.querySelector("#map-button");
 const mapStatus = document.querySelector("#map-status");
+const unavailableMapMessage = "ยังไม่มี URL แผนที่ทางการ จึงยังไม่สามารถเปิดแผนที่ได้";
+let mapRequested = false;
+document.addEventListener("site-language-change", () => {
+  if (mapRequested) mapStatus.textContent = t(unavailableMapMessage);
+});
 mapButton?.addEventListener("click", () => {
   if (!mapUrl) {
-    mapStatus.textContent = "ยังไม่มี URL แผนที่ทางการ จึงยังไม่สามารถเปิดแผนที่ได้";
+    mapRequested = true;
+    mapStatus.textContent = t(unavailableMapMessage);
     return;
   }
   window.open(mapUrl, "_blank", "noopener,noreferrer");
 });
 
-// เมนู Dropdown บริการประชาชน
-const servicesToggle = document.querySelector("#services-toggle");
-const servicesMenu = document.querySelector("#services-menu");
-const servicesDropdown = document.querySelector("#services-dropdown");
-const informationToggle = document.querySelector("#information-toggle");
-const informationMenu = document.querySelector("#information-menu");
-const informationDropdown = document.querySelector("#information-dropdown");
-const aboutDropdown = document.querySelector("#about-dropdown");
-const aboutToggle = document.querySelector("#about-toggle");
-const aboutMenu = document.querySelector("#about-menu");
+// Navigation disclosures share the same focus and dismissal behavior.
+const dropdowns = [...primaryNavigation.querySelectorAll(".nav-dropdown")].map((container) => {
+  const button = container.querySelector(".dropdown-toggle");
+  return { container, button, menu: document.getElementById(button.getAttribute("aria-controls")) };
+});
+let openDropdown = null;
 
-function setAboutMenuOpen(isOpen) {
-  if (!aboutToggle || !aboutMenu) return;
-  aboutToggle.setAttribute("aria-expanded", String(isOpen));
-  aboutMenu.hidden = !isOpen;
-}
-
-function closeServicesMenu() {
-  if (!servicesToggle || !servicesMenu) return;
-  servicesToggle.setAttribute("aria-expanded", "false");
-  servicesMenu.hidden = true;
-}
-
-function openServicesMenu() {
-  if (!servicesToggle || !servicesMenu) return;
-  closeInformationMenu();
-  setAboutMenuOpen(false);
-  servicesToggle.setAttribute("aria-expanded", "true");
-  servicesMenu.hidden = false;
-}
-
-function closeInformationMenu() {
-  if (!informationToggle || !informationMenu) return;
-  informationToggle.setAttribute("aria-expanded", "false");
-  informationMenu.hidden = true;
-}
-
-function openInformationMenu() {
-  if (!informationToggle || !informationMenu) return;
-  closeServicesMenu();
-  setAboutMenuOpen(false);
-  informationToggle.setAttribute("aria-expanded", "true");
-  informationMenu.hidden = false;
-}
-
-servicesToggle?.addEventListener("click", (event) => {
-  event.stopPropagation();
-  const isExpanded = servicesToggle.getAttribute("aria-expanded") === "true";
-  if (isExpanded) {
-    closeServicesMenu();
-  } else {
-    openServicesMenu();
+function setOpenDropdown(dropdown) {
+  if (openDropdown) {
+    openDropdown.button.setAttribute("aria-expanded", "false");
+    openDropdown.menu.hidden = true;
   }
-});
+  openDropdown = dropdown;
+  if (!dropdown) return;
+  searchResults.hidden = true;
+  dropdown.button.setAttribute("aria-expanded", "true");
+  dropdown.menu.hidden = false;
+}
 
-informationToggle?.addEventListener("click", (event) => {
-  event.stopPropagation();
-  const isExpanded = informationToggle.getAttribute("aria-expanded") === "true";
-  if (isExpanded) closeInformationMenu();
-  else openInformationMenu();
-});
-
-aboutToggle?.addEventListener("click", () => {
-  const isOpen = aboutToggle.getAttribute("aria-expanded") === "true";
-  closeServicesMenu();
-  closeInformationMenu();
-  setAboutMenuOpen(!isOpen);
-});
-
-aboutDropdown?.addEventListener("focusout", (event) => {
-  if (!aboutDropdown.contains(event.relatedTarget)) setAboutMenuOpen(false);
+dropdowns.forEach((dropdown) => {
+  dropdown.button.addEventListener("click", () => {
+    setOpenDropdown(openDropdown === dropdown ? null : dropdown);
+  });
+  dropdown.container.addEventListener("focusout", (event) => {
+    if (openDropdown === dropdown && !dropdown.container.contains(event.relatedTarget)) {
+      setOpenDropdown(null);
+    }
+  });
 });
 
 document.addEventListener("click", (event) => {
-  if (servicesDropdown && !servicesDropdown.contains(event.target)) {
-    closeServicesMenu();
-  }
-  if (informationDropdown && !informationDropdown.contains(event.target)) {
-    closeInformationMenu();
-  }
-  if (aboutDropdown && !aboutDropdown.contains(event.target)) setAboutMenuOpen(false);
+  if (openDropdown && !openDropdown.container.contains(event.target)) setOpenDropdown(null);
+  if (!searchForm.contains(event.target) && !searchResults.contains(event.target)) searchResults.hidden = true;
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && servicesMenu && !servicesMenu.hidden) {
-    closeServicesMenu();
-    servicesToggle?.focus();
-  }
-  if (event.key === "Escape" && informationMenu && !informationMenu.hidden) {
-    closeInformationMenu();
-    informationToggle?.focus();
-  }
-  if (event.key === "Escape" && aboutMenu && !aboutMenu.hidden) {
-    setAboutMenuOpen(false);
-    aboutToggle.focus();
+  if (event.key !== "Escape" || event.defaultPrevented) return;
+  if (openDropdown) {
+    const { button } = openDropdown;
+    setOpenDropdown(null);
+    button.focus();
+    event.preventDefault();
+  } else if (!searchResults.hidden) {
+    searchResults.hidden = true;
+    searchInput.focus();
+    event.preventDefault();
   }
 });
 
@@ -391,7 +419,7 @@ if (menuButton && primaryNavigation) {
   // ปิดเมนูและคืนค่าป้ายกำกับสำหรับโปรแกรมอ่านหน้าจอ
   const closeMenu = () => {
     menuButton.setAttribute("aria-expanded", "false");
-    menuButton.setAttribute("aria-label", "เปิดเมนูนำทาง");
+    menuButton.setAttribute("aria-label", t("เปิดเมนูนำทาง"));
     primaryNavigation.classList.remove("is-open");
   };
 
@@ -399,7 +427,7 @@ if (menuButton && primaryNavigation) {
   menuButton.addEventListener("click", () => {
     const isOpen = menuButton.getAttribute("aria-expanded") === "true";
     menuButton.setAttribute("aria-expanded", String(!isOpen));
-    menuButton.setAttribute("aria-label", isOpen ? "เปิดเมนูนำทาง" : "ปิดเมนูนำทาง");
+    menuButton.setAttribute("aria-label", t(isOpen ? "เปิดเมนูนำทาง" : "ปิดเมนูนำทาง"));
     primaryNavigation.classList.toggle("is-open", !isOpen);
   });
 
@@ -410,10 +438,15 @@ if (menuButton && primaryNavigation) {
 
   // กด Escape เพื่อปิดเมนูและคืนโฟกัสไปยังปุ่มควบคุม
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && primaryNavigation.classList.contains("is-open")) {
+    if (event.key === "Escape" && !event.defaultPrevented && primaryNavigation.classList.contains("is-open")) {
       closeMenu();
       menuButton.focus();
     }
+  });
+
+  document.addEventListener("site-language-change", () => {
+    const isOpen = menuButton.getAttribute("aria-expanded") === "true";
+    menuButton.setAttribute("aria-label", t(isOpen ? "ปิดเมนูนำทาง" : "เปิดเมนูนำทาง"));
   });
 
   // เมื่อกลับสู่จอใหญ่ ล้างสถานะเมนูมือถือที่ไม่จำเป็น

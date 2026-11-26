@@ -4,12 +4,6 @@
   background: linear-gradient(110deg, var(--blue-pale), var(--page) 80%);
 }
 .about-intro .subpage-subtitle { color: var(--navy); }
-.about-intro h1 {
-  margin: 0;
-  color: var(--navy-deep);
-  font-size: 2.25rem;
-  line-height: 1.3;
-}
 .about-intro h1 + p { margin: 10px 0 0; font-size: 1rem; }
 .about-content { padding-bottom: 44px; }
 .about-categories {
@@ -123,11 +117,11 @@
 .about-filters label { display: grid; gap: 4px; color: var(--navy); font-weight: 600; }
 .about-filters input, .about-filters select {
   width: 100%;
-  min-height: 44px;
+  min-height: var(--control-height);
   padding: 7px 10px;
-  border: 1px solid var(--muted);
-  border-radius: 8px;
-  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--control-radius);
+  background: var(--control-bg);
   color: var(--body);
   font: inherit;
 }

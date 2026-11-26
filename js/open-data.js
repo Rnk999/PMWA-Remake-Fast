@@ -7,7 +7,7 @@
   const cards = Array.from(document.querySelectorAll(".open-data-card"), (card) => ({
     card,
     text: [card.querySelector("h2"), card.querySelector(".open-data-description")]
-      .map((element) => element.textContent).join(" ").normalize().toLocaleLowerCase("th")
+      .map(siteLanguage.searchableContent).join(" ")
   }));
 
   function updateResults() {
@@ -23,8 +23,8 @@
     });
 
     count.textContent = query || topic.value
-      ? `พบ ${matches} จาก ${cards.length} ชุดข้อมูล`
-      : `แสดงทั้งหมด ${cards.length} ชุดข้อมูล`;
+      ? t("พบ {0} จาก {1} ชุดข้อมูล", matches, cards.length)
+      : t("แสดงทั้งหมด {0} ชุดข้อมูล", cards.length);
     empty.hidden = matches > 0;
   }
 
@@ -42,6 +42,7 @@
   });
   document.querySelector("#dataset-empty-reset").addEventListener("click", () => form.reset());
   window.addEventListener("pageshow", updateResults);
+  document.addEventListener("site-language-change", updateResults);
 
   const dialog = document.querySelector("#dataset-dialog");
   const content = document.querySelector("#dataset-dialog-content");
@@ -49,7 +50,9 @@
   document.querySelectorAll(".open-data-preview").forEach((button) => {
     button.addEventListener("click", () => {
       const template = document.getElementById(`sample-${button.dataset.preview}`);
-      content.replaceChildren(template.content.cloneNode(true));
+      const preview = template.content.cloneNode(true);
+      siteLanguage.localize(preview);
+      content.replaceChildren(preview);
       dialog.showModal();
     });
   });
