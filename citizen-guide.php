@@ -23,21 +23,18 @@
       require __DIR__ . '/partials/header.php';
     ?>
 
-    <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
     <main tabindex="-1" id="main-content">
-
-      <!-- ส่วนหัวหน้าย่อย (Subpage Hero) -->
-      <div class="subpage-hero">
-        <div class="container subpage-hero-inner">
-          <div class="subpage-hero-content">
-            <p class="section-kicker">
-              <span class="material-symbols-rounded" aria-hidden="true">menu_book</span>
-              บริการประชาชน · คู่มือขั้นตอน
-            </p>
-            <h1 class="subpage-title">คู่มือประชาชน</h1>
-            <p class="subpage-subtitle" lang="en">Citizen Guide</p>
-            <p class="subpage-hero-desc">รวมขั้นตอนและเอกสารที่ต้องเตรียมสำหรับบริการของกองการประปา เทศบาลนครพิษณุโลก จำนวน 13 หัวข้อบริการ เพื่อให้ประชาชนสามารถเตรียมตัวและเข้ารับบริการได้อย่างสะดวก รวดเร็ว</p>
-            <div class="subpage-hero-meta">
+      <?php
+        $banner = [
+            'title' => 'คู่มือประชาชน',
+            'subtitle' => 'Citizen Guide',
+            'description' => 'รวมขั้นตอนและเอกสารที่ต้องเตรียมสำหรับบริการของกองการประปา เทศบาลนครพิษณุโลก จำนวน 13 หัวข้อบริการ เพื่อให้ประชาชนสามารถเตรียมตัวและเข้ารับบริการได้อย่างสะดวก รวดเร็ว',
+            'eyebrow' => 'บริการประชาชน · คู่มือขั้นตอน',
+            'icon' => 'menu_book',
+            'breadcrumbParent' => 'services',
+            'details' => static function (): void {
+            ?>
+            <div class="guide-banner-meta">
               <span class="guide-count-pill">
                 <span class="material-symbols-rounded" aria-hidden="true">format_list_bulleted</span>
                 13 หัวข้อบริการ
@@ -47,14 +44,11 @@
                 ข้อมูลต้นแบบ รอเนื้อหาทางการจากหน่วยงาน
               </span>
             </div>
-          </div>
-          <div class="subpage-hero-visual" aria-hidden="true">
-            <span class="subpage-hero-icon">
-              <span class="material-symbols-rounded">menu_book</span>
-            </span>
-          </div>
-        </div>
-      </div>
+            <?php
+            },
+        ];
+        require __DIR__ . '/partials/page-banner.php';
+      ?>
 
       <!-- เนื้อหาหลัก: รายการคู่มือประชาชน -->
       <div class="page-content">

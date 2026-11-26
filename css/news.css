@@ -1,10 +1,7 @@
 .news-page { padding-top: 24px; padding-bottom: 42px; }
-.news-intro { padding: 4px 0 22px; }
-.news-intro-row { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
-.news-eyebrow, .news-social-eyebrow { display: inline-flex; align-items: center; gap: 7px; margin: 0 0 10px; color: var(--blue-bright); font-size: .8125rem; font-weight: 700; }
-.news-eyebrow .material-symbols-rounded, .news-social-eyebrow .material-symbols-rounded { font-size: 1.125rem; }
-.news-lead { max-width: 760px; margin: 10px 0 0; color: var(--body); font-size: 1rem; }
-.news-demo-callout { display: flex; max-width: 370px; flex: 0 0 340px; align-items: flex-start; gap: 12px; padding: 16px 18px; border: 1px solid #d6e8f3; border-radius: 14px; background: #f6fbfe; color: var(--navy); }
+.news-social-eyebrow { display: inline-flex; align-items: center; gap: 7px; margin: 0 0 10px; color: var(--blue-bright); font-size: .8125rem; font-weight: 700; }
+.news-social-eyebrow .material-symbols-rounded { font-size: 1.125rem; }
+.news-demo-callout { display: flex; width: 340px; max-width: 100%; align-items: flex-start; gap: 12px; padding: 16px 18px; border: 1px solid #d6e8f3; border-radius: 14px; background: #f6fbfe; color: var(--navy); }
 .news-demo-callout > .material-symbols-rounded { color: var(--blue-bright); }
 .news-demo-callout span:last-child { display: grid; gap: 2px; }
 .news-demo-callout strong { font-size: .875rem; }

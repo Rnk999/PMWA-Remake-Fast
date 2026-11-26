@@ -22,22 +22,28 @@ $activePage = 'documents';
   <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
-    <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
-    <main tabindex="-1" id="main-content" class="documents-page container">
-      <header class="documents-intro">
-        <div class="documents-intro-row">
-          <div>
-            <p class="documents-eyebrow"><span class="material-symbols-rounded" aria-hidden="true">folder_open</span> ศูนย์รวมข้อมูลและเอกสาร</p>
-            <h1 class="subpage-title" id="documents-title">แบบฟอร์มและเอกสารเผยแพร่</h1>
-            <p class="documents-subtitle" lang="en">Forms &amp; Published Documents</p>
-            <p class="documents-lead">ค้นหาแบบฟอร์มสำหรับประชาชน คู่มือ และเอกสารเผยแพร่ได้จากจุดเดียว พร้อมตรวจสอบประเภทเอกสารก่อนเลือกดู</p>
-          </div>
-          <aside class="documents-notice" aria-label="คำชี้แจงข้อมูลตัวอย่าง">
-            <span class="material-symbols-rounded" aria-hidden="true">info</span>
-            <p><strong>ข้อมูลตัวอย่างสำหรับต้นแบบ</strong><span>รายการในหน้านี้เป็นข้อมูลจำลอง และยังไม่มีไฟล์เอกสารจริงแนบ</span></p>
-          </aside>
-        </div>
-      </header>
+    <main tabindex="-1" id="main-content">
+      <?php
+        $banner = [
+            'title' => 'แบบฟอร์มและเอกสารเผยแพร่',
+            'titleId' => 'documents-title',
+            'subtitle' => 'Forms & Published Documents',
+            'description' => 'ค้นหาแบบฟอร์มสำหรับประชาชน คู่มือ และเอกสารเผยแพร่ได้จากจุดเดียว พร้อมตรวจสอบประเภทเอกสารก่อนเลือกดู',
+            'eyebrow' => 'ศูนย์รวมข้อมูลและเอกสาร',
+            'icon' => 'folder_open',
+            'breadcrumbParent' => 'information',
+            'details' => static function (): void {
+            ?>
+            <aside class="documents-notice" aria-label="คำชี้แจงข้อมูลตัวอย่าง">
+              <span class="material-symbols-rounded" aria-hidden="true">info</span>
+              <p><strong>ข้อมูลตัวอย่างสำหรับต้นแบบ</strong><span>รายการในหน้านี้เป็นข้อมูลจำลอง และยังไม่มีไฟล์เอกสารจริงแนบ</span></p>
+            </aside>
+            <?php
+            },
+        ];
+        require __DIR__ . '/partials/page-banner.php';
+      ?>
+      <div class="documents-page container">
 
       <section class="documents-filter-panel" aria-label="ค้นหาและกรองเอกสาร">
         <div class="documents-filter-row">
@@ -79,6 +85,7 @@ $activePage = 'documents';
         </nav>
       </section>
       <p class="documents-prototype-note"><span class="material-symbols-rounded" aria-hidden="true">info</span> ต้นแบบส่วนติดต่อผู้ใช้: รายการและรูปแบบไฟล์เป็นข้อมูลจำลอง ไม่มีเอกสารราชการหรือไฟล์ดาวน์โหลดจริง</p>
+      </div>
     </main>
     <?php require __DIR__ . '/partials/footer.php'; ?>
   </body>

@@ -569,7 +569,7 @@ button, input, select, textarea { font: inherit; }
    หน้าย่อย: เส้นทาง Breadcrumb และส่วนหัวหน้าย่อย (Subpage)
    =================================================================== */
 
-/* Breadcrumb navigation */
+/* Shared subpage headings */
 .subpage-title {
   margin: 0;
   color: var(--navy-deep);
@@ -603,31 +603,94 @@ button, input, select, textarea { font: inherit; }
 .page-search input::placeholder { color: var(--muted); }
 .page-search > .material-symbols-rounded { flex-shrink: 0; }
 
-.subpage-breadcrumb { background: var(--white); border-bottom: 1px solid var(--line); }
-.breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; margin: 0; padding: 10px 0; list-style: none; font-size: .8125rem; }
+.breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 9px; margin: 0; padding: 0; list-style: none; font-size: .8125rem; }
 .breadcrumb li { display: flex; align-items: center; gap: 9px; }
-.breadcrumb li + li::before { content: "›" / ""; color: var(--muted); }
-.breadcrumb a { color: var(--body); text-decoration: none; }
-.breadcrumb a:hover { text-decoration: underline; }
-.breadcrumb [aria-current="page"] { color: var(--blue-bright); font-weight: 600; }
-.subpage-subtitle { margin: 2px 0 7px; color: var(--blue-bright); font-size: .9375rem; font-weight: 600; }
+.breadcrumb li + li::before { content: "›" / ""; }
+.breadcrumb a { text-underline-offset: .2em; }
+.breadcrumb [aria-current="page"] { color: var(--white); font-weight: 700; }
+.subpage-subtitle { margin: 2px 0 6px; color: var(--blue-pale); font-size: .9375rem; font-weight: 600; }
 
-/* Subpage hero header band */
-.subpage-hero { background: linear-gradient(135deg, var(--navy) 0%, #1b5a9e 55%, #1a7bbf 100%); color: var(--white); padding: 48px 0 52px; }
-.subpage-hero-inner { display: flex; align-items: center; gap: 32px; justify-content: space-between; }
-.subpage-hero-content { flex: 1 1 auto; }
-.subpage-hero-content .section-kicker { color: #9ed8f7; }
-.subpage-hero-content h1 { margin: 8px 0 14px; color: var(--white); }
-.subpage-hero-content .subpage-subtitle { margin-top: -10px; color: #9ed8f7; }
-.subpage-hero-desc { max-width: 680px; margin: 0 0 20px; font-size: 1.0rem; line-height: 1.75; color: #cce7f7; }
-.subpage-hero-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
-.guide-count-pill { display: inline-flex; align-items: center; gap: 7px; padding: 6px 14px; border-radius: 22px; background: rgb(255 255 255 / 20%); color: var(--white); font-size: 0.875rem; font-weight: 600; }
-.guide-note-pill { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 22px; background: rgb(255 255 255 / 10%); color: #cce7f7; font-size: 0.75rem; }
+/* Water identity banner */
+.page-banner {
+  --focus-ring: #ffcf70;
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(110deg, var(--navy-deep), var(--navy) 58%, color-mix(in srgb, var(--blue-bright) 82%, var(--navy-deep)));
+  color: var(--blue-pale);
+}
+.page-banner::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0 0 0 56%;
+  background: repeating-radial-gradient(ellipse 80% 64% at 80% 138%, transparent 0 16px, rgb(255 255 255 / 12%) 17px 18px, transparent 19px 27px);
+  mask-image: linear-gradient(to right, transparent, #000 62%);
+  pointer-events: none;
+  content: "";
+}
+.page-banner-inner {
+  display: grid;
+  min-block-size: 232px;
+  grid-template-rows: auto 1fr;
+  gap: 12px;
+  padding-block: 16px 20px;
+}
+.page-banner-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 32px;
+}
+.page-banner-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-inline-size: 0;
+  flex: 1 1 32rem;
+}
+.page-banner-icon {
+  display: grid;
+  inline-size: 3.25rem;
+  block-size: 3.25rem;
+  flex: none;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 35%);
+  border-radius: 12px;
+  background: rgb(255 255 255 / 10%);
+  color: var(--white);
+}
+.page-banner-icon .material-symbols-rounded { inline-size: 1em; overflow: hidden; font-size: 1.75rem; }
+.page-banner-copy { min-inline-size: 0; max-inline-size: 50rem; }
+.page-banner .section-kicker { margin-bottom: 3px; color: inherit; }
+.page-banner .subpage-title { color: var(--white); }
+.page-banner-description { margin: 0; font-size: 1rem; }
+.page-banner-details { min-inline-size: 0; max-inline-size: 100%; }
+
+:root[data-contrast="high"] .page-banner { background: var(--navy-deep); color: var(--white); }
+:root[data-contrast="high"] .page-banner::before { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .page-banner-row { animation: page-banner-enter 500ms ease-out; }
+  @keyframes page-banner-enter {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+.guide-banner-meta { display: grid; inline-size: min(22rem, 100%); justify-items: start; gap: 8px; }
+.guide-count-pill, .guide-note-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 22px;
+  background: rgb(0 0 0 / 17%);
+}
+.guide-count-pill { color: var(--white); font-size: .875rem; font-weight: 600; }
+.guide-note-pill { font-size: .75rem; }
 .guide-count-pill .material-symbols-rounded,
-.guide-note-pill .material-symbols-rounded { font-size: 1.0625rem; }
-.subpage-hero-visual { flex: 0 0 auto; display: flex; align-items: center; justify-content: center; }
-.subpage-hero-icon { display: flex; width: 128px; height: 128px; align-items: center; justify-content: center; border-radius: 50%; background: rgb(255 255 255 / 12%); border: 2px solid rgb(255 255 255 / 20%); }
-.subpage-hero-icon .material-symbols-rounded { inline-size: 1em; overflow: hidden; font-size: 4rem; color: #9ed8f7; }
+.guide-note-pill .material-symbols-rounded { inline-size: 1em; flex: none; overflow: hidden; font-size: 1.0625rem; }
 
 /* ===================================================================
    คู่มือประชาชน: กริดการ์ดรายการ
@@ -707,19 +770,14 @@ button, input, select, textarea { font: inherit; }
 .nav-link.is-current { background: var(--blue); color: var(--white); }
 
 /* FAQs: search, category filters, accordion list, and supporting links */
-.faq-hero { padding: 38px 0 30px; background: linear-gradient(115deg, #e7f2fd 0%, #f5f9ff 60%, #e7f0fb 100%); }
-.faq-hero-inner { display: flex; align-items: end; justify-content: space-between; gap: 32px; }
-.faq-hero .section-kicker { margin-bottom: 4px; }
-.faq-hero h1 { margin-bottom: 8px; }
-.faq-hero-desc { max-width: 780px; margin: 0; color: var(--body); font-size: 1rem; line-height: 1.75; }
-.faq-hero-stats { display: flex; flex: 0 0 auto; gap: 12px; }
+.faq-banner-stats { display: flex; flex-wrap: wrap; gap: 12px; }
 .faq-stat-card { display: flex; align-items: center; gap: 12px; min-width: 175px; padding: 13px 16px; border: 1px solid rgb(18 57 98 / 5%); border-radius: 14px; background: var(--white); box-shadow: var(--shadow); }
 .faq-stat-icon { display: grid; width: 44px; height: 44px; place-items: center; flex: 0 0 auto; border-radius: 11px; background: #e2efff; color: var(--blue-bright); }
 .faq-stat-icon .material-symbols-rounded { font-size: 1.5rem; }
 .faq-stat-card p { display: grid; gap: 0; margin: 0; }
 .faq-stat-card strong { color: var(--navy-deep); font-size: 1.125rem; line-height: 1.35; white-space: nowrap; }
 .faq-stat-card span:not(.faq-stat-icon) { color: var(--muted); font-size: .75rem; white-space: nowrap; }
-.faq-content { padding: 0 0 54px; }
+.faq-content { padding: 24px 0 54px; }
 .faq-search-panel { position: relative; z-index: 1; margin-top: 0; padding: 24px; border: 1px solid rgb(18 57 98 / 5%); border-radius: var(--radius); background: var(--white); box-shadow: 0 3px 10px rgb(19 50 83 / 9%); }
 .faq-search-field > .material-symbols-rounded { font-size: 1.375rem; }
 .faq-search-clear { display: grid; width: 34px; height: 34px; place-items: center; flex: 0 0 auto; border: 0; border-radius: 50%; background: #e2eaf1; color: var(--navy); cursor: pointer; }

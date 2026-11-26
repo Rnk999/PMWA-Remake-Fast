@@ -33,17 +33,18 @@ $introductions = [
   <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
-    <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
-
     <main class="about-page" id="main-content" tabindex="-1">
-      <!-- หัวข้อและเมนูหมวดเกี่ยวกับเรา -->
-      <div class="about-intro">
-        <div class="container">
-          <p class="subpage-subtitle"><span class="material-symbols-rounded" aria-hidden="true"><?= $aboutIcon ?></span> <span lang="en"><?= $pageSubtitle ?></span></p>
-          <h1 class="subpage-title"><?= $pageHeading ?></h1>
-          <p><?= $pageLead ?></p>
-        </div>
-      </div>
+      <?php
+        $banner = [
+            'title' => $pageHeading,
+            'subtitle' => $pageSubtitle,
+            'description' => $pageLead,
+            'icon' => $aboutIcon,
+            'breadcrumbParent' => 'about',
+            'breadcrumbLabel' => $aboutTitle,
+        ];
+        require __DIR__ . '/partials/page-banner.php';
+      ?>
       <div class="container about-content">
         <nav class="card about-categories" aria-label="หมวดเกี่ยวกับเรา">
           <?php foreach ($aboutCategories as $section => [$sectionLabel, $sectionIcon]): ?>

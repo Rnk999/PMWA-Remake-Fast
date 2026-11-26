@@ -1,11 +1,5 @@
 .documents-page { padding-top: 24px; padding-bottom: 42px; }
-.documents-intro { padding: 4px 0 25px; }
-.documents-intro-row { display: flex; align-items: center; justify-content: space-between; gap: 36px; }
-.documents-eyebrow, .documents-section-eyebrow { display: flex; align-items: center; gap: 7px; margin: 0 0 8px; color: var(--blue-bright); font-size: .8125rem; font-weight: 700; }
-.documents-eyebrow .material-symbols-rounded { font-size: 1.125rem; }
-.documents-subtitle { margin: 2px 0 7px; color: var(--blue-bright); font-size: .9375rem; font-weight: 600; }
-.documents-lead { max-width: 780px; margin: 0; color: var(--body); font-size: .9375rem; }
-.documents-notice { display: flex; max-width: 350px; flex: 0 0 330px; align-items: flex-start; gap: 12px; padding: 15px 17px; border: 1px solid #d6e8f3; border-radius: 14px; background: #f6fbfe; color: var(--blue-bright); }
+.documents-notice { display: flex; width: 330px; max-width: 100%; align-items: flex-start; gap: 12px; padding: 15px 17px; border: 1px solid #d6e8f3; border-radius: 14px; background: #f6fbfe; color: var(--blue-bright); }
 .documents-notice > .material-symbols-rounded { margin-top: 2px; }
 .documents-notice p { display: grid; gap: 3px; margin: 0; }
 .documents-notice strong { color: var(--navy); font-size: .8125rem; }
@@ -19,7 +13,7 @@
 .documents-reset .material-symbols-rounded { font-size: 1.125rem; }
 .documents-filter-status { min-height: 1.25em; margin: 9px 0 0; color: var(--muted); font-size: .75rem; }
 .documents-results-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin: 0 4px 18px; }
-.documents-section-eyebrow { margin-bottom: 1px; font-size: .6875rem; }
+.documents-section-eyebrow { display: flex; align-items: center; gap: 7px; margin: 0 0 1px; color: var(--blue-bright); font-size: .6875rem; font-weight: 700; }
 .documents-results-heading h2 { margin: 0; color: var(--navy-deep); font-size: 1.375rem; }
 .documents-count, .documents-group-count { color: var(--muted); font-size: .75rem; white-space: nowrap; }
 .documents-group { margin-bottom: 26px; }

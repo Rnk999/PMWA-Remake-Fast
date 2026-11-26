@@ -23,23 +23,27 @@
       require __DIR__ . '/partials/header.php';
     ?>
 
-    <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
     <main tabindex="-1" id="main-content" class="faqs-page">
-
-      <section class="faq-hero" aria-labelledby="faq-title">
-        <div class="container faq-hero-inner">
-          <div>
-            <p class="section-kicker"><span class="status-dot"></span> คำถามจากบริการสาธารณะ</p>
-            <h1 class="subpage-title" id="faq-title">คำถามที่พบบ่อย</h1>
-            <p class="subpage-subtitle" lang="en">Frequently Asked Questions (FAQs)</p>
-            <p class="faq-hero-desc">รวมคำถามตัวอย่างเกี่ยวกับการใช้น้ำประปา การขอติดตั้ง การชำระเงิน และการแจ้งเหตุ เพื่อช่วยค้นหาหัวข้อที่ต้องการได้สะดวก</p>
-          </div>
-          <div class="faq-hero-stats" aria-label="ข้อมูลคำถาม">
-            <div class="faq-stat-card"><span class="faq-stat-icon"><span class="material-symbols-rounded" aria-hidden="true">quiz</span></span><p><strong data-faq-total>8</strong><span>คำถามตัวอย่าง</span></p></div>
-            <div class="faq-stat-card"><span class="faq-stat-icon"><span class="material-symbols-rounded" aria-hidden="true">info</span></span><p><strong>ข้อมูลตัวอย่าง</strong><span>รอยืนยันจากหน่วยงาน</span></p></div>
-          </div>
-        </div>
-      </section>
+      <?php
+        $banner = [
+            'title' => 'คำถามที่พบบ่อย',
+            'titleId' => 'faq-title',
+            'subtitle' => 'Frequently Asked Questions (FAQs)',
+            'description' => 'รวมคำถามตัวอย่างเกี่ยวกับการใช้น้ำประปา การขอติดตั้ง การชำระเงิน และการแจ้งเหตุ เพื่อช่วยค้นหาหัวข้อที่ต้องการได้สะดวก',
+            'eyebrow' => 'คำถามจากบริการสาธารณะ',
+            'icon' => 'quiz',
+            'breadcrumbParent' => 'services',
+            'details' => static function (): void {
+            ?>
+            <div class="faq-banner-stats" aria-label="ข้อมูลคำถาม">
+              <div class="faq-stat-card"><span class="faq-stat-icon"><span class="material-symbols-rounded" aria-hidden="true">quiz</span></span><p><strong data-faq-total>8</strong><span>คำถามตัวอย่าง</span></p></div>
+              <div class="faq-stat-card"><span class="faq-stat-icon"><span class="material-symbols-rounded" aria-hidden="true">info</span></span><p><strong>ข้อมูลตัวอย่าง</strong><span>รอยืนยันจากหน่วยงาน</span></p></div>
+            </div>
+            <?php
+            },
+        ];
+        require __DIR__ . '/partials/page-banner.php';
+      ?>
 
       <div class="page-content faq-content">
         <section class="container faq-search-panel" aria-label="ค้นหาและกรองคำถาม">

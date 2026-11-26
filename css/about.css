@@ -1,11 +1,5 @@
-/* หัวข้อและเมนูหมวด */
-.about-intro {
-  padding: 28px 0 32px;
-  background: linear-gradient(110deg, var(--blue-pale), var(--page) 80%);
-}
-.about-intro .subpage-subtitle { color: var(--navy); }
-.about-intro h1 + p { margin: 10px 0 0; font-size: 1rem; }
-.about-content { padding-bottom: 44px; }
+/* เมนูหมวด */
+.about-content { padding-block: 24px 44px; }
 .about-categories {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));

@@ -57,28 +57,32 @@ $pageSize = 10;
   <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
-    <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
-    <main tabindex="-1" id="main-content" class="procurement-page container">
-      <header class="documents-intro">
-        <div class="documents-intro-row">
-          <div>
-            <p class="documents-eyebrow"><span class="material-symbols-rounded" aria-hidden="true">assignment_turned_in</span> ความโปร่งใสภาครัฐ</p>
-            <h1 class="subpage-title">จัดซื้อจัดจ้าง</h1>
-            <p class="documents-subtitle" lang="en">Procurement</p>
-            <p class="documents-lead">ค้นหาประกาศ แผนงาน ราคากลาง ผลการเสนอราคา และสัญญาจัดซื้อจัดจ้างของหน่วยงาน</p>
-          </div>
-          <aside class="documents-notice" aria-label="สรุปข้อมูลจัดซื้อจัดจ้างตัวอย่าง">
-            <span class="material-symbols-rounded" aria-hidden="true">info</span>
-            <div>
-              <p><strong>ข้อมูลตัวอย่างสำหรับต้นแบบ</strong></p>
-              <dl class="procurement-stats">
-                <div><dt>ปีงบประมาณ</dt><dd id="procurement-summary-year"><?= $defaultYear ?></dd></div>
-                <div><dt>ประกาศตัวอย่าง</dt><dd id="procurement-summary-total"><?= $defaultTotal ?> รายการ</dd></div>
-              </dl>
-            </div>
-          </aside>
-        </div>
-      </header>
+    <main tabindex="-1" id="main-content">
+      <?php
+        $banner = [
+            'title' => 'จัดซื้อจัดจ้าง',
+            'subtitle' => 'Procurement',
+            'description' => 'ค้นหาประกาศ แผนงาน ราคากลาง ผลการเสนอราคา และสัญญาจัดซื้อจัดจ้างของหน่วยงาน',
+            'eyebrow' => 'ความโปร่งใสภาครัฐ',
+            'icon' => 'assignment_turned_in',
+            'details' => static function () use ($defaultYear, $defaultTotal): void {
+            ?>
+            <aside class="documents-notice" aria-label="สรุปข้อมูลจัดซื้อจัดจ้างตัวอย่าง">
+              <span class="material-symbols-rounded" aria-hidden="true">info</span>
+              <div>
+                <p><strong>ข้อมูลตัวอย่างสำหรับต้นแบบ</strong></p>
+                <dl class="procurement-stats">
+                  <div><dt>ปีงบประมาณ</dt><dd id="procurement-summary-year"><?= $defaultYear ?></dd></div>
+                  <div><dt>ประกาศตัวอย่าง</dt><dd id="procurement-summary-total"><?= $defaultTotal ?> รายการ</dd></div>
+                </dl>
+              </div>
+            </aside>
+            <?php
+            },
+        ];
+        require __DIR__ . '/partials/page-banner.php';
+      ?>
+      <div class="procurement-page container">
 
       <section class="card procurement-egp" aria-labelledby="procurement-egp-title">
         <span class="procurement-icon" aria-hidden="true"><span class="material-symbols-rounded">account_balance</span></span>
@@ -173,6 +177,7 @@ $pageSize = 10;
         <p>ตัวอย่างนี้แสดงรายละเอียดประกาศ ยังไม่มีไฟล์เอกสารแนบ</p>
         <form method="dialog"><button class="button button-primary" type="submit" autofocus>ปิดพรีวิว</button></form>
       </dialog>
+      </div>
     </main>
     <?php require __DIR__ . '/partials/footer.php'; ?>
   </body>

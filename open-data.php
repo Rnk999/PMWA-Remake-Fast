@@ -62,24 +62,26 @@ $datasetCount = count($datasets);
   <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
-    <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
     <main tabindex="-1" class="open-data" id="main-content">
-      <header class="open-data-intro">
-        <div class="container">
-          <div class="open-data-intro-row">
-            <div>
-              <p class="section-kicker"><span class="material-symbols-rounded" aria-hidden="true">database</span> แค็ตตาล็อกชุดข้อมูลเปิด</p>
-              <h1 class="subpage-title">ข้อมูลเปิด</h1>
-              <p class="subpage-subtitle" lang="en">Open Data</p>
-              <p class="open-data-lead">ศูนย์รวมชุดข้อมูลเปิดของกองการประปา เทศบาลนครพิษณุโลก เพื่อส่งเสริมการเข้าถึงข้อมูลและความโปร่งใสในการให้บริการประชาชน</p>
-            </div>
+      <?php
+        $banner = [
+            'title' => 'ข้อมูลเปิด',
+            'subtitle' => 'Open Data',
+            'description' => 'ศูนย์รวมชุดข้อมูลเปิดของกองการประปา เทศบาลนครพิษณุโลก เพื่อส่งเสริมการเข้าถึงข้อมูลและความโปร่งใสในการให้บริการประชาชน',
+            'eyebrow' => 'แค็ตตาล็อกชุดข้อมูลเปิด',
+            'icon' => 'database',
+            'breadcrumbParent' => 'information',
+            'details' => static function () use ($datasetCount): void {
+            ?>
             <div class="card open-data-summary">
               <span class="open-data-icon material-symbols-rounded" aria-hidden="true">folder_open</span>
               <div><span>ข้อมูลจำลองสำหรับต้นแบบ</span><strong>ทั้งหมด <?= $datasetCount ?> ชุดข้อมูล</strong></div>
             </div>
-          </div>
-        </div>
-      </header>
+            <?php
+            },
+        ];
+        require __DIR__ . '/partials/page-banner.php';
+      ?>
 
       <section class="container open-data-catalog" aria-label="แค็ตตาล็อกชุดข้อมูล">
         <form class="card open-data-filters" role="search" aria-label="ค้นหาชุดข้อมูลเปิด">

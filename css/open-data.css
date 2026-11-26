@@ -1,24 +1,7 @@
-.open-data-intro {
-  padding-block: 28px 25px;
-  background: var(--blue-soft);
-}
-
-.open-data-intro-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-}
-
 .open-data h2,
 .open-data-summary strong {
   color: var(--navy-deep);
 }
-
-
-.open-data-intro .section-kicker { margin-bottom: 8px; font-weight: 700; }
-.open-data-intro .section-kicker .material-symbols-rounded { font-size: 1.125rem; }
-.open-data-lead { max-width: 780px; margin: 0; font-size: .9375rem; }
 
 .open-data-summary {
   display: flex;
@@ -26,6 +9,7 @@
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
+  color: var(--body);
   font-size: .8125rem;
 }
 

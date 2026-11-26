@@ -40,19 +40,25 @@ $years = array_values(array_unique(array_map(static fn ($item) => (string) ((int
   <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
-    <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
-    <main tabindex="-1" id="main-content" class="news-page container">
-      <section class="news-intro" aria-labelledby="news-title">
-        <div class="news-intro-row">
-          <div>
-            <p class="news-eyebrow"><span class="material-symbols-rounded" aria-hidden="true">newspaper</span> ข่าวสารและกิจกรรม</p>
-            <h1 class="subpage-title" id="news-title">ข่าวประชาสัมพันธ์</h1>
-            <p class="subpage-subtitle" lang="en">Public Relations News</p>
-            <p class="news-lead">ติดตามข่าวสาร กิจกรรม และข้อมูลที่เป็นประโยชน์จากกองการประปา เทศบาลนครพิษณุโลก</p>
-          </div>
-          <aside class="news-demo-callout"><span class="material-symbols-rounded" aria-hidden="true">info</span><span><strong>ข้อมูลตัวอย่าง</strong><small>เนื้อหาในหน้านี้จัดทำเพื่อทดสอบต้นแบบ ไม่ใช่ข่าวประกาศจากหน่วยงาน</small></span></aside>
-        </div>
-      </section>
+    <main tabindex="-1" id="main-content">
+      <?php
+        $banner = [
+            'title' => 'ข่าวประชาสัมพันธ์',
+            'titleId' => 'news-title',
+            'subtitle' => 'Public Relations News',
+            'description' => 'ติดตามข่าวสาร กิจกรรม และข้อมูลที่เป็นประโยชน์จากกองการประปา เทศบาลนครพิษณุโลก',
+            'eyebrow' => 'ข่าวสารและกิจกรรม',
+            'icon' => 'newspaper',
+            'breadcrumbParent' => 'information',
+            'details' => static function (): void {
+            ?>
+            <aside class="news-demo-callout"><span class="material-symbols-rounded" aria-hidden="true">info</span><span><strong>ข้อมูลตัวอย่าง</strong><small>เนื้อหาในหน้านี้จัดทำเพื่อทดสอบต้นแบบ ไม่ใช่ข่าวประกาศจากหน่วยงาน</small></span></aside>
+            <?php
+            },
+        ];
+        require __DIR__ . '/partials/page-banner.php';
+      ?>
+      <div class="news-page container">
 
       <section class="news-filters" aria-label="ค้นหาและกรองข่าว">
         <div class="page-search news-search">
@@ -98,6 +104,7 @@ $years = array_values(array_unique(array_map(static fn ($item) => (string) ((int
       <p class="news-prototype-note">หมายเหตุ: ข่าวและรายละเอียดทั้งหมดในหน้านี้เป็นข้อมูลจำลองเพื่อออกแบบและทดสอบต้นแบบเท่านั้น ไม่ใช่ข่าวหรือประกาศจากหน่วยงาน</p>
       <dialog class="news-dialog" id="news-dialog" aria-labelledby="news-dialog-title"><form method="dialog"><button class="news-dialog-close" aria-label="ปิดรายละเอียด"><span class="material-symbols-rounded" aria-hidden="true">close</span></button></form><div id="news-dialog-content"></div></dialog>
       <script>window.newsData = <?= json_encode(array_column(array_merge([$featuredNews], $newsItems), null, 'id'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;</script>
+      </div>
     </main>
     <?php require __DIR__ . '/partials/footer.php'; ?>
   </body>

@@ -72,26 +72,28 @@ foreach ($announcements as $announcement) {
   <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
-    <?php require __DIR__ . '/partials/breadcrumb.php'; ?>
     <main tabindex="-1" id="main-content" class="announcements-page">
-      <section class="announcement-hero">
-        <div class="container">
-          <div class="announcement-hero-row">
-            <div class="announcement-intro">
-              <p class="section-kicker announcement-eyebrow"><span class="status-dot status-dot-red" aria-hidden="true"></span> ศูนย์แจ้งเตือนและข่าวสารสถานการณ์น้ำประปา</p>
-              <h1 class="subpage-title">ประกาศด่วนและแจ้งเหตุน้ำประปา</h1>
-              <p class="subpage-subtitle" lang="en">Urgent Announcements &amp; Water Service Alerts</p>
-              <p>ติดตามประกาศหยุดจ่ายน้ำชั่วคราว เหตุขัดข้อง และความคืบหน้าการซ่อมบำรุง</p>
-            </div>
+      <?php
+        $banner = [
+            'title' => 'ประกาศด่วนและแจ้งเหตุน้ำประปา',
+            'subtitle' => 'Urgent Announcements & Water Service Alerts',
+            'description' => 'ติดตามประกาศหยุดจ่ายน้ำชั่วคราว เหตุขัดข้อง และความคืบหน้าการซ่อมบำรุง',
+            'eyebrow' => 'ศูนย์แจ้งเตือนและข่าวสารสถานการณ์น้ำประปา',
+            'icon' => 'campaign',
+            'breadcrumbParent' => 'information',
+            'details' => static function () use ($counts): void {
+            ?>
             <div class="announcement-stats" aria-label="สรุปประกาศจากข้อมูลตัวอย่าง">
               <div class="announcement-stat stat-urgent"><span>ด่วนที่สุด</span><strong><?= $counts['urgent'] ?></strong><small>รายการตัวอย่าง</small></div>
               <div class="announcement-stat stat-important"><span>สำคัญ</span><strong><?= $counts['important'] ?></strong><small>รายการตัวอย่าง</small></div>
               <div class="announcement-stat stat-other"><span>อื่น ๆ / ดำเนินการแล้ว</span><strong><?= $counts['other'] ?></strong><small>รายการตัวอย่าง</small></div>
               <div class="announcement-stat stat-active"><span>กำลังดำเนินการ</span><strong><?= $counts['active'] ?></strong><small>รายการตัวอย่าง</small></div>
             </div>
-          </div>
-        </div>
-      </section>
+            <?php
+            },
+        ];
+        require __DIR__ . '/partials/page-banner.php';
+      ?>
       <section class="announcement-content container" aria-label="ค้นหาและรายการประกาศ">
         <form class="announcement-filters" id="announcement-filters">
           <div class="announcement-filter-row">
