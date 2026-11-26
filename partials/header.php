@@ -6,7 +6,7 @@
       $isHome = ($activePage === 'home');
       $homeHref = $isHome ? '#top' : 'index.php';
       $newsHref = 'news.php';
-      $aboutHref = $isHome ? '#about' : 'index.php#about';
+      $aboutCategories ??= require __DIR__ . '/about-categories.php';
       $contactHref = $isHome ? '#contact' : 'index.php#contact';
     ?>
     <header class="site-header" id="top">
@@ -86,7 +86,17 @@
               </div>
             </div>
             <a class="nav-link<?php echo ($activePage === 'procurement') ? ' is-current' : ''; ?>" href="procurement.php"<?php echo ($activePage === 'procurement') ? ' aria-current="page"' : ''; ?>>จัดซื้อจัดจ้าง</a>
-            <a class="nav-link" href="<?php echo $aboutHref; ?>">เกี่ยวกับเรา</a>
+            <div class="nav-dropdown" id="about-dropdown">
+              <button class="nav-link dropdown-toggle<?= $activePage === 'about' ? ' is-current' : '' ?>" id="about-toggle" type="button" aria-expanded="false" aria-controls="about-menu">
+                เกี่ยวกับเรา <span class="material-symbols-rounded" aria-hidden="true">arrow_drop_down</span>
+              </button>
+              <div class="dropdown-menu" id="about-menu" hidden>
+                <?php foreach ($aboutCategories as $aboutNavSection => [$aboutNavLabel, $aboutNavIcon]): ?>
+                  <?php $isCurrentCategory = $activePage === 'about' && $aboutCategory === $aboutNavSection; ?>
+                  <a class="dropdown-item<?= $isCurrentCategory ? ' is-active' : '' ?>" href="about.php?section=<?= $aboutNavSection ?>"<?= $isCurrentCategory ? ' aria-current="page"' : '' ?>><span class="material-symbols-rounded" aria-hidden="true"><?= $aboutNavIcon ?></span><span><?= $aboutNavLabel ?></span></a>
+                <?php endforeach; ?>
+              </div>
+            </div>
             <a class="nav-link" href="<?php echo $contactHref; ?>">ติดต่อเรา</a>
           </nav>
           <div class="search-results" id="search-results" aria-live="polite" hidden>

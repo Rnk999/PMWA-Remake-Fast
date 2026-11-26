@@ -7,6 +7,7 @@ $breadcrumbPages = [
     'documents' => ['แบบฟอร์มและเอกสารเผยแพร่', 'ข้อมูลเผยแพร่', 'index.php#information'],
     'open-data' => ['ข้อมูลเปิด', 'ข้อมูลเผยแพร่', 'index.php#information'],
     'procurement' => ['จัดซื้อจัดจ้าง', null, null],
+    'about' => [$aboutTitle ?? '', 'เกี่ยวกับเรา', 'about.php'],
 ];
 [$breadcrumbTitle, $breadcrumbParent, $breadcrumbParentHref] = $breadcrumbPages[$activePage];
 ?>

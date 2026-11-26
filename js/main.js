@@ -296,6 +296,15 @@ const servicesDropdown = document.querySelector("#services-dropdown");
 const informationToggle = document.querySelector("#information-toggle");
 const informationMenu = document.querySelector("#information-menu");
 const informationDropdown = document.querySelector("#information-dropdown");
+const aboutDropdown = document.querySelector("#about-dropdown");
+const aboutToggle = document.querySelector("#about-toggle");
+const aboutMenu = document.querySelector("#about-menu");
+
+function setAboutMenuOpen(isOpen) {
+  if (!aboutToggle || !aboutMenu) return;
+  aboutToggle.setAttribute("aria-expanded", String(isOpen));
+  aboutMenu.hidden = !isOpen;
+}
 
 function closeServicesMenu() {
   if (!servicesToggle || !servicesMenu) return;
@@ -306,6 +315,7 @@ function closeServicesMenu() {
 function openServicesMenu() {
   if (!servicesToggle || !servicesMenu) return;
   closeInformationMenu();
+  setAboutMenuOpen(false);
   servicesToggle.setAttribute("aria-expanded", "true");
   servicesMenu.hidden = false;
 }
@@ -319,6 +329,7 @@ function closeInformationMenu() {
 function openInformationMenu() {
   if (!informationToggle || !informationMenu) return;
   closeServicesMenu();
+  setAboutMenuOpen(false);
   informationToggle.setAttribute("aria-expanded", "true");
   informationMenu.hidden = false;
 }
@@ -340,6 +351,17 @@ informationToggle?.addEventListener("click", (event) => {
   else openInformationMenu();
 });
 
+aboutToggle?.addEventListener("click", () => {
+  const isOpen = aboutToggle.getAttribute("aria-expanded") === "true";
+  closeServicesMenu();
+  closeInformationMenu();
+  setAboutMenuOpen(!isOpen);
+});
+
+aboutDropdown?.addEventListener("focusout", (event) => {
+  if (!aboutDropdown.contains(event.relatedTarget)) setAboutMenuOpen(false);
+});
+
 document.addEventListener("click", (event) => {
   if (servicesDropdown && !servicesDropdown.contains(event.target)) {
     closeServicesMenu();
@@ -347,6 +369,7 @@ document.addEventListener("click", (event) => {
   if (informationDropdown && !informationDropdown.contains(event.target)) {
     closeInformationMenu();
   }
+  if (aboutDropdown && !aboutDropdown.contains(event.target)) setAboutMenuOpen(false);
 });
 
 document.addEventListener("keydown", (event) => {
@@ -357,6 +380,10 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && informationMenu && !informationMenu.hidden) {
     closeInformationMenu();
     informationToggle?.focus();
+  }
+  if (event.key === "Escape" && aboutMenu && !aboutMenu.hidden) {
+    setAboutMenuOpen(false);
+    aboutToggle.focus();
   }
 });
 
