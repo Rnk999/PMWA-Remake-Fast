@@ -1,3 +1,9 @@
+<?php
+# ข้อมูลคู่มือประชาชน
+# โหลดรายการบริการร่วมกับหน้ารายละเอียดและเตรียมตัวช่วย escape ข้อความ
+$guideServices = require __DIR__ . '/data/citizen-guide-data.php';
+$escapeGuide = static fn(string $value): string => htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+?>
 <!doctype html>
 <html lang="th">
   <head>
@@ -25,6 +31,8 @@
 
     <main tabindex="-1" id="main-content">
       <?php
+        # ค่าของแบนเนอร์หน้าย่อย
+        # ส่งหัวเรื่อง คำอธิบาย และข้อมูลเสริมจากหน้านี้ให้แบนเนอร์ร่วม
         $banner = [
             'title' => 'คู่มือประชาชน',
             'subtitle' => 'Citizen Guide',
@@ -50,12 +58,13 @@
         require __DIR__ . '/partials/page-banner.php';
       ?>
 
-      <!-- เนื้อหาหลัก: รายการคู่มือประชาชน -->
+      <!-- # รายการคู่มือประชาชน
+           แสดงคู่มือแยกตามประเภทบริการและลิงก์ไปยังหน้ารายละเอียด
+      -->
       <div class="page-content">
         <section class="section guide-section" aria-labelledby="guide-list-title">
           <div class="container">
 
-            <!-- หัวเรื่องส่วน -->
             <div class="section-heading guide-section-heading">
               <div>
                 <p class="section-kicker">
@@ -71,10 +80,11 @@
               </span>
             </div>
 
-            <!-- กริดคู่มือ 13 หัวข้อ แยกตามหมวดหมู่ -->
             <div class="guide-categories">
 
-              <!-- หมวดที่ 1: การขอใช้น้ำและจัดการมาตรวัดน้ำ -->
+              <!-- # การขอใช้น้ำและจัดการมาตรวัดน้ำ
+                   รวมคู่มือขอใช้น้ำใหม่และงานที่เกี่ยวข้องกับมาตรวัด
+              -->
               <section class="guide-category-group" aria-labelledby="cat-1-title">
                 <div class="guide-category-header">
                   <div class="guide-category-title-wrap">
@@ -90,7 +100,6 @@
                 </div>
                 <ol class="guide-grid" aria-label="หมวดการขอใช้น้ำและจัดการมาตรวัดน้ำ">
 
-              <!-- 1 -->
               <li>
                 <article class="card guide-card" id="guide-1">
                   <div class="guide-card-header">
@@ -103,8 +112,8 @@
                     <div class="guide-tags">
                       <span class="guide-tag">การขอใช้น้ำ</span>
                     </div>
-                    <h3>การขอติดตั้งมาตรวัดน้ำใหม่</h3>
-                    <p>ขั้นตอนสำหรับประชาชนที่ต้องการขอติดตั้งมาตรวัดน้ำใหม่ในพื้นที่ให้บริการของกองการประปา เทศบาลนครพิษณุโลก</p>
+                    <h3><?= $escapeGuide($guideServices[1]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[1]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -125,7 +134,6 @@
                 </article>
               </li>
 
-              <!-- 2 -->
               <li>
                 <article class="card guide-card" id="guide-2">
                   <div class="guide-card-header">
@@ -138,8 +146,8 @@
                     <div class="guide-tags">
                       <span class="guide-tag">การขอใช้น้ำ</span>
                     </div>
-                    <h3>การขอย้ายมาตรวัดน้ำ</h3>
-                    <p>ขั้นตอนและเอกสารที่ต้องเตรียมสำหรับการขอย้ายตำแหน่งมาตรวัดน้ำไปยังตำแหน่งใหม่ภายในอาคารหรือพื้นที่เดิม</p>
+                    <h3><?= $escapeGuide($guideServices[2]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[2]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -160,7 +168,6 @@
                 </article>
               </li>
 
-              <!-- 3 -->
               <li>
                 <article class="card guide-card" id="guide-3">
                   <div class="guide-card-header">
@@ -173,8 +180,8 @@
                     <div class="guide-tags">
                       <span class="guide-tag">การขอใช้น้ำ</span>
                     </div>
-                    <h3>การขอเพิ่ม/ลดขนาดมาตรวัดน้ำ</h3>
-                    <p>ขั้นตอนการขอเปลี่ยนขนาดมาตรวัดน้ำ ทั้งการขอเพิ่มขนาดสำหรับปริมาณการใช้น้ำที่มากขึ้น และการขอลดขนาดตามความเหมาะสม</p>
+                    <h3><?= $escapeGuide($guideServices[3]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[3]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -195,7 +202,6 @@
                 </article>
               </li>
 
-              <!-- 4 -->
               <li>
                 <article class="card guide-card" id="guide-4">
                   <div class="guide-card-header">
@@ -208,8 +214,8 @@
                     <div class="guide-tags">
                       <span class="guide-tag">กรรมสิทธิ์</span>
                     </div>
-                    <h3>การขอโอนกรรมสิทธิ์การใช้น้ำ</h3>
-                    <p>ขั้นตอนการโอนสิทธิ์การใช้น้ำระหว่างบุคคล เช่น กรณีซื้อขายบ้าน โอนมรดก หรือเปลี่ยนชื่อผู้ใช้น้ำ</p>
+                    <h3><?= $escapeGuide($guideServices[4]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[4]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -230,7 +236,6 @@
                 </article>
               </li>
 
-              <!-- 5 -->
               <li>
                 <article class="card guide-card" id="guide-5">
                   <div class="guide-card-header">
@@ -243,8 +248,8 @@
                     <div class="guide-tags">
                       <span class="guide-tag">การขอใช้น้ำ</span>
                     </div>
-                    <h3>การขอยกเลิกการใช้น้ำ</h3>
-                    <p>ขั้นตอนสำหรับประชาชนที่ต้องการยกเลิกการใช้น้ำประปา รวมถึงการถอดมาตรวัดน้ำและการคืนเงินประกันการใช้น้ำ</p>
+                    <h3><?= $escapeGuide($guideServices[5]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[5]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -265,7 +270,6 @@
                 </article>
               </li>
 
-              <!-- 6 -->
               <li>
                 <article class="card guide-card" id="guide-6">
                   <div class="guide-card-header">
@@ -278,8 +282,8 @@
                     <div class="guide-tags">
                       <span class="guide-tag">ระบบท่อ</span>
                     </div>
-                    <h3>การขอต่อท่อผ่านที่ดินผู้อื่น</h3>
-                    <p>ขั้นตอนการขออนุญาตวางท่อประปาผ่านที่ดินของบุคคลอื่น รวมถึงเอกสารยินยอมและการสำรวจพื้นที่</p>
+                    <h3><?= $escapeGuide($guideServices[6]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[6]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -303,7 +307,9 @@
                 </ol>
               </section>
 
-              <!-- หมวดที่ 2: การชำระเงินและค่าบริการ -->
+              <!-- # การชำระเงินและค่าบริการ
+                   รวมคู่มือด้านการจ่ายค่าน้ำและการขอข้อมูลค่าใช้จ่าย
+              -->
               <section class="guide-category-group" aria-labelledby="cat-2-title">
                 <div class="guide-category-header">
                   <div class="guide-category-title-wrap">
@@ -319,7 +325,6 @@
                 </div>
                 <ol class="guide-grid" aria-label="หมวดการชำระเงินและค่าบริการ">
 
-              <!-- 7 -->
               <li>
                 <article class="card guide-card" id="guide-7">
                   <div class="guide-card-header">
@@ -332,8 +337,8 @@
                     <div class="guide-tags">
                       <span class="guide-tag">การชำระเงิน</span>
                     </div>
-                    <h3>การชำระค่าน้ำประปา</h3>
-                    <p>ช่องทางและขั้นตอนการชำระค่าน้ำประปา ทั้งการชำระที่สำนักงาน ผ่านธนาคาร และช่องทางออนไลน์ที่ให้บริการ</p>
+                    <h3><?= $escapeGuide($guideServices[7]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[7]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -354,7 +359,6 @@
                 </article>
               </li>
 
-              <!-- 8 -->
               <li>
                 <article class="card guide-card" id="guide-8">
                   <div class="guide-card-header">
@@ -367,8 +371,8 @@
                     <div class="guide-tags">
                       <span class="guide-tag">การชำระเงิน</span>
                     </div>
-                    <h3>การขอผ่อนผันชำระค่าน้ำ</h3>
-                    <p>ขั้นตอนการยื่นคำขอผ่อนผันหรือขยายระยะเวลาการชำระค่าน้ำประปา สำหรับผู้ใช้น้ำที่มีเหตุจำเป็น</p>
+                    <h3><?= $escapeGuide($guideServices[8]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[8]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -392,7 +396,9 @@
                 </ol>
               </section>
 
-              <!-- หมวดที่ 3: การตรวจสอบและแจ้งเหตุซ่อมบำรุง -->
+              <!-- # การตรวจสอบและแจ้งเหตุซ่อมบำรุง
+                   รวมคู่มือตรวจสอบปัญหาและแจ้งเหตุเกี่ยวกับระบบประปา
+              -->
               <section class="guide-category-group" aria-labelledby="cat-3-title">
                 <div class="guide-category-header">
                   <div class="guide-category-title-wrap">
@@ -408,7 +414,6 @@
                 </div>
                 <ol class="guide-grid" aria-label="หมวดการตรวจสอบและแจ้งเหตุซ่อมบำรุง">
 
-              <!-- 9 -->
               <li>
                 <article class="card guide-card" id="guide-9">
                   <div class="guide-card-header">
@@ -421,8 +426,8 @@
                     <div class="guide-tags">
                       <span class="guide-tag">การตรวจสอบ</span>
                     </div>
-                    <h3>การขอตรวจสอบมาตรวัดน้ำ</h3>
-                    <p>ขั้นตอนการยื่นคำขอให้เจ้าหน้าที่ตรวจสอบความถูกต้องของมาตรวัดน้ำ กรณีสงสัยค่าน้ำสูงผิดปกติ</p>
+                    <h3><?= $escapeGuide($guideServices[9]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[9]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -443,7 +448,6 @@
                 </article>
               </li>
 
-              <!-- 10 -->
               <li>
                 <article class="card guide-card" id="guide-10">
                   <div class="guide-card-header">
@@ -457,8 +461,8 @@
                       <span class="guide-tag guide-tag-urgent">เร่งด่วน</span>
                       <span class="guide-tag">การแจ้งซ่อม</span>
                     </div>
-                    <h3>การแจ้งซ่อมท่อแตก/รั่วซึม</h3>
-                    <p>ช่องทางการแจ้งเหตุท่อประปาแตกหรือรั่วซึม ทั้งในพื้นที่สาธารณะและภายในอาคาร รวมถึงขั้นตอนการดำเนินการหลังแจ้ง</p>
+                    <h3><?= $escapeGuide($guideServices[10]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[10]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -482,7 +486,9 @@
                 </ol>
               </section>
 
-              <!-- หมวดที่ 4: ข้อมูล เอกสาร และเรื่องร้องเรียน -->
+              <!-- # ข้อมูล เอกสาร และเรื่องร้องเรียน
+                   รวมช่องทางขอข้อมูล ขอเอกสาร และยื่นเรื่องร้องเรียน
+              -->
               <section class="guide-category-group" aria-labelledby="cat-4-title">
                 <div class="guide-category-header">
                   <div class="guide-category-title-wrap">
@@ -498,7 +504,6 @@
                 </div>
                 <ol class="guide-grid" aria-label="หมวดข้อมูล เอกสาร และเรื่องร้องเรียน">
 
-              <!-- 11 -->
               <li>
                 <article class="card guide-card" id="guide-11">
                   <div class="guide-card-header">
@@ -511,8 +516,8 @@
                     <div class="guide-tags">
                       <span class="guide-tag">ข้อมูลบริการ</span>
                     </div>
-                    <h3>การขอข้อมูลสถิติการใช้น้ำ</h3>
-                    <p>ขั้นตอนการขอรับข้อมูลประวัติและสถิติการใช้น้ำของผู้ใช้น้ำ เพื่อประกอบการตรวจสอบหรือวางแผนการใช้น้ำ</p>
+                    <h3><?= $escapeGuide($guideServices[11]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[11]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -533,7 +538,6 @@
                 </article>
               </li>
 
-              <!-- 12 -->
               <li>
                 <article class="card guide-card" id="guide-12">
                   <div class="guide-card-header">
@@ -546,8 +550,8 @@
                     <div class="guide-tags">
                       <span class="guide-tag">เอกสาร</span>
                     </div>
-                    <h3>การขอหนังสือรับรองการชำระค่าน้ำ</h3>
-                    <p>ขั้นตอนการขอหนังสือรับรองการชำระค่าน้ำประปา เพื่อใช้เป็นเอกสารประกอบการขอสินเชื่อหรือนิติกรรมต่าง ๆ</p>
+                    <h3><?= $escapeGuide($guideServices[12]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[12]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -568,7 +572,6 @@
                 </article>
               </li>
 
-              <!-- 13 -->
               <li>
                 <article class="card guide-card" id="guide-13">
                   <div class="guide-card-header">
@@ -581,8 +584,8 @@
                     <div class="guide-tags">
                       <span class="guide-tag">ร้องเรียน</span>
                     </div>
-                    <h3>การร้องเรียน/ข้อเสนอแนะ</h3>
-                    <p>ช่องทางการยื่นข้อร้องเรียนเกี่ยวกับการให้บริการ การแสดงข้อเสนอแนะ และขั้นตอนการติดตามผลการดำเนินการ</p>
+                    <h3><?= $escapeGuide($guideServices[13]['title']) ?></h3>
+                    <p><?= $escapeGuide($guideServices[13]['description']) ?></p>
                     <dl class="guide-meta-row">
                       <div>
                         <dt><span class="material-symbols-rounded" aria-hidden="true">schedule</span> ระยะเวลา</dt>
@@ -607,9 +610,10 @@
               </section>
 
             </div>
-            <!-- สิ้นสุดหมวดหมู่คู่มือ -->
 
-            <!-- แถบข้อมูลเพิ่มเติม -->
+            <!-- # การติดต่อเพิ่มเติม
+                 แสดงช่องทางสอบถามเกี่ยวกับคู่มือประชาชน
+            -->
             <aside class="guide-contact-banner" aria-label="ติดต่อสอบถามเพิ่มเติม">
               <div class="guide-contact-banner-inner">
                 <span class="icon-box">
@@ -640,7 +644,6 @@
           </div>
         </section>
       </div>
-      <!-- สิ้นสุดเนื้อหาหลัก -->
 
     </main>
 

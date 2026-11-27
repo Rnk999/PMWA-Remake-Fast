@@ -1,9 +1,15 @@
+/* # พื้นที่หน้าเอกสาร
+ * กำหนดระยะหน้าและรูปแบบข้อความกำกับข้อมูลตัวอย่าง
+ */
 .documents-page { padding-top: 24px; padding-bottom: 42px; }
 .documents-notice { display: flex; width: 330px; max-width: 100%; align-items: flex-start; gap: 12px; padding: 15px 17px; border: 1px solid #d6e8f3; border-radius: 14px; background: #f6fbfe; color: var(--blue-bright); }
 .documents-notice > .material-symbols-rounded { margin-top: 2px; }
 .documents-notice p { display: grid; gap: 3px; margin: 0; }
 .documents-notice strong { color: var(--navy); font-size: .8125rem; }
 .documents-notice p span { color: var(--body); font-size: .75rem; line-height: 1.55; }
+/* # ระบบค้นหาและตัวกรอง
+ * จัดช่องค้นหา ตัวเลือก ปุ่มล้าง และข้อความสถานะ
+ */
 .documents-filter-panel { margin: 6px 0 32px; padding: 18px 20px 13px; border: 1px solid #e5ebf0; border-radius: 16px; background: var(--white); box-shadow: var(--shadow); }
 .documents-filter-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto; align-items: end; gap: 12px; }
 .documents-search button { display: grid; width: 30px; height: 30px; flex: 0 0 auto; place-items: center; border: 0; border-radius: 50%; background: transparent; color: var(--muted); cursor: pointer; }
@@ -12,6 +18,9 @@
 .documents-reset:hover { background: #dceef8; }
 .documents-reset .material-symbols-rounded { font-size: 1.125rem; }
 .documents-filter-status { min-height: 1.25em; margin: 9px 0 0; color: var(--muted); font-size: .75rem; }
+/* # รายการเอกสาร
+ * จัดหัวเรื่อง ตัวนับ และกลุ่มแบบฟอร์มกับเอกสารเผยแพร่
+ */
 .documents-results-heading { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin: 0 4px 18px; }
 .documents-section-eyebrow { display: flex; align-items: center; gap: 7px; margin: 0 0 1px; color: var(--blue-bright); font-size: .6875rem; font-weight: 700; }
 .documents-results-heading h2 { margin: 0; color: var(--navy-deep); font-size: 1.375rem; }
@@ -26,6 +35,9 @@
 .documents-group-heading p { margin: 1px 0 0; color: var(--muted); font-size: .75rem; }
 .documents-group-count { padding: 3px 10px; border-radius: 20px; background: #e8f3fa; color: var(--blue-bright); font-weight: 600; }
 .documents-list { display: grid; gap: 9px; }
+/* # การ์ดเอกสาร
+ * จัดไอคอน ข้อมูลไฟล์ ป้ายกำกับ และปุ่มดำเนินการ
+ */
 .documents-item { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; align-items: center; gap: 15px; min-height: 98px; padding: 15px 17px; border: 1px solid #e7edf2; border-radius: 14px; background: var(--white); box-shadow: 0 2px 7px rgb(19 50 83 / 4%); transition: border-color .18s ease, box-shadow .18s ease; }
 .documents-item:hover { border-color: #c9dce9; box-shadow: var(--shadow); }
 .documents-file-icon { display: grid; width: 46px; height: 46px; place-items: center; border-radius: 12px; background: #e8f3fa; color: var(--blue-bright); }
@@ -47,11 +59,17 @@
 .documents-action-primary { border-color: var(--blue-bright); background: #08719f; color: var(--white); }
 .documents-action-primary:hover { background: var(--navy); }
 .documents-action .material-symbols-rounded { font-size: 1.125rem; }
+/* # สถานะไม่พบเอกสาร
+ * กำหนดรูปแบบข้อความเมื่อไม่มีเอกสารที่ตรงกับตัวกรอง
+ */
 .documents-empty { padding: 48px 24px; border: 1px dashed #bfd0de; border-radius: 16px; background: rgb(255 255 255 / 75%); text-align: center; }
 .documents-empty[hidden], .documents-pagination[hidden] { display: none; }
 .documents-empty > .material-symbols-rounded { color: #8ca2b5; font-size: 2.5rem; }
 .documents-empty h3 { margin: 8px 0 4px; color: var(--navy); font-size: 1.125rem; }
 .documents-empty p { margin: 0 0 15px; font-size: .8125rem; }
+/* # การแบ่งหน้า
+ * จัดข้อความสรุป ปุ่มเปลี่ยนหน้า และสถานะหน้าปัจจุบัน
+ */
 .documents-pagination { display: flex; min-height: 60px; align-items: center; justify-content: space-between; gap: 16px; margin-top: 6px; padding: 9px 15px; border: 1px solid #e7edf2; border-radius: 13px; background: var(--white); box-shadow: 0 2px 7px rgb(19 50 83 / 4%); }
 .documents-pagination p { margin: 0; color: var(--muted); font-size: .75rem; }
 .documents-page-buttons { display: flex; gap: 5px; }

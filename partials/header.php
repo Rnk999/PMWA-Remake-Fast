@@ -1,7 +1,6 @@
-    <!-- ส่วนที่ 1: แถบข้อมูลหน่วยงาน ประกาศ และเมนูนำทาง -->
-    <!-- หน้าที่: แสดงช่องทางติดต่อ ข่าวประกาศ โลโก้ และทางลัดไปยังเนื้อหาหลัก -->
     <?php
-      // กำหนดหน้าปัจจุบันสำหรับ nav active state ถ้ายังไม่ได้กำหนดจากหน้าที่เรียกใช้
+      # ค่าที่ใช้ในส่วนหัว
+      # เลือกสถานะหน้าปัจจุบันและโหลดข้อมูลเมนูกับพจนานุกรมแปลภาษา
       if (!isset($activePage)) $activePage = 'home';
       $isHome = ($activePage === 'home');
       $homeHref = $isHome ? '#top' : 'index.php';
@@ -11,11 +10,18 @@
       $aboutCategories ??= require __DIR__ . '/about-categories.php';
       $contactHref = $isHome ? '#contact' : 'index.php#contact';
     ?>
+    <!-- # ส่วนหัวเว็บไซต์
+         รวมแถบการเข้าถึง ประกาศ และเมนูหลักไว้ในส่วนหัวร่วม
+    -->
     <header class="site-header">
-      <!-- แถบข้อมูลหน่วยงานและหมายเลขโทรศัพท์ -->
+      <!-- # แถบข้อมูลหน่วยงาน
+           จัดวางเครื่องมือช่วยการเข้าถึงและช่องทางติดต่อ
+      -->
       <div class="utility-bar">
         <div class="container utility-inner">
-          <!-- แถบเครื่องมือช่วยการเข้าถึงเว็บไซต์ -->
+          <!-- # แถบการเข้าถึง
+               ให้ปรับขนาดตัวอักษร ความเปรียบต่าง และภาษาของหน้า
+          -->
           <div class="accessibility-tools" role="group" aria-label="เครื่องมือช่วยการเข้าถึงเว็บไซต์">
             <button id="font-decrease" type="button" aria-label="ลดขนาดตัวอักษร">A−</button>
             <button id="font-reset" type="button" aria-label="คืนค่าขนาดตัวอักษรปกติ" aria-pressed="true">A</button>
@@ -28,7 +34,9 @@
           </div>
           <div class="utility-contact">
             <a class="utility-phone" href="tel:055983230"><span class="material-symbols-rounded" aria-hidden="true">call</span> 055-983230</a>
-            <!-- ช่องทางสังคมจะแสดงเป็นลิงก์เมื่อมีการกำหนด URL ทางการใน js/main.js -->
+            <!-- # ช่องทางสังคม
+                 แสดงสถานะรอยืนยันลิงก์และเปิดใช้ลิงก์เมื่อมี URL ที่กำหนด
+            -->
             <div class="top-social" role="group" aria-label="ช่องทางสังคม รอยืนยัน URL ทางการ">
               <span class="social-channel" data-social-channel="facebook"><img src="assets/contact/Facebook%20logo.png" alt=""><span>Facebook</span><small>รอ URL ทางการ</small></span>
               <span class="social-channel" data-social-channel="line"><img src="assets/contact/Line%20OA%20logo.png" alt=""><span>LINE Official</span><small>รอ URL ทางการ</small></span>
@@ -36,21 +44,27 @@
           </div>
         </div>
       </div>
-      <!-- แถบประกาศพร้อมทางลัดไปยังข่าวสาร -->
+      <!-- # แถบประกาศ
+           แสดงข้อความประกาศและลิงก์ไปยังหน้าข่าว
+      -->
       <div class="announcement-bar">
         <div class="container announcement-inner">
           <p><span class="material-symbols-rounded" aria-hidden="true">campaign</span><strong>ประกาศสำคัญ</strong> ติดตามข่าวสารและประกาศการให้บริการประปาจากกองการประปา</p>
           <a href="<?php echo $newsHref; ?>" aria-label="อ่านประกาศเพิ่มเติม"><span class="announcement-link-long">อ่านข่าวประกาศ</span><span class="announcement-link-short">อ่านต่อ</span><span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a>
         </div>
       </div>
-      <!-- ส่วนหัวหลักและเมนูนำทาง -->
+      <!-- # Navigation Bar
+           จัดวางตราหน่วยงาน ช่องค้นหา และเมนูหลัก
+      -->
       <div class="nav-wrap">
         <div class="container nav-inner">
           <a class="brand" href="<?php echo $homeHref; ?>" aria-label="กองการประปา เทศบาลนครพิษณุโลก - หน้าแรก">
             <img src="assets/logos/PMWA.jpg" alt="ตราสัญลักษณ์กองการประปา เทศบาลนครพิษณุโลก">
             <span class="brand-name"><strong>กองการประปา</strong><span>เทศบาลนครพิษณุโลก</span></span>
           </a>
-          <!-- ค้นหาจากเนื้อหาบนหน้าเว็บที่มีอยู่เท่านั้น -->
+          <!-- # ระบบค้นหาภายในหน้า
+               รับคำค้นสำหรับค้นบริการหรือประกาศจากเนื้อหาที่แสดงอยู่
+          -->
           <form class="header-search" id="site-search" role="search">
             <label class="visually-hidden" for="site-search-input">ค้นหาบริการหรือประกาศ</label>
             <input id="site-search-input" name="q" type="search" placeholder="ค้นหาบริการหรือประกาศ..." autocomplete="off">
@@ -61,6 +75,9 @@
           </button>
           <nav class="primary-nav" id="primary-navigation" aria-label="เมนูหลัก">
             <a class="nav-link<?php echo $isHome ? ' is-current' : ''; ?>" href="<?php echo $homeHref; ?>"<?php echo $isHome ? ' aria-current="page"' : ''; ?>>หน้าแรก</a>
+            <!-- # Dropdown Menu
+                 สร้างเมนูบริการและข้อมูลเผยแพร่จากรายการเมนูร่วม
+            -->
             <?php foreach ($navigationGroups as $groupId => ['label' => $label, 'items' => $items]): ?>
               <div class="nav-dropdown" id="<?= $groupId ?>-dropdown">
                 <button class="nav-link dropdown-toggle<?= isset($items[$activePage]) ? ' is-current' : '' ?>" id="<?= $groupId ?>-toggle" type="button" aria-expanded="false" aria-controls="<?= $groupId ?>-menu">
@@ -77,6 +94,9 @@
               </div>
             <?php endforeach; ?>
             <a class="nav-link<?php echo ($activePage === 'procurement') ? ' is-current' : ''; ?>" href="procurement.php"<?php echo ($activePage === 'procurement') ? ' aria-current="page"' : ''; ?>>จัดซื้อจัดจ้าง</a>
+            <!-- # เมนูเกี่ยวกับเรา
+                 สร้างลิงก์แต่ละหมวดและระบุหมวดปัจจุบัน
+            -->
             <div class="nav-dropdown" id="about-dropdown">
               <button class="nav-link dropdown-toggle<?= $activePage === 'about' ? ' is-current' : '' ?>" id="about-toggle" type="button" aria-expanded="false" aria-controls="about-menu">
                 เกี่ยวกับเรา <span class="material-symbols-rounded" aria-hidden="true">arrow_drop_down</span>
@@ -97,4 +117,3 @@
         </div>
       </div>
     </header>
-    <!-- สิ้นสุดส่วนหัวเว็บไซต์ -->

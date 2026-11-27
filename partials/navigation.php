@@ -1,4 +1,6 @@
 <?php
+# ข้อมูลเมนูร่วม
+# กำหนดชื่อหมวด ปลายทาง และไอคอนสำหรับส่วนหัวและส่วนท้าย
 return [
     'services' => ['label' => 'บริการ', 'items' => [
         'e-service' => ['E-Service (บริการออนไลน์)', 'https://eservice.phsmun.go.th/', 'open_in_new'],

@@ -1,4 +1,6 @@
 <?php
+# การเลือกหมวดเกี่ยวกับเรา
+# ตรวจพารามิเตอร์ section จากหมวดที่รองรับและใช้ค่าเริ่มต้นเมื่อไม่พบ
 $activePage = 'about';
 $aboutCategories = require __DIR__ . '/partials/about-categories.php';
 $requestedSection = $_GET['section'] ?? null;
@@ -6,6 +8,8 @@ $aboutCategory = is_string($requestedSection) && isset($aboutCategories[$request
     ? $requestedSection : 'vision';
 [$aboutTitle, $aboutIcon] = $aboutCategories[$aboutCategory];
 
+# คำแนะนำหมวด
+# กำหนดข้อความเปิดของแต่ละหมวดสำหรับแบนเนอร์
 $introductions = [
     'vision' => ['วิสัยทัศน์ พันธกิจ และค่านิยมองค์กร', 'Vision, Mission and Values', 'ทิศทางและแนวทางการให้บริการของกองการประปา เทศบาลนครพิษณุโลก'],
     'organization' => ['แผนผังองค์กร', 'Organization Chart', 'ข้อมูลโครงสร้างการบริหารและการแบ่งส่วนงานของกองการประปา เทศบาลนครพิษณุโลก'],
@@ -29,12 +33,17 @@ $introductions = [
     <link rel="stylesheet" href="css/about.css">
     <script src="js/localization.js" defer></script>
     <script src="js/main.js" defer></script>
+    <?php if ($aboutCategory === 'operations'): ?>
+      <script src="js/news-dialog.js" defer></script>
+    <?php endif; ?>
   </head>
   <body>
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
     <?php require __DIR__ . '/partials/header.php'; ?>
     <main class="about-page" id="main-content" tabindex="-1">
       <?php
+        # ค่าของแบนเนอร์หน้าย่อย
+        # ส่งหัวเรื่อง คำอธิบาย และข้อมูลเสริมจากหน้านี้ให้แบนเนอร์ร่วม
         $banner = [
             'title' => $pageHeading,
             'subtitle' => $pageSubtitle,
@@ -46,6 +55,9 @@ $introductions = [
         require __DIR__ . '/partials/page-banner.php';
       ?>
       <div class="container about-content">
+        <!-- # เมนูหมวดเกี่ยวกับเรา
+             แสดงลิงก์ของแต่ละหมวดพร้อมระบุหมวดที่เปิดอยู่
+        -->
         <nav class="card about-categories" aria-label="หมวดเกี่ยวกับเรา">
           <?php foreach ($aboutCategories as $section => [$sectionLabel, $sectionIcon]): ?>
             <a href="about.php?section=<?= $section ?>"<?= $section === $aboutCategory ? ' aria-current="page"' : '' ?>><span class="material-symbols-rounded" aria-hidden="true"><?= $sectionIcon ?></span> <?= $sectionLabel ?></a>
@@ -62,7 +74,9 @@ $introductions = [
             ];
             $values = ['Wisdom' => 'ความรู้และความเชี่ยวชาญ', 'Accountability' => 'ความรับผิดชอบ', 'Transparency' => 'ความโปร่งใส', 'Excellence' => 'คุณภาพการบริการ', 'Responsiveness' => 'การตอบสนองประชาชน'];
         ?>
-          <!-- วิสัยทัศน์และยุทธศาสตร์ฉบับตัวอย่าง -->
+          <!-- # วิสัยทัศน์และยุทธศาสตร์
+               แสดงข้อมูลตัวอย่างเกี่ยวกับภารกิจ ยุทธศาสตร์ และค่านิยม
+          -->
           <div class="about-vision card">
             <p class="about-status">ข้อมูลตัวอย่าง · รอวิสัยทัศน์ฉบับทางการ</p>
             <blockquote>“มุ่งพัฒนาการผลิตและจ่ายน้ำประปาที่สะอาดและปลอดภัย ขยายการเข้าถึงบริการ และเพิ่มความสะดวกให้ประชาชนผ่านช่องทางดิจิทัล”</blockquote>
@@ -101,7 +115,9 @@ $introductions = [
             <p class="about-note">พันธกิจ เป้าหมาย และค่านิยมในหน้านี้เป็นข้อมูลตัวอย่างสำหรับต้นแบบ</p>
           </section>
         <?php break; case 'organization': ?>
-          <!-- พื้นที่สำหรับผังและข้อมูลบุคลากรที่รอการยืนยัน -->
+          <!-- # โครงสร้างองค์กร
+               จัดพื้นที่สำหรับผัง บุคลากร และช่องทางสอบถามระหว่างรอยืนยันข้อมูล
+          -->
           <section class="card about-card" aria-labelledby="chart-title">
             <h2 id="chart-title">ผังโครงสร้างการบริหาร</h2>
             <div class="about-placeholder about-placeholder-large">
@@ -125,15 +141,25 @@ $introductions = [
             </section>
           </div>
         <?php break; case 'operations':
-            // รายการตัวอย่างสำหรับแสดงรูปแบบข่าวและทดสอบตัวกรอง
+            # ข้อมูลจำลอง
+            # กำหนดกลุ่มและรายการข่าวผลการดำเนินงานสำหรับตัวกรอง
             $newsGroups = [
                 'reports' => ['รายงานผลการดำเนินงาน', 'ตัวอย่างรายงานการติดตามระบบจ่ายน้ำ', 'สรุปหัวข้อสำหรับรายงานการตรวจติดตามระบบจ่ายน้ำและการบำรุงรักษา', 'รายงานฉบับจริงสามารถแนบรายละเอียดจุดตรวจ ผลการติดตาม และแผนดำเนินงานรอบถัดไปได้'],
                 'projects' => ['โครงการพัฒนา', 'ตัวอย่างรายงานความคืบหน้าโครงการปรับปรุงท่อประปา', 'แสดงรูปแบบการสรุปแผนงานและขั้นตอนการปรับปรุงโครงข่าย', 'เมื่อมีรายงานอย่างเป็นทางการ จะสามารถเผยแพร่ขอบเขตงานและผลกระทบต่อผู้ใช้น้ำได้'],
                 'community' => ['กิจกรรมชุมชน', 'ตัวอย่างกิจกรรมให้ความรู้เรื่องการใช้น้ำ', 'แสดงรูปแบบข่าวกิจกรรมสื่อสารกับประชาชนเรื่องการใช้น้ำอย่างประหยัด', 'รายละเอียดจริงจะเพิ่มเติมหลังได้รับข้อมูลกิจกรรมและภาพที่ได้รับอนุญาตให้เผยแพร่'],
                 'water-quality' => ['การตรวจสอบคุณภาพน้ำ', 'ตัวอย่างสรุปผลการตรวจคุณภาพน้ำ', 'แสดงรูปแบบการนำเสนอรายงานคุณภาพน้ำเพื่อให้ประชาชนอ่านได้ง่าย', 'รอผลตรวจและรายงานที่ได้รับการรับรองจากหน่วยงาน'],
             ];
+            # วันเผยแพร่ตัวอย่างของข่าวการดำเนินงานแต่ละรายการ
+            $operationDates = [
+                'reports' => ['2026-11-24', '24 พ.ย. 2569'],
+                'projects' => ['2026-11-20', '20 พ.ย. 2569'],
+                'community' => ['2026-11-16', '16 พ.ย. 2569'],
+                'water-quality' => ['2026-10-28', '28 ต.ค. 2569'],
+            ];
             $query = is_string($_GET['q'] ?? null) ? trim($_GET['q']) : '';
             $group = is_string($_GET['group'] ?? null) && isset($newsGroups[$_GET['group']]) ? $_GET['group'] : '';
+            # การกรองข่าวผลการดำเนินงาน
+            # จับคู่คำค้นและกลุ่มข่าวก่อนแสดงผล
             $visibleNews = array_filter($newsGroups, static fn ($item, $key) =>
                 ($group === '' || $group === $key)
                     && (stripos(implode(' ', $item), $query) !== false
@@ -144,6 +170,9 @@ $introductions = [
             );
         ?>
           <p class="about-note">ข้อมูลตัวอย่างสำหรับต้นแบบ · รอข่าวและภาพจากหน่วยงาน</p>
+          <!-- # ระบบค้นหาและตัวกรอง
+               ส่งคำค้นและหมวดข่าวผ่านพารามิเตอร์ของหน้า
+          -->
           <form class="card about-filters" action="about.php" method="get" data-page-search>
             <input type="hidden" name="section" value="operations">
             <label>ค้นหาข่าว <input type="search" name="q" value="<?= htmlspecialchars($query, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') ?>"></label>
@@ -158,6 +187,9 @@ $introductions = [
             <button class="button button-primary" type="submit">ค้นหา</button>
             <a href="about.php?section=operations">ล้างตัวกรอง</a>
           </form>
+          <!-- # ผลการดำเนินงาน
+               แสดงจำนวน ข่าวที่ตรงกับตัวกรอง และสถานะเมื่อไม่พบรายการ
+          -->
           <section class="about-section" aria-labelledby="operations-title">
             <div class="about-results-heading">
               <h2 id="operations-title">รายการข่าวและผลการดำเนินงาน</h2>
@@ -165,27 +197,41 @@ $introductions = [
             </div>
             <?php if ($visibleNews): ?>
               <div class="about-grid about-grid-three">
-                <?php foreach ($visibleNews as [$groupLabel, $title, $summary, $details]): ?>
-                  <article class="card about-news">
+                <?php
+                  # ส่งรายละเอียดเฉพาะรายการที่แสดงหลังกรอง โดยใช้รหัสกลุ่มของหน้านี้
+                  $newsDialogItems = [];
+                  foreach ($visibleNews as $key => [$groupLabel, $title, $summary, $details]):
+                    [$date, $dateLabel] = $operationDates[$key];
+                    $newsDialogItems[] = [
+                        'id' => $key, 'category' => $groupLabel, 'title' => $title, 'date' => $date,
+                        'dateLabel' => $dateLabel, 'summary' => $summary, 'details' => $details,
+                        'image' => 'assets/images/hero/waterwork%201.jpg',
+                    ];
+                ?>
+                  <article class="card about-news linked-card">
                     <div class="about-placeholder about-news-image">
                       <span class="material-symbols-rounded" aria-hidden="true">image</span>
                       <small>พื้นที่ภาพประกอบข่าว</small>
                     </div>
                     <div class="about-card">
                       <p class="about-status"><?= $groupLabel ?></p>
-                      <h3><?= $title ?></h3>
+                      <h3 id="operation-title-<?= $key ?>"><?= $title ?></h3>
                       <p><?= $summary ?></p>
-                      <details><summary>อ่านรายละเอียด</summary><p><?= $details ?></p></details>
+                      <button class="about-news-read card-trigger" type="button" aria-haspopup="dialog" data-news-id="<?= $key ?>"
+                              aria-labelledby="operation-read-<?= $key ?> operation-title-<?= $key ?>"><span id="operation-read-<?= $key ?>">อ่านรายละเอียด</span></button>
                     </div>
                   </article>
                 <?php endforeach; ?>
               </div>
+              <?php require __DIR__ . '/partials/news-dialog.php'; ?>
             <?php else: ?>
               <p class="card about-card">ไม่พบข่าวที่ตรงกับตัวกรอง ลองเปลี่ยนคำค้นหาหรือหมวดข่าว</p>
             <?php endif; ?>
           </section>
         <?php break; case 'location': ?>
-          <!-- ข้อมูลที่อยู่และโทรศัพท์อ้างอิงจากส่วนท้ายของเว็บไซต์ -->
+          <!-- # ที่ตั้งและช่องทางติดต่อ
+               ใช้ที่อยู่และหมายเลขโทรศัพท์จากส่วนท้าย พร้อมพื้นที่สำหรับแผนที่
+          -->
           <div class="about-grid about-grid-map">
             <section class="card about-card" aria-labelledby="office-map-title">
               <h2 id="office-map-title">แผนที่การเดินทาง</h2>
@@ -211,7 +257,9 @@ $introductions = [
             </div>
           </div>
         <?php break; case 'service-areas': ?>
-          <!-- แผนที่และขอบเขตยังรอข้อมูลจากหน่วยงาน -->
+          <!-- # พื้นที่ให้บริการ
+               แสดงพื้นที่รอข้อมูลขอบเขตและช่องทางตรวจสอบกับหน่วยงาน
+          -->
           <div class="about-grid about-grid-map">
             <section class="card about-card" aria-labelledby="coverage-map-title">
               <h2 id="coverage-map-title">แผนที่ขอบเขตพื้นที่ให้บริการ</h2>

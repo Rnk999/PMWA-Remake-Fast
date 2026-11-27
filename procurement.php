@@ -1,5 +1,7 @@
 <?php
 $activePage = 'procurement';
+# หมวดประกาศและตัวกรองด่วน
+# กำหนดป้ายกำกับสำหรับประเภทประกาศและปุ่มคัดกรอง
 $categories = [
     'invitation' => 'ประกาศร่าง / ประกาศเชิญชวน',
     'award' => 'ประกาศผู้ชนะการเสนอราคา',
@@ -13,7 +15,8 @@ $quickFilters = [
     'chemicals' => 'จัดซื้อสารเคมี',
     'pipes' => 'งานปรับปรุงท่อ',
 ];
-// ข้อมูลจำลองสำหรับแสดงผลต้นแบบ เรียงตามวันที่ประกาศล่าสุด
+# ข้อมูลจำลอง
+# กำหนดรายการจัดซื้อจัดจ้างตัวอย่างเรียงตามวันที่ประกาศล่าสุด
 $records = [
     ['2568', '24 ต.ค.', 'invitation', 'DEMO-P01', 'ประกวดราคางานปรับปรุงท่อส่งน้ำประปา (e-Bidding)', 'วิธีจัดหา: ประกวดราคาอิเล็กทรอนิกส์', 'bidding pipes'],
     ['2568', '22 ต.ค.', 'award', 'DEMO-P02', 'ผลการเสนอราคาจัดซื้อสารเคมี PAC สำหรับผลิตน้ำประปา', 'ผลการพิจารณา: ตัวอย่างการประกาศผู้ชนะ', 'chemicals'],
@@ -30,6 +33,8 @@ $records = [
     ['2567', '18 ก.ย.', 'plan', 'DEMO-P13', 'แผนบำรุงรักษาเครื่องสูบน้ำประจำปี', 'สถานะตัวอย่าง: เผยแพร่แผน', ''],
     ['2567', '12 ก.ย.', 'price', 'DEMO-P14', 'ราคากลางงานปรับปรุงท่อจ่ายน้ำ', 'ราคากลางจำลอง: 580,000 บาท', 'pipes'],
 ];
+# ค่าเริ่มต้นของรายการ
+# หาปีงบประมาณเริ่มต้น จำนวนประกาศในปีนั้น และขนาดหน้า
 $fiscalYears = array_unique(array_column($records, 0));
 $defaultYear = $fiscalYears[0];
 $defaultTotal = count(array_filter($records, static fn ($record) => $record[0] === $defaultYear));
@@ -59,6 +64,8 @@ $pageSize = 10;
     <?php require __DIR__ . '/partials/header.php'; ?>
     <main tabindex="-1" id="main-content">
       <?php
+        # ค่าของแบนเนอร์หน้าย่อย
+        # ส่งหัวเรื่อง คำอธิบาย และข้อมูลเสริมจากหน้านี้ให้แบนเนอร์ร่วม
         $banner = [
             'title' => 'จัดซื้อจัดจ้าง',
             'subtitle' => 'Procurement',
@@ -84,6 +91,9 @@ $pageSize = 10;
       ?>
       <div class="procurement-page container">
 
+      <!-- # ระบบ e-GP
+           แสดงช่องทางไปยังระบบจัดซื้อจัดจ้างภาครัฐ
+      -->
       <section class="card procurement-egp" aria-labelledby="procurement-egp-title">
         <span class="procurement-icon" aria-hidden="true"><span class="material-symbols-rounded">account_balance</span></span>
         <div>
@@ -96,6 +106,9 @@ $pageSize = 10;
         </div>
       </section>
 
+      <!-- # ระบบค้นหาและตัวกรอง
+           จัดช่องคำค้น ตัวเลือกประเภทและปีงบประมาณ และปุ่มกรองด่วน
+      -->
       <form class="card procurement-filters" id="procurement-filters" role="search" aria-label="ค้นหาประกาศจัดซื้อจัดจ้าง" data-page-search>
         <div class="procurement-filter-fields">
           <label class="page-search procurement-search">
@@ -133,6 +146,9 @@ $pageSize = 10;
       </form>
       <noscript><p>เปิดใช้งาน JavaScript เพื่อค้นหา กรอง และดูตัวอย่างประกาศทั้งหมด</p></noscript>
 
+      <!-- # รายการประกาศจัดซื้อจัดจ้าง
+           แสดงตารางประกาศ พร้อมสถานะว่างและตัวควบคุมแบ่งหน้า
+      -->
       <section class="procurement-results" aria-labelledby="procurement-results-title" aria-describedby="procurement-sample-note">
         <h2 class="visually-hidden" id="procurement-results-title">รายการประกาศจัดซื้อจัดจ้าง</h2>
         <div class="card procurement-table-wrap">
@@ -169,6 +185,9 @@ $pageSize = 10;
         </div>
       </section>
 
+      <!-- # Modal Dialog
+           เตรียมหน้าต่างพรีวิวข้อมูลของรายการที่เลือก
+      -->
       <dialog class="card procurement-preview" id="procurement-preview" aria-labelledby="procurement-preview-title">
         <p class="procurement-badge">ข้อมูลจำลอง</p>
         <h2 id="procurement-preview-title"></h2>

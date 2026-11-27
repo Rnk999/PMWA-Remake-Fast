@@ -1,4 +1,6 @@
-/* เมนูหมวด */
+/* # เมนูหมวดเกี่ยวกับเรา
+ * จัดพื้นที่หน้า ลิงก์หมวด และสถานะหมวดที่เปิด
+ */
 .about-content { padding-block: 24px 44px; }
 .about-categories {
   display: grid;
@@ -23,7 +25,9 @@
 .about-categories a:hover { background: var(--blue-pale); }
 .about-categories a[aria-current="page"] { background: var(--navy); color: var(--white); }
 
-/* การ์ดเนื้อหาและพื้นที่รอข้อมูล */
+/* # การ์ดและพื้นที่รอข้อมูล
+ * จัดกริด ตัวอักษร ไอคอน และกรอบสำหรับข้อมูลที่รอยืนยัน
+ */
 .about-section { margin-top: 28px; }
 .about-grid { display: grid; gap: 18px; }
 .about-grid-two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -72,7 +76,9 @@
 .about-placeholder-large { min-height: 340px; }
 .about-placeholder-inline { min-height: 92px; }
 
-/* วิสัยทัศน์และค่านิยม */
+/* # วิสัยทัศน์และค่านิยม
+ * จัดข้อความวิสัยทัศน์ รายการยุทธศาสตร์ และการ์ดค่านิยม
+ */
 .about-vision {
   padding: 32px 36px;
   background: linear-gradient(120deg, var(--navy-deep), var(--navy));
@@ -100,7 +106,9 @@
 .about-value { text-align: center; }
 .about-value h3 { overflow-wrap: anywhere; }
 
-/* รายการข่าวและตัวกรอง */
+/* # รายการข่าวและตัวกรอง
+ * จัดฟอร์ม ผลการค้นหา และรายละเอียดข่าวที่เปิดพับได้
+ */
 .about-filters {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(180px, 1fr) auto auto;
@@ -128,16 +136,23 @@
   border-bottom: 1px dashed var(--muted);
   border-radius: var(--radius) var(--radius) 0 0;
 }
-.about-news details { margin-top: 10px; }
-.about-news summary { width: fit-content; color: var(--navy); font-weight: 700; cursor: pointer; }
-.about-news details p { margin-top: 6px; }
+/* # ปุ่มรายละเอียดข่าวการดำเนินงาน
+ * ใช้ตำแหน่งและน้ำหนักตัวอักษรเดิมบนการ์ดข่าว
+ */
+.about-news-read { margin-top: 10px; padding: 0; border: 0; background: transparent; color: var(--navy); font: inherit; font-weight: 700; }
 
+/* # โหมดความเปรียบต่างสูง
+ * ปรับขอบการ์ดและปุ่มให้ชัดขึ้นในโหมดความเปรียบต่างสูง
+ */
 :root[data-contrast="high"] .about-page .card { border-color: var(--line); }
 :root[data-contrast="high"] .about-page .button-muted {
   border: 1px solid var(--line);
   background: var(--white);
 }
 
+/* # การลดการเคลื่อนไหว
+ * ลดการเปลี่ยนผ่านตามค่าการเข้าถึงของผู้ใช้
+ */
 @media (prefers-reduced-motion: reduce) {
   .about-categories a { transition: none; }
 }

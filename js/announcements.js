@@ -1,3 +1,5 @@
+// # ตัวควบคุมประกาศ
+// อ้างถึงฟอร์ม รายการประกาศ และหน้าต่างรายละเอียด
 const announcementForm = document.querySelector("#announcement-filters");
 const announcementSearch = document.querySelector("#announcement-search");
 const announcementArea = document.querySelector("#announcement-area");
@@ -7,12 +9,16 @@ const announcementCount = document.querySelector("#announcement-result-count");
 const announcementEmpty = document.querySelector("#announcement-empty");
 const announcementDialog = document.querySelector("#announcement-dialog");
 const announcementDialogContent = document.querySelector("#announcement-dialog-content");
+// # ข้อความสำหรับค้นหา
+// เตรียมดัชนีข้อความจากชื่อ พื้นที่ และคำอธิบายของประกาศ
 const announcementSearchText = new Map(announcementCards.map((card) => {
   const id = card.querySelector("[data-announcement-id]").dataset.announcementId;
   const { title, area, description } = window.announcementData[id];
   return [card, siteLanguage.searchText(title, area, id, description)];
 }));
 
+// # ระบบค้นหาและตัวกรอง
+// กรองประกาศตามคำค้น ระดับ พื้นที่ และช่วงเวลา พร้อมอัปเดตผลลัพธ์
 function filterAnnouncements() {
   const query = announcementSearch.value.trim().normalize().toLocaleLowerCase("th");
   const level = announcementForm.querySelector('input[name="announcement-level"]:checked')?.value || "";
@@ -38,12 +44,16 @@ function filterAnnouncements() {
   announcementEmpty.hidden = visible > 0;
 }
 
+// # Event Listeners
+// เรียกกรองใหม่เมื่อค่าในฟอร์มหรือภาษาของหน้าเปลี่ยน
 document.addEventListener("site-language-change", filterAnnouncements);
 announcementForm?.addEventListener("input", filterAnnouncements);
 announcementForm?.addEventListener("change", filterAnnouncements);
 announcementForm?.addEventListener("reset", () => requestAnimationFrame(filterAnnouncements));
 document.querySelector("#announcement-empty-reset")?.addEventListener("click", () => announcementForm.reset());
 
+// # Modal Dialog
+// สร้างรายละเอียดและลำดับความคืบหน้าจากประกาศที่เลือก
 document.querySelectorAll("[data-announcement-id]").forEach((button) => {
   button.addEventListener("click", () => {
     const data = window.announcementData?.[button.dataset.announcementId];

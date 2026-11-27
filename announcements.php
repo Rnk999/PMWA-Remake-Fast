@@ -1,5 +1,7 @@
 <?php
 $activePage = 'announcements';
+# ข้อมูลจำลอง
+# กำหนดประกาศพร้อมระดับ พื้นที่ สถานะ และความคืบหน้า
 $announcements = [
   [
     'id' => 'MOCK-01', 'level' => 'urgent', 'levelLabel' => 'ด่วนที่สุด', 'title' => 'ตัวอย่าง: เหตุท่อประปาแตกรอการตรวจสอบ',
@@ -44,6 +46,8 @@ $announcements = [
     'updates' => [['time' => '16:00 น.', 'text' => 'รับแจ้งเหตุจำลอง'], ['time' => '18:00 น.', 'text' => 'ติดตามผลและปิดรายการตัวอย่าง']]
   ]
 ];
+# สรุปจำนวนประกาศ
+# นับรายการตามระดับและจำนวนงานที่ยังดำเนินการ
 $counts = ['urgent' => 0, 'important' => 0, 'other' => 0, 'active' => 0];
 foreach ($announcements as $announcement) {
   $counts[$announcement['level']]++;
@@ -74,6 +78,8 @@ foreach ($announcements as $announcement) {
     <?php require __DIR__ . '/partials/header.php'; ?>
     <main tabindex="-1" id="main-content" class="announcements-page">
       <?php
+        # ค่าของแบนเนอร์หน้าย่อย
+        # ส่งหัวเรื่อง คำอธิบาย และข้อมูลเสริมจากหน้านี้ให้แบนเนอร์ร่วม
         $banner = [
             'title' => 'ประกาศด่วนและแจ้งเหตุน้ำประปา',
             'subtitle' => 'Urgent Announcements & Water Service Alerts',
@@ -84,16 +90,19 @@ foreach ($announcements as $announcement) {
             'details' => static function () use ($counts): void {
             ?>
             <div class="announcement-stats" aria-label="สรุปประกาศจากข้อมูลตัวอย่าง">
-              <div class="announcement-stat stat-urgent"><span>ด่วนที่สุด</span><strong><?= $counts['urgent'] ?></strong><small>รายการตัวอย่าง</small></div>
-              <div class="announcement-stat stat-important"><span>สำคัญ</span><strong><?= $counts['important'] ?></strong><small>รายการตัวอย่าง</small></div>
-              <div class="announcement-stat stat-other"><span>อื่น ๆ / ดำเนินการแล้ว</span><strong><?= $counts['other'] ?></strong><small>รายการตัวอย่าง</small></div>
-              <div class="announcement-stat stat-active"><span>กำลังดำเนินการ</span><strong><?= $counts['active'] ?></strong><small>รายการตัวอย่าง</small></div>
+              <div class="announcement-stat stat-urgent"><span>ด่วนที่สุด</span><strong><?= $counts['urgent'] ?></strong><small><span class="material-symbols-rounded" aria-hidden="true">warning</span> รายการตัวอย่าง</small></div>
+              <div class="announcement-stat stat-important"><span>สำคัญ</span><strong><?= $counts['important'] ?></strong><small><span class="material-symbols-rounded" aria-hidden="true">priority_high</span> รายการตัวอย่าง</small></div>
+              <div class="announcement-stat stat-other"><span>อื่น ๆ / ดำเนินการแล้ว</span><strong><?= $counts['other'] ?></strong><small><span class="material-symbols-rounded" aria-hidden="true">check_circle</span> รายการตัวอย่าง</small></div>
+              <div class="announcement-stat stat-active"><span>กำลังดำเนินการ</span><strong><?= $counts['active'] ?></strong><small><span class="material-symbols-rounded" aria-hidden="true">schedule</span> รายการตัวอย่าง</small></div>
             </div>
             <?php
             },
         ];
         require __DIR__ . '/partials/page-banner.php';
       ?>
+      <!-- # ระบบค้นหาและตัวกรอง
+           จัดช่องค้นหาและตัวเลือกพื้นที่ ช่วงเวลา และระดับประกาศ
+      -->
       <section class="announcement-content container" aria-label="ค้นหาและรายการประกาศ">
         <form class="announcement-filters" id="announcement-filters">
           <div class="announcement-filter-row">
@@ -111,6 +120,9 @@ foreach ($announcements as $announcement) {
             <button class="announcement-reset" type="reset"><span class="material-symbols-rounded" aria-hidden="true">restart_alt</span> ล้างตัวกรอง</button>
           </div>
         </form>
+        <!-- # รายการประกาศ
+             แสดงการ์ดประกาศ จำนวนผลลัพธ์ และสถานะเมื่อไม่พบรายการ
+        -->
         <div class="announcement-list-heading"><h2>รายการประกาศและสถานการณ์ล่าสุด <span id="announcement-result-count"><?= count($announcements) ?> รายการ</span></h2><span class="announcement-demo-note">ข้อมูลจำลองเพื่อแสดงรูปแบบต้นแบบ</span></div>
         <div class="announcement-grid" id="announcement-list" aria-live="polite">
           <?php foreach ($announcements as $item): ?>
@@ -130,6 +142,9 @@ foreach ($announcements as $announcement) {
         <div class="announcement-empty" id="announcement-empty" hidden><span class="material-symbols-rounded" aria-hidden="true">search_off</span><h2>ไม่พบประกาศที่ตรงกับตัวกรอง</h2><p>ลองเปลี่ยนคำค้นหาหรือเลือกตัวกรองอื่น</p><button type="button" id="announcement-empty-reset">ล้างตัวกรอง</button></div>
         <p class="announcement-prototype-footnote">หมายเหตุ: ประกาศและสถานะทั้งหมดในหน้านี้เป็นข้อมูลสมมติเพื่อการออกแบบและทดสอบต้นแบบเท่านั้น ไม่ใช่ประกาศจากหน่วยงาน</p>
       </section>
+      <!-- # Modal Dialog
+           เตรียมช่องแสดงรายละเอียดและส่งข้อมูลประกาศให้ JavaScript
+      -->
       <dialog class="announcement-dialog" id="announcement-dialog" aria-labelledby="announcement-dialog-title"><form method="dialog"><button class="dialog-close" aria-label="ปิดรายละเอียด"><span class="material-symbols-rounded" aria-hidden="true">close</span></button></form><div id="announcement-dialog-content"></div></dialog>
       <script>window.announcementData = <?= json_encode(array_column($announcements, null, 'id'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;</script>
     </main>

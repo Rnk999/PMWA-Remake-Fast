@@ -1,4 +1,6 @@
 <?php
+# หน้าปัจจุบัน
+# ระบุหน้าเอกสารเพื่อแสดงสถานะในเมนูร่วม
 $activePage = 'documents';
 ?>
 <!doctype html>
@@ -24,6 +26,8 @@ $activePage = 'documents';
     <?php require __DIR__ . '/partials/header.php'; ?>
     <main tabindex="-1" id="main-content">
       <?php
+        # ค่าของแบนเนอร์หน้าย่อย
+        # ส่งหัวเรื่อง คำอธิบาย และข้อมูลเสริมจากหน้านี้ให้แบนเนอร์ร่วม
         $banner = [
             'title' => 'แบบฟอร์มและเอกสารเผยแพร่',
             'titleId' => 'documents-title',
@@ -45,6 +49,9 @@ $activePage = 'documents';
       ?>
       <div class="documents-page container">
 
+      <!-- # ระบบค้นหาและตัวกรอง
+           จัดช่องค้นหา ตัวเลือกหมวดและรูปแบบไฟล์ และปุ่มล้าง
+      -->
       <section class="documents-filter-panel" aria-label="ค้นหาและกรองเอกสาร">
         <div class="documents-filter-row">
           <div class="page-search documents-search">
@@ -64,6 +71,9 @@ $activePage = 'documents';
         <p class="documents-filter-status" id="documents-filter-status" aria-live="polite"></p>
       </section>
 
+      <!-- # รายการเอกสาร
+           เตรียมพื้นที่ให้ JavaScript แสดงเอกสารแต่ละกลุ่มและสถานะไม่พบผลลัพธ์
+      -->
       <section class="documents-results" id="documents-results" aria-labelledby="documents-results-title">
         <div class="documents-results-heading">
           <div><p class="documents-section-eyebrow">รายการเอกสาร</p><h2 id="documents-results-title">ค้นหาเอกสารเผยแพร่</h2></div>
@@ -80,6 +90,9 @@ $activePage = 'documents';
         <div class="documents-empty" id="documents-empty" hidden>
           <span class="material-symbols-rounded" aria-hidden="true">search_off</span><h3>ไม่พบเอกสารที่ตรงกับการค้นหา</h3><p>ลองเปลี่ยนคำค้นหาหรือปรับตัวกรอง แล้วค้นหาอีกครั้ง</p><button class="documents-reset" id="documents-empty-reset" type="button">ล้างตัวกรอง</button>
         </div>
+        <!-- # การแบ่งหน้า
+             เตรียมข้อความสถานะและปุ่มเปลี่ยนหน้าของรายการเอกสาร
+        -->
         <nav class="documents-pagination" id="documents-pagination" aria-label="หน้าเอกสาร">
           <p id="documents-page-status"></p><div class="documents-page-buttons" id="documents-page-buttons"></div>
         </nav>

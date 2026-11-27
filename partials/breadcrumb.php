@@ -1,4 +1,6 @@
 <?php
+# หมวดแม่ของเส้นทางนำทาง
+# เลือกชื่อและปลายทางของหมวดแม่ตามค่าจากแบนเนอร์
 $breadcrumbParents = [
     'services' => ['บริการ', 'index.php#services'],
     'information' => ['ข้อมูลเผยแพร่', 'index.php#information'],
@@ -6,6 +8,9 @@ $breadcrumbParents = [
 ];
 $breadcrumbParent = $breadcrumbParents[$banner['breadcrumbParent'] ?? ''] ?? null;
 ?>
+          <!-- # เส้นทางนำทาง
+               แสดงหน้าแรก หมวดแม่เมื่อมี และชื่อหน้าปัจจุบัน
+          -->
           <nav aria-label="เส้นทางนำทาง">
             <ol class="breadcrumb">
               <li><a href="index.php">หน้าแรก</a></li>

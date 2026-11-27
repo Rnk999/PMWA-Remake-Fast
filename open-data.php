@@ -1,12 +1,16 @@
 <?php
 $activePage = 'open-data';
+# หมวดชุดข้อมูล
+# กำหนดชื่อหมวดสำหรับตัวกรองและป้ายกำกับ
 $topics = [
     'service' => 'บริการประชาชน',
     'quality' => 'คุณภาพน้ำประปา',
     'production' => 'การผลิตและจ่ายน้ำ',
+    'consumption' => 'การใช้น้ำประปา',
 ];
 
-// ข้อมูลเมตาและค่าทั้งหมดใช้สำหรับสาธิตต้นแบบเท่านั้น
+# ข้อมูลจำลอง
+# กำหนดข้อมูลเมตาและค่าตัวอย่างสำหรับการ์ดและหน้าต่างพรีวิว
 $datasets = [
     'complaints' => [
         'service', 'support_agent', 'ข้อมูลสถิติการรับเรื่องร้องทุกข์',
@@ -38,8 +42,15 @@ $datasets = [
         'ข้อมูลปริมาณน้ำดิบและปริมาณน้ำประปาที่ผลิตได้จากสถานีผลิตน้ำของกองการประปา',
         12, 'ปริมาณน้ำที่ผลิตได้ (ลบ.ม.)', '925,000',
     ],
+    'consumption' => [
+        'consumption', 'bar_chart', 'ข้อมูลปริมาณการใช้น้ำประปา',
+        'ปริมาตรน้ำที่ผู้ใช้น้ำใช้จริงตามมิเตอร์ แสดงตัวอย่างรายเดือนและยอดรวมรายปี',
+        null, 'ปริมาณการใช้น้ำ (m³)', null,
+    ],
 ];
 $datasetCount = count($datasets);
+# ช่วงเวลาและยอดตัวอย่างที่ใช้ร่วมกับกราฟหน้าแรก
+$waterConsumption = require __DIR__ . '/data/water-consumption.php';
 ?>
 <!doctype html>
 <html lang="th">
@@ -64,6 +75,8 @@ $datasetCount = count($datasets);
     <?php require __DIR__ . '/partials/header.php'; ?>
     <main tabindex="-1" class="open-data" id="main-content">
       <?php
+        # ค่าของแบนเนอร์หน้าย่อย
+        # ส่งหัวเรื่อง คำอธิบาย และข้อมูลเสริมจากหน้านี้ให้แบนเนอร์ร่วม
         $banner = [
             'title' => 'ข้อมูลเปิด',
             'subtitle' => 'Open Data',
@@ -83,6 +96,9 @@ $datasetCount = count($datasets);
         require __DIR__ . '/partials/page-banner.php';
       ?>
 
+      <!-- # ระบบค้นหาและตัวกรอง
+           จัดช่องค้นหา ตัวเลือกหัวข้อ และตัวนับชุดข้อมูล
+      -->
       <section class="container open-data-catalog" aria-label="แค็ตตาล็อกชุดข้อมูล">
         <form class="card open-data-filters" role="search" aria-label="ค้นหาชุดข้อมูลเปิด">
           <div class="page-search open-data-search">
@@ -103,8 +119,16 @@ $datasetCount = count($datasets);
           <p class="open-data-count" role="status"><span class="material-symbols-rounded" aria-hidden="true">info</span><span id="dataset-count">แสดงทั้งหมด <?= $datasetCount ?> ชุดข้อมูล</span></p>
         </form>
 
+        <!-- # รายการชุดข้อมูล
+             แสดงการ์ดพร้อมแม่แบบรายละเอียดและข้อมูลตัวอย่างสำหรับพรีวิว
+        -->
         <div class="open-data-grid">
-          <?php foreach ($datasets as $id => [$topic, $icon, $title, $description, $day, $field, $value]): ?>
+          <?php
+            # วันอัปเดตตัวอย่างของแค็ตตาล็อก
+            foreach ($datasets as $id => [$topic, $icon, $title, $description, $day, $field, $value]):
+              $sampleDate = $day === null ? '2026-11-27' : sprintf('2025-02-%02d', $day);
+              $sampleDateLabel = $day === null ? '27 พ.ย. 2569' : "$day กุมภาพันธ์ 2568";
+          ?>
             <article class="card open-data-card" data-topic="<?= $topic ?>">
               <div class="open-data-card-top">
                 <span class="open-data-icon material-symbols-rounded" aria-hidden="true"><?= $icon ?></span>
@@ -114,25 +138,63 @@ $datasetCount = count($datasets);
               <p class="open-data-description"><?= $description ?></p>
               <p class="open-data-date">
                 <span class="material-symbols-rounded" aria-hidden="true">schedule</span>
-                วันที่อัปเดตตัวอย่าง <time datetime="2025-02-<?= sprintf('%02d', $day) ?>"><?= $day ?> กุมภาพันธ์ 2568</time>
+                <span>วันที่อัปเดตตัวอย่าง</span> <time datetime="<?= $sampleDate ?>"><?= $sampleDateLabel ?></time>
               </p>
               <button class="button button-primary open-data-preview" type="button" aria-haspopup="dialog"
                 aria-labelledby="preview-<?= $id ?> dataset-<?= $id ?>" data-preview="<?= $id ?>">
                 <span id="preview-<?= $id ?>">ดูชุดข้อมูล</span><span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span>
               </button>
               <template id="sample-<?= $id ?>">
-                <h2 id="dataset-dialog-title"><?= $title ?></h2>
+                <h2 id="dataset-dialog-title"<?= $id === 'consumption' ? ' tabindex="-1"' : '' ?>><?= $title ?></h2>
                 <p><?= $description ?></p>
                 <dl class="open-data-metadata">
                   <div><dt>หมวดหมู่</dt><dd><?= $topics[$topic] ?></dd></div>
-                  <div><dt>วันที่อัปเดตตัวอย่าง</dt><dd><?= $day ?> กุมภาพันธ์ 2568</dd></div>
+                  <div><dt>วันที่อัปเดตตัวอย่าง</dt><dd><?= $sampleDateLabel ?></dd></div>
                   <div><dt>รูปแบบไฟล์ตัวอย่าง</dt><dd>CSV, XLSX</dd></div>
                 </dl>
+                <?php if ($id === 'consumption'): ?>
+                  <!-- # ข้อมูลการใช้น้ำรายปีและรายเดือน
+                       คำนวณยอดรวมจากเดือนเดียวกับแท่งกราฟ และระบุจำนวนเดือนที่นำมารวม
+                  -->
+                  <p>ข้อมูลตัวอย่างจากมิเตอร์ผู้ใช้น้ำ แยกจากปริมาณน้ำผลิต ปริมาณน้ำผลิตจ่าย และจำนวนผู้ใช้น้ำประปา</p>
+                  <table>
+                    <caption>ยอดรวมรายปี (ข้อมูลตัวอย่าง)</caption>
+                    <thead><tr><th scope="col">ปี พ.ศ.</th><th scope="col">จำนวนเดือนที่รวม</th><th scope="col"><?= $field ?></th></tr></thead>
+                    <tbody>
+                      <?php foreach ($waterConsumption['byYear'] as $year => $values): ?>
+                        <tr data-consumption-total="<?= $year ?>"><th scope="row"><?= $year ?></th><td><?= count($values) ?></td><td><?= number_format(array_sum($values)) ?></td></tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                  <label class="filter-select consumption-year">
+                    <span>เลือกปี พ.ศ.</span>
+                    <select id="consumption-year">
+                      <?php foreach (array_keys($waterConsumption['byYear']) as $year): ?>
+                        <option value="<?= $year ?>"<?= $year === $waterConsumption['defaultYear'] ? ' selected' : '' ?>>ปี พ.ศ. <?= $year ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </label>
+                  <?php foreach ($waterConsumption['byYear'] as $year => $values): ?>
+                    <table data-consumption-months="<?= $year ?>"<?= $year !== $waterConsumption['defaultYear'] ? ' hidden' : '' ?>>
+                      <caption>ปริมาณการใช้น้ำรายเดือน (ข้อมูลตัวอย่าง)</caption>
+                      <thead><tr><th scope="col">เดือน</th><th scope="col"><?= $field ?></th></tr></thead>
+                      <tbody>
+                        <?php foreach ($values as $month => $amount): ?>
+                          <tr><th scope="row"><?= $waterConsumption['months'][$month][0] ?></th><td><?= number_format($amount) ?></td></tr>
+                        <?php endforeach; ?>
+                        <?php if (!$values): ?>
+                          <tr><td colspan="2">ยังไม่มีข้อมูลเดือนที่สิ้นสุดแล้ว</td></tr>
+                        <?php endif; ?>
+                      </tbody>
+                    </table>
+                  <?php endforeach; ?>
+                <?php else: ?>
                 <table>
                   <caption>ตัวอย่างข้อมูลจำลอง</caption>
                   <thead><tr><th scope="col">ช่วงข้อมูล</th><th scope="col"><?= $field ?></th></tr></thead>
                   <tbody><tr><td>มกราคม 2568</td><td><?= $value ?></td></tr></tbody>
                 </table>
+                <?php endif; ?>
               </template>
             </article>
           <?php endforeach; ?>
@@ -146,6 +208,9 @@ $datasetCount = count($datasets);
         <p class="open-data-note"><span class="material-symbols-rounded" aria-hidden="true">info</span> ข้อมูลและวันที่อัปเดตทั้งหมดเป็นข้อมูลจำลองสำหรับต้นแบบ</p>
       </section>
 
+      <!-- # Modal Dialog
+           เตรียมช่องรับเนื้อหาพรีวิวจากแม่แบบของชุดข้อมูลที่เลือก
+      -->
       <dialog class="open-data-dialog" id="dataset-dialog" aria-labelledby="dataset-dialog-title">
         <div id="dataset-dialog-content"></div>
         <form method="dialog">

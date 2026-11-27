@@ -1,3 +1,5 @@
+// # ตัวควบคุมรายการข่าว
+// เก็บองค์ประกอบของตัวกรอง ข่าวเด่น รายการ แบ่งหน้า และหน้าต่างรายละเอียด
 const newsSearch = document.querySelector("#news-search");
 const newsCategory = document.querySelector("#news-category");
 const newsYear = document.querySelector("#news-year");
@@ -10,13 +12,13 @@ const newsPagination = document.querySelector("#news-pagination");
 const newsPageStatus = document.querySelector("#news-page-status");
 const newsPageButtons = document.querySelector("#news-page-buttons");
 const newsSearchClear = document.querySelector("#news-search-clear");
-const newsDialog = document.querySelector("#news-dialog");
-const newsDialogContent = document.querySelector("#news-dialog-content");
 const featuredId = featuredNews?.querySelector("[data-news-id]")?.dataset.newsId;
 const pageSize = 6;
 let currentPage = 1;
 let matchingCards = [];
 
+// # เงื่อนไขค้นหาข่าว
+// จับคู่คำค้นกับข้อความสองภาษา หมวดข่าว และปี พ.ศ.
 function matchesNews(item) {
   const query = newsSearch.value.trim().normalize().toLocaleLowerCase("th");
   const searchText = siteLanguage.searchText(item.title, item.summary, item.category);
@@ -26,6 +28,8 @@ function matchesNews(item) {
     && (!newsYear.value || year === newsYear.value);
 }
 
+// # การแสดงรายการข่าว
+// กรองข่าวเด่นและข่าวทั่วไป แล้วอัปเดตจำนวนผลลัพธ์และหน้า
 function renderNews() {
   const allNews = window.newsData || {};
   const featureMatches = featuredId && allNews[featuredId] ? matchesNews(allNews[featuredId]) : false;
@@ -47,6 +51,8 @@ function renderNews() {
   renderPageButtons(pageCount);
 }
 
+// # ปุ่มแบ่งหน้า
+// สร้างปุ่มเลื่อนหน้าและระบุหน้าปัจจุบันสำหรับเทคโนโลยีช่วยเหลือ
 function renderPageButtons(pageCount) {
   const buttons = [];
   const previous = document.createElement("button");
@@ -77,12 +83,16 @@ function renderPageButtons(pageCount) {
   newsPageButtons.replaceChildren(...buttons);
 }
 
+// # การเปลี่ยนหน้า
+// แสดงข่าวของหน้าที่เลือกและเลื่อนไปยังส่วนผลลัพธ์
 function changePage(page) {
   currentPage = page;
   renderNews();
   document.querySelector("#news-results-title").scrollIntoView({ block: "start" });
 }
 
+// # การล้างตัวกรอง
+// คืนค่าช่องค้นหา หมวด และปี พร้อมกลับไปหน้าแรก
 function resetNewsFilters() {
   newsSearch.value = "";
   newsCategory.value = "";
@@ -91,30 +101,12 @@ function resetNewsFilters() {
   renderNews();
 }
 
-function openNewsDetail(id) {
-  const item = window.newsData?.[id];
-  if (!item || !newsDialog || !newsDialogContent) return;
-  const heading = document.createElement("h2");
-  heading.id = "news-dialog-title";
-  heading.textContent = t(item.title);
-  const meta = document.createElement("p");
-  meta.className = "news-dialog-meta";
-  meta.textContent = [item.category, item.dateLabel, "ข้อมูลตัวอย่าง"].map((part) => t(part)).join(" · ");
-  const summary = document.createElement("p");
-  summary.textContent = t(item.summary);
-  const note = document.createElement("p");
-  note.textContent = t("เนื้อหานี้เป็นข้อมูลจำลองสำหรับต้นแบบ ไม่ใช่ข่าวหรือประกาศจากหน่วยงาน");
-  newsDialogContent.replaceChildren(heading, meta, summary, note);
-  newsDialog.showModal();
-}
-
+// # Event Listeners
+// เชื่อมตัวกรองกับการแสดงข่าวและการเปลี่ยนภาษา
 newsSearch.addEventListener("input", () => { currentPage = 1; renderNews(); });
 newsCategory.addEventListener("change", () => { currentPage = 1; renderNews(); });
 newsYear.addEventListener("change", () => { currentPage = 1; renderNews(); });
 newsSearchClear.addEventListener("click", () => { newsSearch.value = ""; currentPage = 1; renderNews(); newsSearch.focus(); });
 document.querySelector("#news-reset").addEventListener("click", resetNewsFilters);
-document.querySelectorAll("[data-news-id]").forEach((button) => button.addEventListener("click", () => openNewsDetail(button.dataset.newsId)));
-newsDialog?.addEventListener("click", (event) => { if (event.target === newsDialog) newsDialog.close(); });
-
 document.addEventListener("site-language-change", renderNews);
 renderNews();

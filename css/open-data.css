@@ -1,3 +1,6 @@
+/* # สรุปชุดข้อมูล
+ * จัดตัวนับและข้อความสรุปของหน้าแค็ตตาล็อก
+ */
 .open-data h2,
 .open-data-summary strong {
   color: var(--navy-deep);
@@ -14,6 +17,9 @@
 }
 
 .open-data-summary strong { display: block; font-size: 1rem; }
+/* # ระบบค้นหาและตัวกรอง
+ * จัดช่องค้นหา ตัวเลือกหัวข้อ ปุ่มล้าง และตัวนับผลลัพธ์
+ */
 .open-data-catalog { padding-block: 40px 36px; }
 
 .open-data-filters {
@@ -51,6 +57,9 @@
 
 .open-data-count .material-symbols-rounded { color: var(--navy); }
 
+/* # รายการชุดข้อมูล
+ * จัดการ์ด ไอคอน ป้ายรูปแบบไฟล์ และปุ่มพรีวิว
+ */
 .open-data-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -103,6 +112,9 @@
 
 .open-data-preview:hover { background: var(--navy-deep); }
 
+/* # สถานะไม่พบชุดข้อมูล
+ * จัดข้อความสำหรับผลลัพธ์ว่างและหมายเหตุตัวอย่าง
+ */
 .open-data-empty {
   padding: 40px 24px;
   border: 1px dashed var(--line);
@@ -115,6 +127,9 @@
 .open-data-empty p { margin: 6px 0 16px; }
 .open-data-note { margin: 32px 0 0; color: var(--muted); font-size: .8125rem; text-align: center; }
 
+/* # Modal Dialog
+ * จัดหน้าต่างพรีวิว รายการข้อมูลเมตา และตารางตัวอย่าง
+ */
 .open-data-dialog {
   width: min(660px, calc(100% - 48px));
   padding: 28px;
@@ -139,3 +154,9 @@
 .open-data-dialog caption { margin-bottom: 6px; text-align: left; font-weight: 700; }
 .open-data-dialog :is(th, td) { padding: 8px 12px; border: 1px solid var(--line); text-align: left; }
 .open-data-dialog th { background: var(--blue-soft); }
+
+/* # ตารางข้อมูลการใช้น้ำ
+ * ให้ตารางรายเดือนแสดงตามปีที่เลือกและเว้นระยะจากยอดรวมรายปี
+ */
+.open-data-dialog table[hidden] { display: none; }
+.consumption-year { width: fit-content; margin: 20px 0 12px; }

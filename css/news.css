@@ -1,3 +1,6 @@
+/* # พื้นที่หน้าข่าว
+ * กำหนดระยะหน้าและรูปแบบกล่องแจ้งข้อมูลตัวอย่าง
+ */
 .news-page { padding-top: 24px; padding-bottom: 42px; }
 .news-social-eyebrow { display: inline-flex; align-items: center; gap: 7px; margin: 0 0 10px; color: var(--blue-bright); font-size: .8125rem; font-weight: 700; }
 .news-social-eyebrow .material-symbols-rounded { font-size: 1.125rem; }
@@ -6,6 +9,9 @@
 .news-demo-callout span:last-child { display: grid; gap: 2px; }
 .news-demo-callout strong { font-size: .875rem; }
 .news-demo-callout small { color: var(--muted); font-size: .75rem; line-height: 1.55; }
+/* # ระบบค้นหาและตัวกรอง
+ * จัดช่องค้นหา ตัวเลือก และปุ่มล้าง
+ */
 .news-filters { display: grid; grid-template-columns: minmax(0, 1fr) auto auto auto; align-items: end; gap: 12px; margin: 6px 0 30px; padding: 16px 18px; border: 1px solid #e8edf2; border-radius: 16px; background: var(--white); box-shadow: var(--shadow); }
 .news-search button { display: grid; width: 28px; height: 28px; flex: 0 0 auto; place-items: center; border: 0; border-radius: 50%; background: transparent; color: var(--muted); cursor: pointer; }
 .news-search button[hidden] { display: none; }
@@ -13,6 +19,9 @@
 .news-reset:focus-visible, .news-page-buttons button:focus-visible, .news-read-more:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
 .news-reset { display: inline-flex; height: 42px; align-items: center; justify-content: center; gap: 6px; padding: 0 10px; border: 0; border-radius: 9px; background: transparent; color: var(--blue-bright); font: inherit; font-size: .8125rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
 .news-reset:hover { background: var(--blue-pale); }
+/* # ข่าวเด่น
+ * จัดภาพ ป้ายหมวด วันที่ และเนื้อหาข่าวเด่น
+ */
 .featured-news { display: grid; min-height: 380px; grid-template-columns: 1.15fr 1fr; overflow: hidden; margin-bottom: 36px; border-radius: 20px; background: var(--white); box-shadow: var(--shadow); }
 .featured-news[hidden] { display: none; }
 .featured-image-wrap { position: relative; min-height: 380px; background: #dceaf2; }
@@ -32,6 +41,9 @@
 .news-read-more:hover { color: var(--navy); }
 .news-read-more .material-symbols-rounded { font-size: 1.1rem; transition: transform .15s ease; }
 .news-read-more:hover .material-symbols-rounded { transform: translateX(3px); }
+/* # รายการข่าว
+ * จัดหัวเรื่อง ตัวนับ กริดข่าว และสถานะเมื่อไม่พบข่าว
+ */
 .news-results-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
 .news-results-heading h2 { margin: 0; padding-left: 12px; border-left: 4px solid var(--blue-bright); color: var(--navy-deep); font-size: 1.375rem; }
 .news-results-heading p { margin: 0; color: var(--muted); font-size: .75rem; }
@@ -53,6 +65,9 @@
 .news-empty > .material-symbols-rounded { color: #8193a4; font-size: 2rem; }
 .news-empty h3 { margin: 5px 0; color: var(--navy); }
 .news-empty p { margin: 0; color: var(--muted); }
+/* # การแบ่งหน้า
+ * จัดปุ่มและสถานะหน้าปัจจุบันของรายการข่าว
+ */
 .news-pagination { display: flex; min-height: 62px; align-items: center; justify-content: space-between; gap: 18px; margin-top: 24px; padding: 10px 16px; border: 1px solid #e8edf2; border-radius: 14px; background: var(--white); box-shadow: 0 2px 8px rgb(19 50 83 / 4%); }
 .news-pagination[hidden] { display: none; }
 .news-pagination > p { margin: 0; color: var(--body); font-size: .8125rem; }
@@ -61,6 +76,9 @@
 .news-page-buttons button:hover:not(:disabled) { background: var(--blue-pale); color: var(--navy); }
 .news-page-buttons button[aria-current="page"] { background: #08719f; color: var(--white); font-weight: 700; }
 .news-page-buttons button:disabled { color: #aebbc6; cursor: default; }
+/* # ช่องทางติดตามข่าว
+ * จัดข้อความและการ์ดช่องทางสังคมพร้อมหมายเหตุต้นแบบ
+ */
 .news-social { display: flex; align-items: center; justify-content: space-between; gap: 36px; margin-top: 38px; padding: 30px 42px; border-radius: 20px; background: linear-gradient(110deg, #173f70 0%, #08719f 60%, #1595d0 100%); color: var(--white); box-shadow: var(--shadow-hover); }
 .news-social-copy { max-width: 720px; }
 .news-social-eyebrow { margin-bottom: 8px; color: #c8efff; }
@@ -73,11 +91,3 @@
 .news-social-channel strong { color: white; font-size: .8125rem; }
 .news-social-channel small { color: #d5eaf7; font-size: .6875rem; }
 .news-prototype-note { margin: 20px 0 0; color: var(--muted); font-size: .75rem; text-align: center; }
-.news-dialog { position: relative; width: min(680px, calc(100% - 48px)); max-width: 680px; max-height: 82vh; overflow: auto; padding: 34px; border: 1px solid var(--line); border-radius: 18px; color: var(--body); box-shadow: 0 20px 70px rgb(4 24 48 / 25%); }
-.news-dialog::backdrop { background: rgb(8 26 45 / 55%); }
-.news-dialog[open] { animation: news-dialog-in .16s ease-out; }
-.news-dialog h2 { margin: 0 40px 8px 0; color: var(--navy-deep); font-size: 1.5rem; line-height: 1.5; }
-.news-dialog p { line-height: 1.8; }
-.news-dialog .news-dialog-meta { color: var(--muted); font-size: .8125rem; }
-.news-dialog-close { position: absolute; top: 14px; right: 14px; display: grid; width: 36px; height: 36px; place-items: center; border: 0; border-radius: 50%; background: #eff4f8; color: var(--navy); cursor: pointer; }
-@keyframes news-dialog-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }

@@ -1,3 +1,5 @@
+// # ระบบแปลภาษา
+// โหลดพจนานุกรมและเก็บข้อความต้นฉบับเพื่อสลับภาษาได้
 const siteLanguage = (() => {
   const root = document.documentElement;
   const dictionary = JSON.parse(document.querySelector("#site-translations").textContent);
@@ -11,6 +13,8 @@ const siteLanguage = (() => {
   const storageKey = "pmwa-site-language";
   const normalize = (text) => text.trim().replace(/\s+/g, " ");
 
+  // # การค้นหาคำแปล
+  // หาคำแปลจากข้อความที่จัดช่องว่างแล้ว และรองรับรูปแบบปีและเวลา
   function english(text) {
     const key = normalize(text);
     if (Object.hasOwn(dictionary, key)) return dictionary[key];
@@ -21,17 +25,23 @@ const siteLanguage = (() => {
     return key;
   }
 
+  // # ข้อความแบบมีตัวแปร
+  // แทนค่าตัวแปรในข้อความตามภาษาปัจจุบัน
   function text(source, ...values) {
     const message = root.lang === "en" ? english(source) : source;
     return message.replace(/\{(\d+)\}/g, (match, index) => values[index] ?? match);
   }
 
+  // # ข้อความสำหรับค้นหา
+  // รวมข้อความต้นฉบับและคำแปลเพื่อจับคู่คำค้นทั้งสองภาษา
   function searchText(...sources) {
     const original = sources.join(" ");
     const translated = sources.map(english).join(" ");
     return `${original} ${translated}`.normalize().toLocaleLowerCase("th");
   }
 
+  // # โหนดข้อความที่แปลได้
+  // เลือกโหนดข้อความที่มีเนื้อหาและอยู่นอกองค์ประกอบที่ยกเว้น
   function textNodes(scope) {
     return document.createTreeWalker(scope, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
@@ -41,6 +51,8 @@ const siteLanguage = (() => {
     });
   }
 
+  // # ข้อความที่ใช้ค้นหาในหน้า
+  // เก็บข้อความต้นฉบับและคำแปลจากองค์ประกอบที่กำหนด
   function searchableContent(scope) {
     const nodes = textNodes(scope);
     const phrases = [];
@@ -51,6 +63,8 @@ const siteLanguage = (() => {
     return searchText(...phrases);
   }
 
+  // # การแปลเนื้อหา
+  // สลับข้อความและแอตทริบิวต์โดยใช้ค่าต้นฉบับเป็นแหล่งอ้างอิง
   function localize(scope) {
     const nodes = textNodes(scope);
     while (nodes.nextNode()) {
@@ -81,6 +95,8 @@ const siteLanguage = (() => {
   const description = document.querySelector('meta[name="description"]');
   const originalDescription = description?.content;
 
+  // # การเปลี่ยนภาษา
+  // อัปเดตภาษาของเอกสาร ข้อมูลเมตา ปุ่ม และส่งเหตุการณ์ให้ส่วนอื่น
   function apply(language) {
     root.lang = language;
     document.title = title.split(/( — | \| )/).map((part, index) => index % 2 ? part : text(part)).join("");
@@ -90,6 +106,8 @@ const siteLanguage = (() => {
     document.dispatchEvent(new Event("site-language-change"));
   }
 
+  // # ภาษาที่บันทึกไว้
+  // อ่านภาษาจากพื้นที่จัดเก็บและใช้ภาษาเริ่มต้นเมื่ออ่านไม่ได้
   function storedLanguage() {
     try {
       return localStorage.getItem(storageKey) === "en" ? "en" : "th";
@@ -98,13 +116,16 @@ const siteLanguage = (() => {
     }
   }
 
+  // # Event Listeners
+  // เชื่อมปุ่มเลือกภาษากับการบันทึกและอ่านค่าซ้ำเมื่อกลับมายังหน้า
   buttons.forEach((button) => button.addEventListener("click", () => {
     const language = button.dataset.siteLanguage;
     if (root.lang === language) return;
     try {
       localStorage.setItem(storageKey, language);
     } catch {
-      // Keep the selected language for the current page.
+      // # การบันทึกภาษา
+      // คงภาษาที่เลือกบนหน้าปัจจุบันเมื่อบันทึกข้ามหน้าไม่ได้
     }
     apply(language);
   }));

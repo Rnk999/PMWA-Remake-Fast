@@ -1,11 +1,13 @@
-    <!-- ส่วนที่ 7: ข้อมูลหน่วยงาน ช่องทางติดต่อ และลิงก์ท้ายเว็บไซต์ -->
-    <!-- หน้าที่: ให้ข้อมูลติดต่อและทางลัดไปยังหมวดต่าง ๆ ของเว็บไซต์ -->
     <?php
-      // ใช้ตัวแปร $activePage ที่กำหนดจากหน้าหลัก หากยังไม่ได้กำหนดให้ถือเป็น home
+      # ลิงก์กลับหน้าแรก
+      # เลือกปลายทางตามหน้าปัจจุบันก่อนสร้างส่วนท้าย
       if (!isset($activePage)) $activePage = 'home';
       $isHome = ($activePage === 'home');
       $footerHomeHref = $isHome ? '#top' : 'index.php';
     ?>
+    <!-- # Footer
+         แสดงข้อมูลติดต่อ ลิงก์ตามหมวด และข้อมูลลิขสิทธิ์
+    -->
     <footer class="site-footer" id="about">
       <div class="container footer-main">
         <div class="footer-about" id="contact">
@@ -14,11 +16,16 @@
             <p><span class="material-symbols-rounded" aria-hidden="true">location_on</span> 1299 ถนนบรมไตรโลกนารถ 2 ตำบลในเมือง อำเภอเมือง จังหวัดพิษณุโลก 65000</p>
             <p><span class="material-symbols-rounded" aria-hidden="true">call</span> โทรศัพท์: <a href="tel:055983230">055-983230</a></p>
           </address>
-          <!-- ปุ่มแผนที่รอ URL ทางการ จึงไม่เปิดบริการภายนอก -->
+          <!-- # สถานะแผนที่
+               แสดงปุ่มและข้อความรอยืนยัน URL ของแผนที่
+          -->
           <button class="map-button" id="map-button" type="button" aria-disabled="true" aria-describedby="map-status"><span class="material-symbols-rounded" aria-hidden="true">location_on</span> ดูแผนที่การเดินทาง</button>
           <p class="map-status" id="map-status" role="status" aria-live="polite">รอยืนยัน URL แผนที่จากหน่วยงาน</p>
           <div class="social-links" aria-label="ตัวอย่างช่องทางสื่อสารที่รอการยืนยันลิงก์ทางการ"><span><img src="assets/contact/Facebook%20logo.png" alt=""> Facebook</span><span><img src="assets/contact/Line%20OA%20logo.png" alt=""> LINE Official</span></div>
         </div>
+        <!-- # ลิงก์ในส่วนท้าย
+             สร้างทางลัดตามหมวดจากรายการเมนูร่วม
+        -->
         <?php foreach ($navigationGroups as $groupId => ['label' => $label, 'items' => $items]): ?>
           <nav class="footer-nav" data-footer-group="<?= $groupId ?>" aria-labelledby="footer-<?= $groupId ?>-title">
             <h2 id="footer-<?= $groupId ?>-title"><?= $label ?></h2>
@@ -35,5 +42,7 @@
       </div>
       <div class="footer-bottom"><div class="container footer-bottom-inner"><p>© 2569 กองการประปา เทศบาลนครพิษณุโลก สงวนลิขสิทธิ์ตามกฎหมาย</p><span>เอกสารกฎหมายและนโยบายรอเผยแพร่จากหน่วยงาน</span></div></div>
     </footer>
+    <!-- # ข้อมูลแปลภาษา
+         ส่งพจนานุกรมในรูป JSON ให้ JavaScript อ่านจากหน้า
+    -->
     <script type="application/json" id="site-translations"><?= json_encode($siteTranslations, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_THROW_ON_ERROR) ?></script>
-    <!-- สิ้นสุดส่วนท้ายเว็บไซต์ -->

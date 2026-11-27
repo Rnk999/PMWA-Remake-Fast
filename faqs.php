@@ -25,6 +25,8 @@
 
     <main tabindex="-1" id="main-content" class="faqs-page">
       <?php
+        # ค่าของแบนเนอร์หน้าย่อย
+        # ส่งหัวเรื่อง คำอธิบาย และข้อมูลเสริมจากหน้านี้ให้แบนเนอร์ร่วม
         $banner = [
             'title' => 'คำถามที่พบบ่อย',
             'titleId' => 'faq-title',
@@ -46,6 +48,9 @@
       ?>
 
       <div class="page-content faq-content">
+        <!-- # ระบบค้นหาและตัวกรอง
+             แสดงช่องค้นหาและตัวเลือกหมวดคำถาม
+        -->
         <section class="container faq-search-panel" aria-label="ค้นหาและกรองคำถาม">
           <div class="page-search faq-search-field">
             <span class="material-symbols-rounded" aria-hidden="true">search</span>
@@ -64,6 +69,9 @@
         </section>
 
         <div class="container faq-layout">
+          <!-- # รายการคำถามที่พบบ่อย
+               จัดคำถามและคำตอบตัวอย่างด้วย details และ summary
+          -->
           <section class="faq-results-column" aria-label="รายการคำถามที่พบบ่อย">
             <p class="faq-results-status" id="faq-results-status" role="status" aria-live="polite">แสดงคำถามตัวอย่าง 8 รายการ</p>
             <div class="faq-list" id="faq-list">
@@ -109,6 +117,9 @@
             </div>
           </section>
 
+          <!-- # ทางลัดบริการ
+               แสดงลิงก์บริการออนไลน์และคู่มือประชาชน
+          -->
           <aside class="faq-sidebar" aria-label="บริการและข้อมูลเพิ่มเติม">
             <section class="faq-online-card">
               <div class="faq-sidebar-heading"><span class="faq-sidebar-icon"><span class="material-symbols-rounded" aria-hidden="true">devices</span></span><span>บริการประชาชนออนไลน์</span></div>
@@ -125,6 +136,9 @@
         </div>
       </div>
 
+      <!-- # การติดต่อเพิ่มเติม
+           แสดงช่องทางสอบถามเมื่อยังไม่พบคำตอบ
+      -->
       <section class="faq-contact-section" aria-labelledby="faq-contact-title">
         <div class="container faq-contact-card">
           <div class="faq-contact-copy">

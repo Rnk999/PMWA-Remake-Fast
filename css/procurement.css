@@ -1,3 +1,6 @@
+/* # พื้นที่หน้าจัดซื้อจัดจ้าง
+ * กำหนดระยะหน้าและการตอบสนองของการ์ด
+ */
 .procurement-page {
   padding-block: 24px 36px;
 }
@@ -7,6 +10,9 @@
   box-shadow: var(--shadow);
 }
 
+/* # ระบบ e-GP และสรุปประกาศ
+ * จัดรูปแบบการ์ดลิงก์ภายนอก ป้ายประเภท และตัวนับ
+ */
 .procurement-egp {
   display: flex;
   align-items: center;
@@ -75,6 +81,9 @@
 .procurement-egp .procurement-icon { background: var(--white); }
 .procurement-egp p:last-child { color: var(--navy); font-size: .8125rem; }
 
+/* # ระบบค้นหาและตัวกรอง
+ * จัดช่องค้นหา ตัวเลือก และปุ่มกรองด่วนร่วมกับรูปแบบปุ่มแบ่งหน้า
+ */
 .procurement-filters { margin-bottom: 22px; padding: 16px; }
 .procurement-filter-fields {
   display: grid;
@@ -122,6 +131,9 @@
 .procurement-page .button-primary:hover { background: var(--navy-deep); }
 .procurement-page .button:disabled { background: var(--page); color: var(--muted); cursor: default; transform: none; }
 
+/* # ตารางประกาศ
+ * จัดคอลัมน์ แถวข้อมูล และข้อความเมื่อไม่พบรายการ
+ */
 .procurement-table-wrap { overflow-x: auto; }
 .procurement-table {
   width: 100%;
@@ -139,10 +151,16 @@
 .procurement-record-meta { display: block; margin-top: 3px; color: var(--muted); font-size: .8125rem; font-weight: 400; }
 #procurement-empty td { padding: 32px 18px; color: var(--muted); text-align: center; }
 
+/* # การแบ่งหน้า
+ * จัดวางสถานะผลลัพธ์และชุดปุ่มสลับหน้า
+ */
 .procurement-pagination { justify-content: space-between; margin-top: 18px; padding: 10px 16px; }
 .procurement-pagination p { margin: 0; }
 .procurement-pagination nav[hidden] { display: none; }
 
+/* # Modal Dialog
+ * จัดหน้าต่างพรีวิวประกาศและฉากหลัง
+ */
 .procurement-preview {
   max-width: min(560px, calc(100% - 48px));
   padding: 24px;
@@ -155,4 +173,7 @@
 .procurement-preview p { margin: 0 0 10px; }
 .procurement-preview form { margin-top: 16px; }
 
+/* # โหมดความเปรียบต่างสูง
+ * ปรับป้ายประเภทประกาศให้เข้ากับธีมความเปรียบต่างสูง
+ */
 :root[data-contrast="high"] .procurement-badge[data-category] { border: 1px solid currentColor; background: var(--white); color: var(--navy); }

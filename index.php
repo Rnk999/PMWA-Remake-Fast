@@ -1,3 +1,11 @@
+<?php
+# ข้อมูลข่าวและการใช้น้ำหน้าแรก
+# เลือกข่าวล่าสุดสี่รายการจากหน้าข่าวประชาสัมพันธ์และใช้สถิติชุดเดียวกับ Open Data
+$homeNews = array_slice(require __DIR__ . '/data/news-data.php', 0, 4);
+[$homeFeatured] = $homeNews;
+$waterConsumption = require __DIR__ . '/data/water-consumption.php';
+$escapeHome = static fn (string $text): string => htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+?>
 <!doctype html>
 <html lang="th">
   <head>
@@ -14,6 +22,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/localization.js" defer></script>
     <script src="js/main.js" defer></script>
+    <script src="js/news-dialog.js" defer></script>
   </head>
   <body id="top">
     <a class="skip-link" href="#main-content">ข้ามไปยังเนื้อหาหลัก</a>
@@ -21,8 +30,9 @@
     <?php require __DIR__ . '/partials/header.php'; ?>
 
     <main tabindex="-1" id="main-content">
-      <!-- ส่วนที่ 2: ภาพหลักและทางลัดบริการด่วน -->
-      <!-- หน้าที่: แนะนำภารกิจของหน่วยงานและนำไปยังบริการหรือติดต่อทางโทรศัพท์ -->
+      <!-- # Hero Section
+           แนะนำกองการประปาและแสดงทางลัดบริการด่วน
+      -->
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-shade"></div>
         <div class="container hero-content">
@@ -48,32 +58,43 @@
           </div>
         </aside>
       </section>
-      <!-- สิ้นสุดส่วนภาพหลัก -->
 
       <div class="page-content">
-        <!-- ส่วนที่ 6: ข่าวสารและประชาสัมพันธ์ -->
-        <!-- หน้าที่: แสดงตัวอย่างรูปแบบข่าวและประกาศของหน่วยงาน -->
+        <!-- # ข่าวสารและประชาสัมพันธ์
+             แสดงข่าวเด่นและประกาศตัวอย่างบนหน้าแรก
+        -->
         <section class="section news-section" id="news" aria-labelledby="news-title">
           <div class="container">
-            <div class="section-heading"><div><p class="section-kicker"><span class="material-symbols-rounded" aria-hidden="true">campaign</span> ข่าวสารอัปเดตล่าสุด</p><h2 id="news-title">ข่าวสารและประชาสัมพันธ์</h2><p>ติดตามข่าวสาร ประกาศการให้บริการ และกิจกรรมของกองการประปา</p></div><span class="section-aside"><span class="status-dot status-dot-red"></span> ข่าวตัวอย่างสำหรับต้นแบบ</span></div>
+            <div class="section-heading"><div><p class="section-kicker"><span class="material-symbols-rounded" aria-hidden="true">campaign</span> ข่าวสารอัปเดตล่าสุด</p><h2 id="news-title"><a class="section-title-link" href="news.php">ข่าวสารและประชาสัมพันธ์</a></h2><p>ติดตามข่าวสาร ประกาศการให้บริการ และกิจกรรมของกองการประปา</p></div><span class="section-aside"><span class="status-dot status-dot-red"></span> ข่าวตัวอย่างสำหรับต้นแบบ</span></div>
             <div class="news-grid">
-              <article class="card news-feature">
+              <article class="card news-feature linked-card">
                 <div class="news-art news-art-work" role="img" aria-label="ภาพประกอบตัวอย่างข่าว รอภาพข่าวจริงจากหน่วยงาน"><span class="material-symbols-rounded" aria-hidden="true">image</span><span>ภาพข่าวตัวอย่าง</span></div>
-                <div class="news-body"><span class="news-tag tag-red">ตัวอย่างรูปแบบข่าว</span><p class="news-meta">ข่าวประชาสัมพันธ์ · รอข้อมูลจริง</p><h3>หัวข้อข่าวประชาสัมพันธ์ตัวอย่าง</h3><p>พื้นที่แสดงรายละเอียดข่าว รอเนื้อหาที่ผ่านการยืนยันจากหน่วยงาน</p></div>
+                <div class="news-body">
+                  <span class="news-tag tag-red"><?= $escapeHome($homeFeatured['category']) ?></span>
+                  <p class="news-meta"><time datetime="<?= $homeFeatured['date'] ?>"><?= $homeFeatured['dateLabel'] ?></time></p>
+                  <h3><button class="card-title-button card-trigger" type="button" aria-haspopup="dialog" data-news-id="<?= $homeFeatured['id'] ?>"><?= $escapeHome($homeFeatured['title']) ?></button></h3>
+                  <p><?= $escapeHome($homeFeatured['summary']) ?></p>
+                </div>
               </article>
               <div class="news-list">
-                <article class="card news-item"><span class="news-icon"><span class="material-symbols-rounded" aria-hidden="true">science</span></span><div><p class="news-meta"><span class="news-tag">ข่าวกิจกรรม</span> รอข้อมูลจริง</p><h3>หัวข้อข่าวกิจกรรมตัวอย่าง</h3></div></article>
-              <article class="card news-item"><span class="news-icon"><span class="material-symbols-rounded" aria-hidden="true">description</span></span><div><p class="news-meta"><span class="news-tag">จัดซื้อจัดจ้าง</span> รอข้อมูลจริง</p><h3>รายการประกาศจัดซื้อจัดจ้าง</h3><p class="news-pending">ยังไม่มีประกาศหรือเอกสาร TOR ใน Assets</p></div></article>
-                <article class="card news-item"><span class="news-icon"><span class="material-symbols-rounded" aria-hidden="true">lightbulb</span></span><div><p class="news-meta"><span class="news-tag tag-green">สาระน่ารู้</span> รอข้อมูลจริง</p><h3>หัวข้อสาระน่ารู้ตัวอย่าง</h3></div></article>
+                <?php foreach (array_slice($homeNews, 1) as $position => $item): ?>
+                  <article class="card news-item linked-card">
+                    <span class="news-icon"><span class="material-symbols-rounded" aria-hidden="true"><?= ['lightbulb', 'groups', 'science'][$position] ?></span></span>
+                    <div>
+                      <p class="news-meta"><span class="news-tag"><?= $escapeHome($item['category']) ?></span> <time datetime="<?= $item['date'] ?>"><?= $item['dateLabel'] ?></time></p>
+                      <h3><button class="card-title-button card-trigger" type="button" aria-haspopup="dialog" data-news-id="<?= $item['id'] ?>"><?= $escapeHome($item['title']) ?></button></h3>
+                    </div>
+                  </article>
+                <?php endforeach; ?>
               </div>
             </div>
-            <div class="news-more"><a class="button button-muted" href="#news">ดูข่าวทั้งหมด <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></div>
+            <div class="news-more"><a class="button button-muted" href="news.php">ดูข่าวทั้งหมด <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></div>
           </div>
         </section>
-        <!-- สิ้นสุดส่วนข่าวสาร -->
 
-        <!-- ส่วนที่ 3: สถานะน้ำประปาและสถิติ -->
-        <!-- หน้าที่: แสดงตัวอย่างสถานะระบบ คุณภาพน้ำ และสถิติที่ยังไม่เชื่อมต่อข้อมูลจริง -->
+        <!-- # สถานะระบบน้ำประปา
+             แสดงสถานะการจ่ายน้ำและเชื่อมไปยังชุดข้อมูล Open Data ที่เกี่ยวข้องกับแต่ละกล่อง
+        -->
         <section class="section status-section" id="water-status" aria-labelledby="status-title">
           <div class="container">
             <div class="section-heading status-heading">
@@ -86,7 +107,7 @@
             </div>
 
             <div class="status-grid">
-              <article class="card status-card">
+              <article class="card status-card linked-card">
                 <div class="card-title-row">
                   <span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">water</span></span>
                   <div><h3>สถานะระบบน้ำประปา</h3><p>ตัวอย่างข้อมูลการจ่ายน้ำ</p></div>
@@ -98,10 +119,10 @@
                   <div><dt>อัตราการจ่ายน้ำ</dt><dd>42,500</dd><small>ลบ.ม./วัน</small></div>
                   <div><dt>สถานีผลิตน้ำหลัก</dt><dd>3 / 3</dd><small>ข้อมูลตัวอย่าง</small></div>
                 </dl>
-                <div class="card-footer"><span>ข้อมูลสถานะยังไม่เชื่อมต่อระบบจริง</span><a href="#information">ข้อมูลเผยแพร่ <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></div>
+                <div class="card-footer"><span>ข้อมูลสถานะยังไม่เชื่อมต่อระบบจริง</span><a class="card-trigger" href="open-data.php?dataset=distribution">ข้อมูลปริมาณน้ำผลิตจ่าย <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></div>
               </article>
 
-              <article class="card status-card">
+              <article class="card status-card linked-card">
                 <div class="card-title-row">
                   <span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">biotech</span></span>
                   <div><h3>คุณภาพน้ำประปา</h3><p>ตัวอย่างค่าคุณภาพน้ำ</p></div>
@@ -113,22 +134,25 @@
                   <div><dt>คลอรีนคงเหลือ</dt><dd>0.35 <small>mg/L (เกณฑ์ 0.2 – 0.5)</small></dd></div>
                   <div><dt>ผลตรวจเชื้อแบคทีเรีย</dt><dd class="good-value">ข้อมูลตัวอย่าง</dd></div>
                 </dl>
-                <div class="card-footer"><span>ผลวิเคราะห์ตัวอย่างเพื่อประกอบต้นแบบ</span><a href="#information">อ่านข้อมูลเพิ่มเติม <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></div>
+                <div class="card-footer"><span>ผลวิเคราะห์ตัวอย่างเพื่อประกอบต้นแบบ</span><a class="card-trigger" href="open-data.php?dataset=quality">ข้อมูลตรวจวัดคุณภาพน้ำประปา <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></div>
               </article>
             </div>
 
-            <article class="card usage-card">
+            <!-- # กราฟข้อมูลการใช้น้ำ
+                 เชื่อมไปยังชุดข้อมูล Open Data โดยแยกพื้นที่ตัวเลือกและกราฟออกจากลิงก์
+            -->
+            <article class="card usage-card linked-card">
               <div class="card-title-row usage-title-row">
                 <span class="icon-box"><span class="material-symbols-rounded" aria-hidden="true">bar_chart</span></span>
-                <div><h3>สถิติปริมาณการใช้น้ำประปา</h3><p>ตัวอย่างสถิติประกอบต้นแบบเว็บไซต์</p></div>
+                <div><h3><a class="section-title-link card-trigger" href="open-data.php?dataset=consumption">สถิติปริมาณการใช้น้ำประปา <span class="material-symbols-rounded" aria-hidden="true">arrow_forward</span></a></h3><p>ตัวอย่างสถิติประกอบต้นแบบเว็บไซต์</p></div>
                 <div class="usage-controls" role="group" aria-label="เลือกช่วงเวลาสถิติ">
                   <button class="period-button is-selected" id="period-monthly" type="button" aria-pressed="true">รายเดือน (Monthly)</button>
                   <button class="period-button" id="period-yearly" type="button" aria-pressed="false">รายปี (Yearly)</button>
                   <label class="visually-hidden" for="usage-year">เลือกปี พ.ศ.</label>
                   <select id="usage-year" aria-label="เลือกปี พ.ศ." aria-controls="usage-chart">
-                    <option value="2567">ปี พ.ศ. 2567</option>
-                    <option value="2568">ปี พ.ศ. 2568</option>
-                    <option value="2569" selected>ปี พ.ศ. 2569</option>
+                    <?php foreach (array_keys($waterConsumption['byYear']) as $year): ?>
+                      <option value="<?= $year ?>"<?= $year === $waterConsumption['defaultYear'] ? ' selected' : '' ?>>ปี พ.ศ. <?= $year ?></option>
+                    <?php endforeach; ?>
                   </select>
                 </div>
               </div>
@@ -139,17 +163,18 @@
                 <div><span>แนวโน้มเทียบเดือนก่อน</span><strong class="trend" data-usage-trend>—</strong></div>
                 <div><span>ผู้ใช้น้ำที่ลงทะเบียน (ตัวอย่าง)</span><strong>34,812 <small>ราย</small></strong></div>
                 </div>
-                <div class="chart" id="usage-chart" aria-label="กราฟปริมาณการใช้น้ำประปา ข้อมูลจำลอง">
+                <div class="chart" id="usage-chart" aria-label="กราฟปริมาณการใช้น้ำประปา ข้อมูลจำลอง"
+                     data-usage="<?= $escapeHome(json_encode($waterConsumption, JSON_UNESCAPED_UNICODE)) ?>">
                 </div>
               </div>
-              <p class="usage-empty" id="usage-empty" hidden>ยังไม่มีข้อมูลรายปีสำหรับแสดงในต้นแบบ</p>
+              <p class="usage-empty" id="usage-empty" hidden>ยังไม่มีข้อมูลเดือนที่สิ้นสุดแล้ว</p>
             </article>
           </div>
         </section>
-        <!-- สิ้นสุดส่วนสถานะและสถิติ -->
 
-        <!-- ส่วนที่ 4: บริการประชาชน -->
-        <!-- หน้าที่: รวมทางลัดไปยังข้อมูลบริการและช่องทางติดต่อในต้นแบบ -->
+        <!-- # รายการบริการประชาชน
+             รวมทางลัดไปยังบริการและช่องทางติดต่อ
+        -->
         <section class="section" id="services" aria-labelledby="services-title">
           <div class="container">
             <div class="section-heading">
@@ -167,10 +192,10 @@
             <p class="prototype-disclaimer"><span class="material-symbols-rounded" aria-hidden="true">info</span> บริการบนหน้านี้เป็นข้อมูลต้นแบบ ไม่มีการส่งคำขอหรือทำธุรกรรมออนไลน์</p>
           </div>
         </section>
-        <!-- สิ้นสุดส่วนบริการประชาชน -->
 
-        <!-- ส่วนที่ 5: ข้อมูลเผยแพร่ -->
-        <!-- หน้าที่: รวบรวมหมวดข้อมูลสาธารณะและแนวทางที่ประชาชนค้นหาได้ -->
+        <!-- # ข้อมูลเผยแพร่
+             แสดงหมวดข้อมูลสาธารณะที่เข้าถึงได้จากหน้าแรก
+        -->
         <section class="section information-section" id="information" aria-labelledby="information-title">
           <div class="container">
             <div class="section-heading"><div><p class="section-kicker"><span class="material-symbols-rounded" aria-hidden="true">info</span> สาระน่ารู้และระเบียบปฏิบัติ</p><h2 id="information-title">ข้อมูลเผยแพร่</h2><p>รวมข้อมูลบริการ เอกสารสาธารณะ และแนวทางปฏิบัติสำหรับผู้ใช้น้ำในเขตเทศบาลนครพิษณุโลก</p></div></div>
@@ -182,10 +207,14 @@
             </div>
           </div>
         </section>
-        <!-- สิ้นสุดส่วนข้อมูลเผยแพร่ -->
 
 
       </div>
+      <?php
+        # ส่งเฉพาะข่าวที่แสดงบนหน้าแรกให้หน้าต่างรายละเอียดร่วม
+        $newsDialogItems = $homeNews;
+        require __DIR__ . '/partials/news-dialog.php';
+      ?>
     </main>
 
     <?php require __DIR__ . '/partials/footer.php'; ?>

@@ -1,3 +1,5 @@
+// # ตัวควบคุมรายการจัดซื้อจัดจ้าง
+// เก็บฟอร์ม ตาราง ข้อความค้นหา และสถานะการแบ่งหน้า
 const procurementFilters = document.querySelector("#procurement-filters");
 const procurementSearch = document.querySelector("#procurement-search");
 const procurementCategory = document.querySelector("#procurement-category");
@@ -21,6 +23,8 @@ const procurementPreview = document.querySelector("#procurement-preview");
 let procurementQuickFilter = "";
 let procurementPage = 1;
 
+// # การแสดงรายการจัดซื้อจัดจ้าง
+// กรองแถวและอัปเดตจำนวนผลลัพธ์ แถวที่มองเห็น และปุ่มแบ่งหน้า
 function renderProcurement() {
   const query = procurementSearch.value.trim().normalize().toLocaleLowerCase("th");
   const year = procurementYear.value;
@@ -61,11 +65,15 @@ function renderProcurement() {
   }
 }
 
+// # การใช้ตัวกรอง
+// กลับไปหน้าแรกก่อนแสดงผลตามตัวกรองล่าสุด
 function applyProcurementFilters() {
   procurementPage = 1;
   renderProcurement();
 }
 
+// # Event Listeners
+// เชื่อมฟอร์ม ปุ่มกรองด่วน และปุ่มแบ่งหน้ากับการอัปเดตรายการ
 procurementFilters.addEventListener("submit", (event) => {
   event.preventDefault();
   applyProcurementFilters();
@@ -104,6 +112,8 @@ procurementPages.addEventListener("click", (event) => {
   document.querySelector(".procurement-table-wrap").scrollIntoView({ block: "start" });
 });
 
+// # Modal Dialog
+// อ่านข้อมูลจากแถวที่เลือกแล้วเปิดหน้าต่างพรีวิวประกาศ
 procurementRecords.addEventListener("click", (event) => {
   const button = event.target.closest("[data-procurement-preview]");
   if (!button) return;

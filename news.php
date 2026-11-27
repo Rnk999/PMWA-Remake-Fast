@@ -1,19 +1,8 @@
 <?php
 $activePage = 'news';
-$newsItems = [
-  ['id' => 'mock-12', 'category' => 'การพัฒนาระบบประปา', 'date' => '2026-11-24', 'dateLabel' => '24 พ.ย. 2569', 'title' => 'ตัวอย่าง: แนวทางพัฒนาการให้บริการข้อมูลประปาในรูปแบบดิจิทัล', 'summary' => 'เนื้อหาตัวอย่างสำหรับนำเสนอแนวคิดการสื่อสารข้อมูลบริการให้ประชาชนเข้าถึงได้สะดวกขึ้น'],
-  ['id' => 'mock-11', 'category' => 'บริการประชาชน', 'date' => '2026-11-20', 'dateLabel' => '20 พ.ย. 2569', 'title' => 'ตัวอย่าง: รวมคำแนะนำการใช้น้ำและการดูแลอุปกรณ์ภายในบ้าน', 'summary' => 'ตัวอย่างเนื้อหาความรู้ทั่วไปเกี่ยวกับการใช้น้ำอย่างเหมาะสมและการดูแลระบบประปาภายในบ้าน'],
-  ['id' => 'mock-10', 'category' => 'กิจกรรมและชุมชนสัมพันธ์', 'date' => '2026-11-16', 'dateLabel' => '16 พ.ย. 2569', 'title' => 'ตัวอย่าง: กิจกรรมสร้างความเข้าใจเรื่องระบบประปากับชุมชน', 'summary' => 'ข้อความจำลองสำหรับแสดงรูปแบบข่าวกิจกรรมและการสื่อสารข้อมูลกับประชาชน'],
-  ['id' => 'mock-09', 'category' => 'รายงานคุณภาพน้ำประปา', 'date' => '2026-10-28', 'dateLabel' => '28 ต.ค. 2569', 'title' => 'ตัวอย่าง: การนำเสนอข้อมูลคุณภาพน้ำประปาให้อ่านง่าย', 'summary' => 'ตัวอย่างรูปแบบการสรุปข้อมูลและแนวทางเผยแพร่รายงานคุณภาพน้ำอย่างเข้าใจง่าย'],
-  ['id' => 'mock-08', 'category' => 'การพัฒนาระบบประปา', 'date' => '2026-10-14', 'dateLabel' => '14 ต.ค. 2569', 'title' => 'ตัวอย่าง: การบำรุงรักษาระบบประปาและการวางแผนงาน', 'summary' => 'เนื้อหาจำลองเพื่อแสดงการสื่อสารเรื่องการดูแลระบบและการวางแผนงานบริการ'],
-  ['id' => 'mock-07', 'category' => 'บริการประชาชน', 'date' => '2026-09-30', 'dateLabel' => '30 ก.ย. 2569', 'title' => 'ตัวอย่าง: ช่องทางและขั้นตอนการติดต่อขอรับบริการ', 'summary' => 'ตัวอย่างการจัดทำข่าวแนะนำบริการ โดยรายละเอียดจริงควรได้รับการยืนยันจากหน่วยงาน'],
-  ['id' => 'mock-06', 'category' => 'กิจกรรมและชุมชนสัมพันธ์', 'date' => '2026-09-12', 'dateLabel' => '12 ก.ย. 2569', 'title' => 'ตัวอย่าง: สื่อความรู้เรื่องการใช้น้ำอย่างรู้คุณค่า', 'summary' => 'ข้อความตัวอย่างสำหรับข่าวสารความรู้และการมีส่วนร่วมกับชุมชน'],
-  ['id' => 'mock-05', 'category' => 'รายงานคุณภาพน้ำประปา', 'date' => '2025-12-18', 'dateLabel' => '18 ธ.ค. 2568', 'title' => 'ตัวอย่าง: วิธีอ่านข้อมูลในรายงานคุณภาพน้ำประปา', 'summary' => 'ตัวอย่างเนื้อหาอธิบายหัวข้อพื้นฐานที่อาจพบในรายงานคุณภาพน้ำ'],
-  ['id' => 'mock-04', 'category' => 'การพัฒนาระบบประปา', 'date' => '2025-10-05', 'dateLabel' => '5 ต.ค. 2568', 'title' => 'ตัวอย่าง: การปรับปรุงระบบงานเพื่อบริการประชาชน', 'summary' => 'ข่าวจำลองสำหรับแสดงรูปแบบการสื่อสารความคืบหน้าด้านการพัฒนาระบบ'],
-  ['id' => 'mock-03', 'category' => 'บริการประชาชน', 'date' => '2025-08-22', 'dateLabel' => '22 ส.ค. 2568', 'title' => 'ตัวอย่าง: เตรียมข้อมูลก่อนติดต่อขอใช้บริการประปา', 'summary' => 'ตัวอย่างคำแนะนำทั่วไปสำหรับเตรียมข้อมูลให้พร้อมก่อนติดต่อหน่วยงาน'],
-  ['id' => 'mock-02', 'category' => 'กิจกรรมและชุมชนสัมพันธ์', 'date' => '2025-06-11', 'dateLabel' => '11 มิ.ย. 2568', 'title' => 'ตัวอย่าง: เปิดพื้นที่รับฟังข้อเสนอแนะด้านบริการ', 'summary' => 'ข้อความจำลองสำหรับแสดงข่าวประชาสัมพันธ์เกี่ยวกับการรับฟังความคิดเห็น'],
-  ['id' => 'mock-01', 'category' => 'รายงานคุณภาพน้ำประปา', 'date' => '2025-03-04', 'dateLabel' => '4 มี.ค. 2568', 'title' => 'ตัวอย่าง: ทำความรู้จักขั้นตอนการตรวจสอบคุณภาพน้ำ', 'summary' => 'ข้อมูลตัวอย่างเพื่อแสดงรูปแบบข่าวให้ความรู้เกี่ยวกับกระบวนการตรวจสอบคุณภาพน้ำ']
-];
+$newsItems = require __DIR__ . '/data/news-data.php';
+# ข่าวเด่นและตัวเลือกตัวกรอง
+# แยกข่าวเด่นและสร้างตัวเลือกหมวดกับปี พ.ศ. จากรายการทั้งหมด
 $featuredNews = array_shift($newsItems);
 $categories = array_values(array_unique(array_column(array_merge([$featuredNews], $newsItems), 'category')));
 $years = array_values(array_unique(array_map(static fn ($item) => (string) ((int) substr($item['date'], 0, 4) + 543), array_merge([$featuredNews], $newsItems))));
@@ -35,6 +24,7 @@ $years = array_values(array_unique(array_map(static fn ($item) => (string) ((int
     <link rel="stylesheet" href="css/news.css">
     <script src="js/localization.js" defer></script>
     <script src="js/main.js" defer></script>
+    <script src="js/news-dialog.js" defer></script>
     <script src="js/news.js" defer></script>
   </head>
   <body>
@@ -42,6 +32,8 @@ $years = array_values(array_unique(array_map(static fn ($item) => (string) ((int
     <?php require __DIR__ . '/partials/header.php'; ?>
     <main tabindex="-1" id="main-content">
       <?php
+        # ค่าของแบนเนอร์หน้าย่อย
+        # ส่งหัวเรื่อง คำอธิบาย และข้อมูลเสริมจากหน้านี้ให้แบนเนอร์ร่วม
         $banner = [
             'title' => 'ข่าวประชาสัมพันธ์',
             'titleId' => 'news-title',
@@ -60,6 +52,9 @@ $years = array_values(array_unique(array_map(static fn ($item) => (string) ((int
       ?>
       <div class="news-page container">
 
+      <!-- # ระบบค้นหาและตัวกรอง
+           จัดช่องค้นหา ตัวเลือกหมวดและปี และปุ่มล้าง
+      -->
       <section class="news-filters" aria-label="ค้นหาและกรองข่าว">
         <div class="page-search news-search">
           <span class="material-symbols-rounded" aria-hidden="true">search</span>
@@ -72,6 +67,9 @@ $years = array_values(array_unique(array_map(static fn ($item) => (string) ((int
         <button class="news-reset" id="news-reset" type="button"><span class="material-symbols-rounded" aria-hidden="true">restart_alt</span> ล้างตัวกรอง</button>
       </section>
 
+      <!-- # ข่าวเด่น
+           แสดงข่าวที่เลือกไว้เหนือรายการข่าวทั่วไป
+      -->
       <section class="featured-news" id="featured-news" aria-labelledby="featured-title">
         <div class="featured-image-wrap"><img src="assets/images/hero/waterwork%201.jpg" alt="ภาพตัวอย่างระบบท่อประปา" class="featured-image"><span class="featured-image-label"><span class="material-symbols-rounded" aria-hidden="true">image</span> ภาพประกอบตัวอย่าง</span></div>
         <div class="featured-copy">
@@ -83,6 +81,9 @@ $years = array_values(array_unique(array_map(static fn ($item) => (string) ((int
         </div>
       </section>
 
+      <!-- # รายการข่าว
+           แสดงการ์ดข่าว จำนวนผลลัพธ์ และปุ่มแบ่งหน้า
+      -->
       <section class="news-results" aria-labelledby="news-results-title">
         <div class="news-results-heading"><h2 id="news-results-title">ข่าวสารและกิจกรรมล่าสุด</h2><p id="news-results-count" aria-live="polite"></p></div>
         <div class="news-grid" id="news-grid" aria-live="polite">
@@ -97,13 +98,22 @@ $years = array_values(array_unique(array_map(static fn ($item) => (string) ((int
         <nav class="news-pagination" id="news-pagination" aria-label="หน้ารายการข่าว"><p id="news-page-status"></p><div class="news-page-buttons" id="news-page-buttons"></div></nav>
       </section>
 
+      <!-- # ช่องทางติดตามข่าว
+           แสดงช่องทางสังคมสำหรับติดตามประชาสัมพันธ์
+      -->
       <section class="news-social" aria-labelledby="news-social-title">
         <div class="news-social-copy"><p class="news-social-eyebrow"><span class="material-symbols-rounded" aria-hidden="true">notifications_active</span> ติดตามข่าวสารของหน่วยงาน</p><h2 id="news-social-title">ติดตามข้อมูลข่าวสารเพิ่มเติม</h2><p>ช่องทาง Facebook และ LINE Official อยู่ระหว่างรอการยืนยัน URL ทางการจากหน่วยงาน</p></div>
         <div class="news-social-channels"><div class="news-social-channel"><img src="assets/contact/Facebook%20logo.png" alt=""><span><strong>Facebook</strong><small>รอ URL ทางการ</small></span></div><div class="news-social-channel"><img src="assets/contact/Line%20OA%20logo.png" alt=""><span><strong>LINE Official</strong><small>รอ URL ทางการ</small></span></div></div>
       </section>
       <p class="news-prototype-note">หมายเหตุ: ข่าวและรายละเอียดทั้งหมดในหน้านี้เป็นข้อมูลจำลองเพื่อออกแบบและทดสอบต้นแบบเท่านั้น ไม่ใช่ข่าวหรือประกาศจากหน่วยงาน</p>
-      <dialog class="news-dialog" id="news-dialog" aria-labelledby="news-dialog-title"><form method="dialog"><button class="news-dialog-close" aria-label="ปิดรายละเอียด"><span class="material-symbols-rounded" aria-hidden="true">close</span></button></form><div id="news-dialog-content"></div></dialog>
-      <script>window.newsData = <?= json_encode(array_column(array_merge([$featuredNews], $newsItems), null, 'id'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;</script>
+      <!-- # Modal Dialog
+           เตรียมช่องแสดงรายละเอียดและส่งข้อมูลข่าวให้ JavaScript
+      -->
+      <?php
+        # ใช้หน้าต่างรายละเอียดข่าวร่วมกับหน้าแรกและข่าวการดำเนินงาน
+        $newsDialogItems = array_merge([$featuredNews], $newsItems);
+        require __DIR__ . '/partials/news-dialog.php';
+      ?>
       </div>
     </main>
     <?php require __DIR__ . '/partials/footer.php'; ?>

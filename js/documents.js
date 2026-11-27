@@ -1,3 +1,5 @@
+// # ข้อมูลจำลอง
+// กำหนดรายการแบบฟอร์มและเอกสารเผยแพร่สำหรับต้นแบบ
 const documentRecords = [
   { id: "form-sample-01", kind: "form", category: "แบบฟอร์ม", format: "PDF", title: "ตัวอย่างจำลอง: แบบคำร้องขอรับบริการ", description: "ตัวอย่างรายการแบบฟอร์มสำหรับสาธิตการค้นหาเอกสาร" },
   { id: "form-sample-02", kind: "form", category: "แบบฟอร์ม", format: "DOCX", title: "ตัวอย่างจำลอง: แบบฟอร์มแจ้งข้อมูลผู้ใช้น้ำ", description: "รายการจำลองสำหรับแสดงรูปแบบไฟล์เอกสารที่แก้ไขได้" },
@@ -13,6 +15,8 @@ const documentRecords = [
   { id: "publication-sample-06", kind: "publication", category: "ข้อมูลทั่วไป", format: "PDF", title: "ตัวอย่างจำลอง: เอกสารแนะนำการใช้งานเว็บไซต์", description: "ไม่ใช่เอกสารหรือประกาศอย่างเป็นทางการ" }
 ];
 
+// # ตัวควบคุมรายการเอกสาร
+// เก็บสถานะตัวกรอง ผลลัพธ์ การแบ่งหน้า และข้อความตอบกลับ
 const documentsSearch = document.querySelector("#documents-search");
 const documentsCategory = document.querySelector("#documents-category");
 const documentsFormat = document.querySelector("#documents-format");
@@ -28,6 +32,8 @@ let currentDocumentsPage = 1;
 let matchingDocuments = [];
 let documentActionFeedback;
 
+// # การสร้างการ์ดเอกสาร
+// สร้างป้ายกำกับ ข้อมูลไฟล์ และปุ่มดำเนินการของรายการ
 function makeDocumentCard(item) {
   const card = document.createElement("article");
   card.className = "documents-item";
@@ -84,6 +90,8 @@ function makeDocumentCard(item) {
   return card;
 }
 
+// # ปุ่มแบ่งหน้า
+// สร้างปุ่มก่อนหน้า ถัดไป และหมายเลขหน้าจากจำนวนผลลัพธ์
 function renderDocumentPageButtons(pageCount) {
   const buttons = [];
   const addButton = (label, page, ariaLabel, disabled = false, current = false) => {
@@ -107,6 +115,8 @@ function renderDocumentPageButtons(pageCount) {
   documentsPageButtons.replaceChildren(...buttons);
 }
 
+// # การแสดงรายการเอกสาร
+// กรองรายการ แบ่งหน้า แยกกลุ่มเอกสาร และอัปเดตสถานะผลลัพธ์
 function renderDocuments({ preserveFeedback = false } = {}) {
   if (!preserveFeedback) documentActionFeedback = null;
   const query = documentsSearch.value.trim().normalize().toLocaleLowerCase("th");
@@ -141,12 +151,16 @@ function renderDocuments({ preserveFeedback = false } = {}) {
   renderDocumentPageButtons(pageCount);
 }
 
+// # การเปลี่ยนหน้า
+// เลือกรายการหน้าที่กำหนดและเลื่อนไปยังส่วนผลการค้นหา
 function changeDocumentsPage(page) {
   currentDocumentsPage = page;
   renderDocuments();
   document.querySelector("#documents-results-title").scrollIntoView({ block: "start" });
 }
 
+// # การล้างตัวกรอง
+// คืนค่าช่องค้นหาและตัวเลือกก่อนแสดงรายการหน้าแรก
 function resetDocumentFilters() {
   documentsSearch.value = "";
   documentsCategory.value = "";
@@ -155,6 +169,8 @@ function resetDocumentFilters() {
   renderDocuments();
 }
 
+// # Event Listeners
+// อัปเดตผลและกลับไปหน้าแรกเมื่อคำค้นหรือตัวกรองเปลี่ยน
 documentsSearch.addEventListener("input", () => { currentDocumentsPage = 1; renderDocuments(); });
 documentsCategory.addEventListener("change", () => { currentDocumentsPage = 1; renderDocuments(); });
 documentsFormat.addEventListener("change", () => { currentDocumentsPage = 1; renderDocuments(); });
@@ -162,6 +178,8 @@ documentsSearchClear.addEventListener("click", () => { documentsSearch.value = "
 document.querySelector("#documents-reset").addEventListener("click", resetDocumentFilters);
 document.querySelector("#documents-empty-reset").addEventListener("click", resetDocumentFilters);
 
+// # การดำเนินการกับเอกสารตัวอย่าง
+// รับการกดดูตัวอย่างหรือดาวน์โหลดและเตรียมข้อความตอบกลับ
 document.querySelector("#documents-results").addEventListener("click", (event) => {
   const actionButton = event.target.closest("[data-document-action]");
   if (!actionButton) return;
@@ -172,6 +190,8 @@ document.querySelector("#documents-results").addEventListener("click", (event) =
   showDocumentActionFeedback();
 });
 
+// # ข้อความตอบกลับ
+// แจ้งการดำเนินการที่ผู้ใช้เลือกกับรายการเอกสารตัวอย่าง
 function showDocumentActionFeedback() {
   const { action, title } = documentActionFeedback;
   documentsFilterStatus.textContent = t("{0}ไม่ได้: “{1}” เป็นข้อมูลจำลองและไม่มีไฟล์แนบ", t(action), t(title));

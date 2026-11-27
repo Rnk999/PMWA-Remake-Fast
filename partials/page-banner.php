@@ -1,5 +1,6 @@
 <?php
-// Page templates supply text and, optionally, a renderer for their existing summary.
+# การตรวจสอบข้อมูลแบนเนอร์
+# เตรียมตัวช่วย escape ข้อความ ตรวจ ID หัวเรื่อง และรับชื่อไอคอนจากหน้า
 $escapeBanner = static fn(string $value): string => htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 $bannerTitleId = $banner['titleId'] ?? 'page-banner-title';
 if (!preg_match('/\A[a-z][a-z0-9-]*\z/', $bannerTitleId)) {
@@ -7,6 +8,9 @@ if (!preg_match('/\A[a-z][a-z0-9-]*\z/', $bannerTitleId)) {
 }
 $bannerIcon = $banner['icon'] ?? '';
 ?>
+      <!-- # แบนเนอร์หน้าย่อย
+           แสดงเส้นทางนำทาง หัวเรื่อง คำอธิบาย และเนื้อหาเสริมที่ส่งเข้ามา
+      -->
       <section class="page-banner" aria-labelledby="<?= $escapeBanner($bannerTitleId) ?>">
         <div class="container page-banner-inner">
           <?php require __DIR__ . '/breadcrumb.php'; ?>

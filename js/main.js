@@ -1,10 +1,13 @@
-// เมนูมือถือ: ควบคุมปุ่มเปิด/ปิดและแถบนำทางที่เชื่อมด้วย aria-controls
+// # ตัวแปรส่วนกลาง
+// อ้างถึงส่วนหัว เมนู และตัวช่วยแปลภาษาที่ใช้ร่วมกัน
 const menuButton = document.querySelector(".menu-toggle");
 const primaryNavigation = document.querySelector("#primary-navigation");
 const rootElement = document.documentElement;
 const siteHeader = document.querySelector(".site-header");
 const t = siteLanguage.text;
 
+// # ความสูงส่วนหัว
+// วัดความสูงส่วนหัวและอัปเดตตัวแปร CSS เมื่อขนาดเปลี่ยน
 function updateHeaderHeight() {
   rootElement.style.setProperty("--header-height", `${Math.ceil(siteHeader.getBoundingClientRect().height)}px`);
 }
@@ -12,11 +15,13 @@ rootElement.classList.add("has-fixed-header");
 updateHeaderHeight();
 new ResizeObserver(updateHeaderHeight).observe(siteHeader);
 
-// URL ทางการแยกจากส่วนแสดงผล และเว้นว่างไว้จนกว่าจะได้รับการยืนยัน
+// # URL ทางการ
+// เก็บปลายทางสังคมและแผนที่ไว้สำหรับค่าที่หน่วยงานยืนยัน
 const officialSocialUrls = { facebook: "", line: "" };
 const mapUrl = "";
 
-// ปรับขนาดตัวอักษรทั้งหน้าโดยจำกัดช่วงเพื่อป้องกันการเสียรูปแบบ
+// # การปรับขนาดตัวอักษร
+// ผูกปุ่มปรับขนาดและจำกัดช่วงของค่าที่นำไปใช้ทั้งหน้า
 const fontScaleButtons = {
   decrease: document.querySelector("#font-decrease"),
   reset: document.querySelector("#font-reset"),
@@ -42,7 +47,8 @@ fontScaleButtons.decrease?.addEventListener("click", () => setFontScale(fontScal
 fontScaleButtons.reset?.addEventListener("click", () => setFontScale(1));
 fontScaleButtons.increase?.addEventListener("click", () => setFontScale(fontScale + 0.1));
 
-// สลับตัวแปรสีของหน้าเพื่อเพิ่มความเปรียบต่าง และอัปเดตสถานะปุ่ม
+// # โหมดความเปรียบต่างสูง
+// สลับสี อัปเดตสถานะของปุ่ม และบันทึกค่าข้ามหน้า
 const contrastButton = document.querySelector("#contrast-toggle");
 const contrastStorageKey = "pmwa-site-contrast";
 
@@ -62,7 +68,8 @@ function restoreContrast() {
   try {
     setContrast(localStorage.getItem(contrastStorageKey) === "high");
   } catch {
-    // Keep the current mode when storage is unavailable.
+    // # การอ่านค่าที่บันทึก
+    // คงโหมดปัจจุบันเมื่อเบราว์เซอร์ไม่ให้เข้าถึงพื้นที่จัดเก็บ
   }
 }
 
@@ -77,11 +84,13 @@ contrastButton?.addEventListener("click", () => {
   try {
     localStorage.setItem(contrastStorageKey, enabled ? "high" : "normal");
   } catch {
-    // The button still works on the current page.
+    // # การบันทึกโหมด
+    // คงค่าที่เพิ่งเลือกบนหน้านี้เมื่อบันทึกข้ามหน้าไม่ได้
   }
 });
 
-// แสดงช่องทางสังคมเป็นลิงก์เฉพาะเมื่อมีการกำหนด URL ทางการที่ปลอดภัย
+// # ช่องทางสังคม
+// สร้างลิงก์เมื่อ URL ผ่านการตรวจสอบ
 document.querySelectorAll("[data-social-channel]").forEach((channel) => {
   const url = officialSocialUrls[channel.dataset.socialChannel];
   if (!url) return;
@@ -100,11 +109,13 @@ document.querySelectorAll("[data-social-channel]").forEach((channel) => {
     while (channel.firstChild) link.append(channel.firstChild);
     channel.replaceWith(link);
   } catch {
-    // คงข้อความรอ URL ไว้เมื่อค่าที่กำหนดไม่ใช่ URL ที่ถูกต้อง
+    // # URL ไม่ถูกต้อง
+    // คงข้อความรอการยืนยันเมื่อแปลงค่าที่ตั้งไว้เป็น URL ไม่ได้
   }
 });
 
-// ค้นหาและกรองคำถามที่พบบ่อย โดยใช้ native details/summary สำหรับ accordion
+// # คำถามที่พบบ่อย
+// เก็บรายการ หมวด และตัวควบคุมสำหรับค้นหาและกรอง
 const faqSearch = document.querySelector("#faq-search");
 const faqSearchClear = document.querySelector("#faq-search-clear");
 const faqItems = [...document.querySelectorAll("[data-faq-item]")];
@@ -115,6 +126,8 @@ const faqResetFilters = document.querySelector("#faq-reset-filters");
 const faqTotal = document.querySelector("[data-faq-total]");
 let activeFaqCategory = "all";
 
+// # ระบบค้นหาและตัวกรอง
+// แสดงคำถามที่ตรงกับคำค้นและหมวด พร้อมอัปเดตจำนวนผลลัพธ์
 function updateFaqResults() {
   if (!faqSearch || !faqItems.length) return;
   const query = faqSearch.value.trim().normalize().toLocaleLowerCase("th");
@@ -137,6 +150,8 @@ function updateFaqResults() {
   if (faqSearchClear) faqSearchClear.hidden = !query;
 }
 
+// # Event Listeners
+// อัปเดตคำถามเมื่อผู้ใช้พิมพ์ เลือกหมวด หรือล้างตัวกรอง
 faqSearch?.addEventListener("input", updateFaqResults);
 faqSearchClear?.addEventListener("click", () => {
   faqSearch.value = "";
@@ -168,6 +183,8 @@ faqResetFilters?.addEventListener("click", () => {
 updateFaqResults();
 document.addEventListener("site-language-change", updateFaqResults);
 
+// # จำนวนข่าวผลการดำเนินงาน
+// อัปเดตข้อความจำนวนผลลัพธ์เมื่อเปลี่ยนภาษา
 const aboutResultCount = document.querySelector("[data-about-result-count]");
 if (aboutResultCount) {
   const updateAboutResultCount = () => {
@@ -177,13 +194,16 @@ if (aboutResultCount) {
   document.addEventListener("site-language-change", updateAboutResultCount);
 }
 
-// ค้นหาข้อความจากการ์ดที่มีอยู่บนหน้า และแสดงลิงก์ไปยังรายการที่ตรงกัน
+// # ระบบค้นหาภายในหน้า
+// อ้างถึงฟอร์มและพื้นที่แสดงลิงก์ผลลัพธ์
 const searchForm = document.querySelector("#site-search");
 const searchInput = document.querySelector("#site-search-input");
 const searchResults = document.querySelector("#search-results");
 const searchResultStatus = document.querySelector("#search-results-status");
 const searchResultList = document.querySelector("#search-result-list");
 
+// # การแสดงผลการค้นหา
+// จับคู่คำค้นกับข้อความของรายการและสร้างลิงก์ไปยังผลลัพธ์
 function renderSiteSearch() {
   const query = searchInput.value.trim().normalize().toLocaleLowerCase("th");
   searchResultList.replaceChildren();
@@ -214,6 +234,8 @@ function renderSiteSearch() {
   });
 }
 
+// # Event Listeners
+// ควบคุมการส่งฟอร์ม การแปลผล และการนำทางจากผลค้นหา
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const pageSearch = document.querySelector("form[data-page-search]");
@@ -245,7 +267,8 @@ searchInput?.addEventListener("input", () => {
   if (!searchInput.value.trim()) searchResults.hidden = true;
 });
 
-// ข้อมูลจำลองแยกตามปี เพื่อใช้กับกราฟต้นแบบเท่านั้น ไม่ใช่สถิติทางการ
+// # ตัวควบคุมกราฟการใช้น้ำ
+// อ้างถึงปุ่มช่วงเวลา ตัวเลือกปี และพื้นที่แสดงข้อมูล
 const monthlyButton = document.querySelector("#period-monthly");
 const yearlyButton = document.querySelector("#period-yearly");
 const usageYear = document.querySelector("#usage-year");
@@ -255,28 +278,14 @@ const usagePeriodStatus = document.querySelector("#usage-period-status");
 const usageChart = document.querySelector("#usage-chart");
 const usageTotal = document.querySelector("[data-usage-total]");
 const usageTrend = document.querySelector("[data-usage-trend]");
-const buddhistCurrentYear = new Date().getFullYear() + 543;
-const waterUsageByYear = {
-  2567: [1180000, 1142000, 1236000, 1290000, 1348000, 1312000, 1286000, 1305000, 1251000, 1209000, 1167000, 1224000],
-  2568: [1245000, 1208000, 1276000, 1338000, 1401000, 1372000, 1346000, 1319000, 1291000, 1254000, 1216000, 1269000],
-  2569: [1302000, 1258000, 1336000, 1394000, 1458000, 1426000, 1398000, 1371000, 1345000, 1310000, 1276000, 1334000]
-};
-const waterUsageMonths = [
-  { name: "มกราคม", short: "ม.ค." }, { name: "กุมภาพันธ์", short: "ก.พ." },
-  { name: "มีนาคม", short: "มี.ค." }, { name: "เมษายน", short: "เม.ย." },
-  { name: "พฤษภาคม", short: "พ.ค." }, { name: "มิถุนายน", short: "มิ.ย." },
-  { name: "กรกฎาคม", short: "ก.ค." }, { name: "สิงหาคม", short: "ส.ค." },
-  { name: "กันยายน", short: "ก.ย." }, { name: "ตุลาคม", short: "ต.ค." },
-  { name: "พฤศจิกายน", short: "พ.ย." }, { name: "ธันวาคม", short: "ธ.ค." }
-];
+// # ข้อมูลจำลองร่วม
+// อ่านข้อมูลและป้ายเดือนจาก PHP ซึ่งใช้แหล่งเดียวกับ Open Data
+const waterConsumption = usageChart ? JSON.parse(usageChart.dataset.usage) : null;
 
+// # กราฟข้อมูลการใช้น้ำ
+// สร้างแท่งกราฟ ป้ายกำกับ และยอดสรุปตามปีและช่วงเวลา
 function renderWaterUsage(year, period) {
-  const values = waterUsageByYear[year];
-  if (!usageChart || !values) return;
-
-  const isCurrentYear = Number(year) === buddhistCurrentYear;
-  const completedMonthCount = isCurrentYear ? new Date().getMonth() : 12;
-  const visibleValues = values.slice(0, completedMonthCount);
+  const visibleValues = waterConsumption.byYear[year];
   const maximum = Math.max(...visibleValues, 1);
   const numberFormat = new Intl.NumberFormat("en-US");
   usageChart.replaceChildren();
@@ -290,9 +299,9 @@ function renderWaterUsage(year, period) {
   );
 
   visibleValues.forEach((value, index) => {
-    const month = waterUsageMonths[index];
+    const [month, shortMonth] = waterConsumption.months[index];
     const bar = document.createElement("button");
-    const tooltip = t("{0} {1}: {2} ลูกบาศก์เมตร", t(month.name), year, numberFormat.format(value));
+    const tooltip = t("{0} {1}: {2} ลูกบาศก์เมตร", t(month), year, numberFormat.format(value));
     bar.type = "button";
     bar.className = "chart-column";
     bar.dataset.month = String(index + 1);
@@ -306,7 +315,7 @@ function renderWaterUsage(year, period) {
     column.className = "chart-bar";
     column.setAttribute("aria-hidden", "true");
     const label = document.createElement("small");
-    label.textContent = t(month.short);
+    label.textContent = t(shortMonth);
     bar.append(column, label);
     usageChart.append(bar);
   });
@@ -322,6 +331,8 @@ function renderWaterUsage(year, period) {
   }
 }
 
+// # ช่วงเวลาของกราฟ
+// สลับสถานะปุ่มและพื้นที่แสดงผลก่อนวาดกราฟหรือแจ้งสถานะ
 function setUsagePeriod(period) {
   const isMonthly = period === "monthly";
   monthlyButton?.setAttribute("aria-pressed", String(isMonthly));
@@ -329,10 +340,10 @@ function setUsagePeriod(period) {
   monthlyButton?.classList.toggle("is-selected", isMonthly);
   yearlyButton?.classList.toggle("is-selected", !isMonthly);
   if (usageYear) usageYear.disabled = isMonthly;
-  if (usageData) usageData.hidden = false;
-  if (usageEmpty) usageEmpty.hidden = true;
-
-  const year = isMonthly ? buddhistCurrentYear : Number(usageYear?.value);
+  const year = isMonthly ? waterConsumption.defaultYear : Number(usageYear.value);
+  const hasValues = waterConsumption.byYear[year].length > 0;
+  usageData.hidden = !hasValues;
+  usageEmpty.hidden = hasValues;
   renderWaterUsage(year, period);
   if (usagePeriodStatus) {
     usagePeriodStatus.textContent = t(isMonthly ? "ข้อมูลรายเดือน พ.ศ. {0} เป็นข้อมูลจำลอง ไม่ใช่สถิติทางการ" : "ข้อมูลรายปี พ.ศ. {0} เป็นข้อมูลจำลอง ไม่ใช่สถิติทางการ", year);
@@ -349,7 +360,8 @@ if (usageChart) {
   });
 }
 
-// ปุ่มแผนที่จะแจ้งสถานะเท่านั้นจนกว่าจะมี URL ทางการ
+// # สถานะแผนที่
+// แจ้งว่ารอ URL ทางการเมื่อผู้ใช้กดปุ่มแผนที่
 const mapButton = document.querySelector("#map-button");
 const mapStatus = document.querySelector("#map-status");
 const unavailableMapMessage = "ยังไม่มี URL แผนที่ทางการ จึงยังไม่สามารถเปิดแผนที่ได้";
@@ -366,13 +378,16 @@ mapButton?.addEventListener("click", () => {
   window.open(mapUrl, "_blank", "noopener,noreferrer");
 });
 
-// Navigation disclosures share the same focus and dismissal behavior.
+// # Dropdown Menu
+// ควบคุมเมนูที่เปิดอยู่ การปิด และการคืนโฟกัสร่วมกัน
 const dropdowns = [...primaryNavigation.querySelectorAll(".nav-dropdown")].map((container) => {
   const button = container.querySelector(".dropdown-toggle");
   return { container, button, menu: document.getElementById(button.getAttribute("aria-controls")) };
 });
 let openDropdown = null;
 
+// # สถานะเมนูย่อย
+// สลับการแสดงผลและ aria-expanded ให้ตรงกับเมนูที่เปิด
 function setOpenDropdown(dropdown) {
   if (openDropdown) {
     openDropdown.button.setAttribute("aria-expanded", "false");
@@ -415,15 +430,17 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+// # เมนูมือถือ
+// เปิดหรือปิดเมนูตามการกดปุ่ม การเลือกปลายทาง และขนาดหน้าจอ
 if (menuButton && primaryNavigation) {
-  // ปิดเมนูและคืนค่าป้ายกำกับสำหรับโปรแกรมอ่านหน้าจอ
+  // # การปิดเมนูมือถือ
+  // คืนสถานะและป้ายกำกับของปุ่มให้ตรงกับเมนูที่ปิด
   const closeMenu = () => {
     menuButton.setAttribute("aria-expanded", "false");
     menuButton.setAttribute("aria-label", t("เปิดเมนูนำทาง"));
     primaryNavigation.classList.remove("is-open");
   };
 
-  // คลิกปุ่มสลับเมนู พร้อมอัปเดตสถานะที่เทคโนโลยีช่วยเหลืออ่านได้
   menuButton.addEventListener("click", () => {
     const isOpen = menuButton.getAttribute("aria-expanded") === "true";
     menuButton.setAttribute("aria-expanded", String(!isOpen));
@@ -431,11 +448,11 @@ if (menuButton && primaryNavigation) {
     primaryNavigation.classList.toggle("is-open", !isOpen);
   });
 
-  // เลือกลิงก์แล้วปิดเมนูเพื่อให้เนื้อหาปลายทางมองเห็นได้บนมือถือ
   primaryNavigation.addEventListener("click", (event) => {
     if (event.target.closest("a")) closeMenu();
   });
 
+  // # การปิดด้วยคีย์บอร์ด
   // กด Escape เพื่อปิดเมนูและคืนโฟกัสไปยังปุ่มควบคุม
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && !event.defaultPrevented && primaryNavigation.classList.contains("is-open")) {
@@ -449,7 +466,8 @@ if (menuButton && primaryNavigation) {
     menuButton.setAttribute("aria-label", t(isOpen ? "ปิดเมนูนำทาง" : "เปิดเมนูนำทาง"));
   });
 
-  // เมื่อกลับสู่จอใหญ่ ล้างสถานะเมนูมือถือที่ไม่จำเป็น
+  // # การกลับสู่หน้าจอใหญ่
+  // ล้างสถานะเมนูมือถือเมื่อขนาดหน้าจอเปลี่ยน
   window.addEventListener("resize", () => {
     if (window.innerWidth > 1100) closeMenu();
   });
